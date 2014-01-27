@@ -2,3 +2,9 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.0.2'
 gem 'rom-rails', path: '../../'
+
+group :test do
+  gem 'rspec-core', '~> 2.14'
+  gem 'rspec-expectations', '~> 2.14'
+  gem 'rspec-rails', '~> 2.14'
+end
