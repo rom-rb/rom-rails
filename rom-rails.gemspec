@@ -8,8 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = Rom::Rails::VERSION
   spec.authors       = ["Piotr Solnica"]
   spec.email         = ["piotr.solnica@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = %q{Integrate Ruby Object Mapper with Rails}
   spec.homepage      = ""
   spec.license       = "MIT"
 
