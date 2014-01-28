@@ -7,4 +7,7 @@ group :test do
   gem 'rspec-core', '~> 2.14'
   gem 'rspec-expectations', '~> 2.14'
   gem 'rspec-rails', '~> 2.14'
+
+  gem 'rom', git: 'https://github.com/rom-rb/rom.git', branch: 'master'
+  gem 'axiom-memory-adapter'
 end
