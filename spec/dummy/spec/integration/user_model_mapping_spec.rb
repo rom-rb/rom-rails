@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'User model mapping' do
   it 'works' do
-    users = Dummy::Application.config.rom.env[:users]
+    users = Dummy::Application.config.db[:users]
 
     piotr = User.new(id: 1, name: "Piotr")
 

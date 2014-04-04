@@ -1,4 +1,6 @@
-Dummy::Application.config.rom.env.schema do
+env = Dummy::Application.config.rom.env
+
+env.schema do
   base_relation(:users) do
     repository :default
 
@@ -9,9 +11,11 @@ Dummy::Application.config.rom.env.schema do
   end
 end
 
-Dummy::Application.config.rom.env.mapping do
-  users do
-    map :id, :name
+env.mapping do
+  relation(:users) do
     model User
+    map :id, :name
   end
 end
+
+Dummy::Application.config.db = env.finalize
