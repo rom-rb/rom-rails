@@ -10,7 +10,7 @@ module ROM
 
       def initialize(config)
         @config = config
-        @env = Environment.setup(@config)
+        @env = ROM.setup(@config.symbolize_keys)
       end
     end
 
@@ -21,7 +21,33 @@ module ROM
       end
 
       initializer "rom.load_schema" do |app|
-        require ::Rails.root.join('db/schema.rb')
+        require schema_file if schema_file.exist?
+      end
+
+      initializer "rom.load_relations" do |app|
+        relation_files.each { |file| require file }
+      end
+
+      initializer "rom.load_mappers" do |app|
+        mapper_files.each { |file| require file }
+      end
+
+      private
+
+      def schema_file
+        root.join('db/schema.rb')
+      end
+
+      def relation_files
+        Dir[root.join('app/relations/**/*.rb').to_s]
+      end
+
+      def mapper_files
+        Dir[root.join('app/mappers/**/*.rb').to_s]
+      end
+
+      def root
+        ::Rails.root
       end
 
     end

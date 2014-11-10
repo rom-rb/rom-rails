@@ -1,13 +1,17 @@
 require 'spec_helper'
 
 describe 'User model mapping' do
+  let(:rom) { Rails.application.config.rom.env }
+
+  let(:users) { rom.read(:users) }
+
+  before do
+    rom.relations.users << { id: 1, name: 'Piotr' }
+  end
+
   it 'works' do
-    users = Dummy::Application.config.db[:users]
+    piotr = User.new(id: 1, name: 'Piotr')
 
-    piotr = User.new(id: 1, name: "Piotr")
-
-    users.insert(piotr)
-
-    expect(users.restrict(name: "Piotr").one).to eql(piotr)
+    expect(users.by_name('Piotr').to_a).to eql([piotr])
   end
 end
