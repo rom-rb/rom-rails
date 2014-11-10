@@ -1,2 +1,7 @@
+development:
+  adapter: sqlite3
+  database: "db/development.sqlite3"
+
 test:
-  default: "memory://dummy"
+  adapter: sqlite3
+  database: "db/test.sqlite3"

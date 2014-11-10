@@ -4,6 +4,7 @@ require File.expand_path('../boot', __FILE__)
 # require "active_record/railtie"
 require "action_controller/railtie"
 require "action_mailer/railtie"
+require "active_record/railtie"
 # require "sprockets/railtie"
 # require "rails/test_unit/railtie"
 
@@ -11,7 +12,8 @@ require "action_mailer/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env)
 
-require 'rom/adapter/memory'
+require 'rom'
+require 'rom/adapter/sequel'
 
 module Dummy
   class Application < Rails::Application

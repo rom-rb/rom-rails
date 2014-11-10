@@ -1,6 +1,6 @@
 language: ruby
 bundler_args: --without yard guard benchmarks
-script: "cd spec/dummy && bundle exec rspec spec/integration"
+script: "cd spec/dummy && bundle exec RAILS_ENV=test rake db:schema:load && bundle exec rspec spec/integration"
 rvm:
   - 2.0.0
   - 2.1.2

@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.1.7'
 gem 'rom-rails', path: '../../'
+gem 'sequel'
+gem 'sqlite3'
 
 group :test do
   gem 'rspec-core', '~> 2.14'

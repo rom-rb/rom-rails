@@ -5,7 +5,21 @@ module ROM
       attr_reader :config, :env
 
       def self.build(app)
-        new(app.config.database_configuration[::Rails.env])
+        config = rewrite_config(app)
+
+        new(config)
+      end
+
+      def self.rewrite_config(app)
+        root = app.config.root
+        config = app.config.database_configuration[::Rails.env].symbolize_keys
+
+        adapter = config[:adapter]
+        database = config[:database]
+
+        adapter = "sqlite" if adapter == "sqlite3"
+
+        { default: "#{adapter}://#{root}/#{database}" }
       end
 
       def initialize(config)
@@ -35,7 +49,7 @@ module ROM
       private
 
       def schema_file
-        root.join('db/schema.rb')
+        root.join('db/rom/schema.rb')
       end
 
       def relation_files
