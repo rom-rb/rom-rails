@@ -1,11 +1,9 @@
-Rails.application.config.rom.env.relations do
+setup = Rails.application.config.rom.setup
 
-  register(:users) do
+setup.relation(:users) do
 
-    def by_name(name)
-      where(name: name)
-    end
-
+  def by_name(name)
+    where(name: name)
   end
 
 end

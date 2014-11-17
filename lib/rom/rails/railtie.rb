@@ -2,7 +2,7 @@ module ROM
   module Rails
 
     class Configuration
-      attr_reader :config, :env
+      attr_reader :config, :setup, :env
 
       def self.build(app)
         config = rewrite_config(app)
@@ -24,7 +24,11 @@ module ROM
 
       def initialize(config)
         @config = config
-        @env = ROM.setup(@config.symbolize_keys)
+        @setup = ROM.setup(@config.symbolize_keys)
+      end
+
+      def finalize
+        @env = setup.finalize
       end
     end
 
@@ -44,6 +48,10 @@ module ROM
 
       initializer "rom.load_mappers" do |app|
         mapper_files.each { |file| require file }
+      end
+
+      config.after_initialize do |app|
+        app.config.rom.finalize
       end
 
       private

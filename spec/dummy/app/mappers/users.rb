@@ -1,4 +1,6 @@
-Rails.application.config.rom.env.mappers do
+setup = Rails.application.config.rom.setup
+
+setup.mappers do
   define(:users) do
     model User
 

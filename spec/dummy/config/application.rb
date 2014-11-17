@@ -12,9 +12,6 @@ require "active_record/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env)
 
-require 'rom'
-require 'rom/adapter/sequel'
-
 module Dummy
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
