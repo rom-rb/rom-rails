@@ -3,7 +3,9 @@ source 'https://rubygems.org'
 gemspec
 
 gem 'rails', '4.1.7'
-gem 'sqlite3'
+
+gem 'sqlite3', platforms: [:mri, :rbx]
+gem 'jdbc-sqlite3', platforms: :jruby
 
 group :test do
   gem 'rspec-rails', '~> 3.1'
