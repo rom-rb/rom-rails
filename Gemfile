@@ -1,9 +1,15 @@
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in rom-rails.gemspec
 gemspec
 
+gem 'rails', '4.1.7'
+gem 'sqlite3'
+
 group :test do
-  gem 'rspec-core', '~> 2.14'
-  gem 'rspec-expectations', '~> 2.14'
+  gem 'rspec-rails', '~> 3.1'
+
+  gem 'database_cleaner'
+
+  gem 'rom', git: 'https://github.com/rom-rb/rom.git', branch: 'master'
+  gem 'rom-sql', git: 'https://github.com/rom-rb/rom-sql.git', branch: 'master'
 end
