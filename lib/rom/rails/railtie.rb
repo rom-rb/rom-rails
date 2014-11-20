@@ -52,6 +52,7 @@ module ROM
 
       config.after_initialize do |app|
         app.config.rom.finalize
+        ApplicationController.send(:include, ControllerExtension)
       end
 
       private
