@@ -1,6 +1,11 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
 
+if RUBY_ENGINE == 'rbx'
+  require "codeclimate-test-reporter"
+  CodeClimate::TestReporter.start
+end
+
 require Pathname(__FILE__).dirname.join("dummy/config/environment")
 
 require 'rspec/rails'

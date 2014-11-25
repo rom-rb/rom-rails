@@ -12,6 +12,7 @@ gem 'rom-sql', git: 'https://github.com/rom-rb/rom-sql.git', branch: 'master'
 
 group :test do
   gem 'rspec-rails', '~> 3.1'
+  gem "codeclimate-test-reporter", require: nil
   gem 'database_cleaner'
   gem 'capybara'
 end
