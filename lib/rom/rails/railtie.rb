@@ -26,10 +26,12 @@ module ROM
           if adapter == "sqlite"
             "#{root}/#{database}"
           else
+            db_path = [hostname, database].join('/')
+
             if username && password
-              [[username, password].join(':'), [hostname, database].join('/')].join('@')
+              [[username, password].join(':'), db_path].join('@')
             else
-              [hostname, database].join('/')
+              db_path
             end
           end
 
