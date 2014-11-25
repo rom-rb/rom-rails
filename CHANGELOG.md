@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
   * Support for username and password in database.yml (solnic)
   * Support for more db schemes (solnic)
+  * Missing runtime dep on rom gem (solnic)
 
 [Compare v0.0.1...master](https://github.com/rom-rb/rom-rails/compare/v0.0.1...master)
 
