@@ -5,21 +5,35 @@ module ROM
       attr_reader :config, :setup, :env
 
       def self.build(app)
-        config = rewrite_config(app)
+        root = app.config.root
+        db_config = app.config.database_configuration[::Rails.env].symbolize_keys
+
+        config = rewrite_config(root, db_config)
 
         new(config)
       end
 
-      def self.rewrite_config(app)
-        root = app.config.root
-        config = app.config.database_configuration[::Rails.env].symbolize_keys
-
+      def self.rewrite_config(root, config)
         adapter = config[:adapter]
         database = config[:database]
+        password = config[:password]
+        username = config[:username]
+        hostname = config.fetch(:hostname) { 'localhost' }
 
         adapter = "sqlite" if adapter == "sqlite3"
 
-        { default: "#{adapter}://#{root}/#{database}" }
+        path =
+          if adapter == "sqlite"
+            "#{root}/#{database}"
+          else
+            if username && password
+              [[username, password].join(':'), [hostname, database].join('/')].join('@')
+            else
+              [hostname, database].join('/')
+            end
+          end
+
+        { default: "#{adapter}://#{path}" }
       end
 
       def initialize(config)
