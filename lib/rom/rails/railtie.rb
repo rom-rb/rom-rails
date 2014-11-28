@@ -66,6 +66,12 @@ module ROM
         mapper_files.each { |file| require file }
       end
 
+      initializer "rom.set_loggers" do |app|
+        app.config.rom.setup.repositories.each_value do |repository|
+          repository.use_logger(::Rails.logger)
+        end
+      end
+
       config.after_initialize do |app|
         app.config.rom.finalize
         ApplicationController.send(:include, ControllerExtension)
