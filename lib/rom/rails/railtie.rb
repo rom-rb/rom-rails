@@ -66,6 +66,10 @@ module ROM
         mapper_files.each { |file| require file }
       end
 
+      initializer "rom.load_commands" do |app|
+        command_files.each { |file| require file }
+      end
+
       config.after_initialize do |app|
         app.config.rom.finalize
         ApplicationController.send(:include, ControllerExtension)
@@ -83,6 +87,10 @@ module ROM
 
       def mapper_files
         Dir[root.join('app/mappers/**/*.rb').to_s]
+      end
+
+      def command_files
+        Dir[root.join('app/commands/**/*.rb').to_s]
       end
 
       def root

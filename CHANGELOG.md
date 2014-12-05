@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## v0.1.0 to-be-released
+
+[Compare v0.0.2...master](https://github.com/rom-rb/rom-rails/compare/v0.0.2...master)
+
 ## v0.0.2 2014-11-25
 
 ### Added
