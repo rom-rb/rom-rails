@@ -40,22 +40,33 @@ rom's setup object is available via `Rails.application.config.rom.setup`.
 
 ## Relations in controllers
 
-Currently the railtie simply adds `#rom` method to your controllers which returns
-the whole environment. This is **a temporary solution** which is not meant to be final.
+The recommended way of using relations in controllers is to specify which relations
+are needed for particular actions using a DSL provided by the railtie:
 
-Eventually ROM will expose relations to the controller layer (thus view layer too)
-that are already loaded into memory and **there will be no database interactions**
-taking place in those layers. This means that effectively database **query interface
-will not be available in controllers, views, helpers or anywhere outside of the
-relation definitions**.
+``` ruby
+class UsersController < ApplicationController
+  relation 'users.index', only: :index
+  relation 'users.by_name', only: :search, requires: :name
 
-This means your Rails application will work with arrays of domain objects rather
-than ad-hoc database queries scattered across your entire codebase and there will
-be *a single place* where you define all the relations and object mapping.
+  def index
+    render
+  end
+
+  def search
+    render :index
+  end
+end
+```
+
+By doing this actions will have access to `users` which is also set as a helper
+method making it available in the views.
+
+This means **no database interaction will take place in the views or helpers**
+as ROM materializes relations when "injecting" them into controller actions.
 
 ## Status
 
-This project is still in alpha state. For examples of usage please take a look
+This project is still in beta state. For examples of usage please take a look
 at `spec/dummy` app.
 
 Proper documentation will be added once the interface is stable.
