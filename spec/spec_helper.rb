@@ -22,3 +22,7 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with(:truncation)
   end
 end
+
+def rom
+  Rails.application.config.rom.env
+end
