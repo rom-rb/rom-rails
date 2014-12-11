@@ -1,6 +1,4 @@
-setup = Rails.application.config.rom.setup
-
-setup.relation(:users) do
+ROM.relation(:users) do
 
   def index
     order(:name)

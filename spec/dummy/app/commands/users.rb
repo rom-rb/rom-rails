@@ -1,6 +1,4 @@
-setup = Rails.application.config.rom.setup
-
-setup.commands(:users) do
+ROM.commands(:users) do
 
   define(:create) do
     result :one

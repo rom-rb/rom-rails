@@ -44,7 +44,7 @@ module ROM
       end
 
       def finalize
-        @env = setup.finalize
+        @env = ROM.finalize.env
       end
     end
 
