@@ -1,4 +1,4 @@
-module Rom
+module ROM
   module Rails
   end
 end
