@@ -1,3 +1,7 @@
+## v0.1.1 to-be-released
+
+[Compare v0.1.0...master](https://github.com/rom-rb/rom-rails/compare/v0.1.0...master)
+
 ## v0.1.0 2014-12-06
 
 ### Added
