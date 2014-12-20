@@ -1,5 +1,13 @@
 require 'rom/rails/inflections'
 
+if defined?(Spring)
+  Spring.after_fork do
+    ROM.env.repositories.each_value do |repository|
+      repository.adapter.disconnect
+    end
+  end
+end
+
 module ROM
   module Rails
 
@@ -41,11 +49,18 @@ module ROM
       end
 
       def initialize(config)
-        @config = config
+        @config = config.symbolize_keys
+      end
+
+      def setup!
         @setup = ROM.setup(@config.symbolize_keys)
       end
 
-      def finalize
+      def load!
+        Railtie.load_all
+      end
+
+      def finalize!
         # rescuing fixes the chicken-egg problem where we have a relation
         # defined but the table doesn't exist yet
         #
@@ -56,6 +71,16 @@ module ROM
 
     class Railtie < ::Rails::Railtie
 
+      def self.load_all
+        %w(relations mappers commands).each { |type| load_files(type, ::Rails.root) }
+      end
+
+      def self.load_files(type, root)
+        Dir[root.join("app/#{type}/**/*.rb").to_s].each do |path|
+          load(path)
+        end
+      end
+
       initializer "rom.configure" do |app|
         config.rom = ROM::Rails::Configuration.build(app)
       end
@@ -64,39 +89,22 @@ module ROM
         require schema_file if schema_file.exist?
       end
 
-      initializer "rom.load_relations" do |app|
-        relation_files.each { |file| require file }
-      end
-
-      initializer "rom.load_mappers" do |app|
-        mapper_files.each { |file| require file }
-      end
-
-      initializer "rom.load_commands" do |app|
-        command_files.each { |file| require file }
-      end
-
       config.after_initialize do |app|
-        app.config.rom.finalize
         ApplicationController.send(:include, ControllerExtension)
+      end
+
+      initializer "rom:prepare" do |app|
+        config.to_prepare do |config|
+          app.config.rom.setup!
+          app.config.rom.load!
+          app.config.rom.finalize!
+        end
       end
 
       private
 
       def schema_file
         root.join('db/rom/schema.rb')
-      end
-
-      def relation_files
-        Dir[root.join('app/relations/**/*.rb').to_s]
-      end
-
-      def mapper_files
-        Dir[root.join('app/mappers/**/*.rb').to_s]
-      end
-
-      def command_files
-        Dir[root.join('app/commands/**/*.rb').to_s]
       end
 
       def root
