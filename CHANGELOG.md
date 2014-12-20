@@ -1,4 +1,9 @@
-## v0.1.1 to-be-released
+## v0.2.0 2014-12-20
+
+### Added
+
+* Generators for relations, mappers and commands (solnic)
+* Support for Spring and reload in development mode (solnic)
 
 [Compare v0.1.0...master](https://github.com/rom-rb/rom-rails/compare/v0.1.0...master)
 
