@@ -52,9 +52,9 @@ module ROM
       def finalize!
         # rescuing fixes the chicken-egg problem where we have a relation
         # defined but the table doesn't exist yet
-        #
-        # FIXME: ROM should raise a custom error
-        @env = ROM.finalize.env rescue Registry::ElementNotFoundError
+        @env = ROM.finalize.env
+      rescue Registry::ElementNotFoundError => e
+        warn "Skipping ROM setup => #{e.message}"
       end
     end
   end
