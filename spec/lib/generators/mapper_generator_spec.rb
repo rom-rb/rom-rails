@@ -11,11 +11,11 @@ describe ROM::Generators::MapperGenerator do
   end
 
   specify do
-    expect(destination_root).to have_structure do
+    expect(destination_root).to have_structure {
       directory 'app' do
         directory 'mappers' do
           file 'users.rb' do
-            contains <<-RUBY
+            contains <<-CONTENT.strip_heredoc
               ROM.mappers do
 
                 define(:users) do
@@ -28,10 +28,10 @@ describe ROM::Generators::MapperGenerator do
                 end
 
               end
-            RUBY
+            CONTENT
           end
         end
       end
-    end
+    }
   end
 end

@@ -11,11 +11,11 @@ describe ROM::Generators::RelationGenerator do
   end
 
   specify do
-    expect(destination_root).to have_structure do
+    expect(destination_root).to have_structure {
       directory 'app' do
         directory 'relations' do
           file 'users.rb' do
-            contains <<-RUBY
+            contains <<-CONTENT.strip_heredoc
               ROM.relation(:users) do
                 # define your methods here ie:
                 #
@@ -24,10 +24,10 @@ describe ROM::Generators::RelationGenerator do
                 # end
                 #
               end
-            RUBY
+            CONTENT
           end
         end
       end
-    end
+    }
   end
 end

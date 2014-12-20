@@ -3,8 +3,6 @@ require 'spec_helper'
 require 'generators/rom/commands_generator'
 
 describe ROM::Generators::CommandsGenerator do
-  include GeneratorSpec::TestCase
-
   destination File.expand_path('../../../../tmp', __FILE__)
 
   before(:all) do
@@ -13,11 +11,11 @@ describe ROM::Generators::CommandsGenerator do
   end
 
   specify do
-    expect(destination_root).to have_structure do
+    expect(destination_root).to have_structure {
       directory 'app' do
         directory 'commands' do
           file 'users.rb' do
-            contains <<-RUBY
+            contains <<-CONTENT.strip_heredoc
               ROM.commands(:users) do
 
                 define(:create) do
@@ -33,10 +31,10 @@ describe ROM::Generators::CommandsGenerator do
                 end
 
               end
-            RUBY
+            CONTENT
           end
         end
       end
-    end
+    }
   end
 end
