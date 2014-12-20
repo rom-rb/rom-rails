@@ -46,7 +46,11 @@ module ROM
       end
 
       def finalize
-        @env = ROM.finalize.env
+        # rescuing fixes the chicken-egg problem where we have a relation
+        # defined but the table doesn't exist yet
+        #
+        # FIXME: ROM should raise a custom error
+        @env = ROM.finalize.env rescue KeyError
       end
     end
 
