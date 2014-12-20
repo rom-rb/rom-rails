@@ -5,6 +5,10 @@
 * Generators for relations, mappers and commands (solnic)
 * Support for Spring and reload in development mode (solnic)
 
+### Fixed
+
+* Setup will be skipped when there are missing elements in the registries (solnic)
+
 [Compare v0.1.0...master](https://github.com/rom-rb/rom-rails/compare/v0.1.0...master)
 
 ## v0.1.0 2014-12-06
