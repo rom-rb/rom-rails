@@ -54,7 +54,7 @@ module ROM
         # defined but the table doesn't exist yet
         #
         # FIXME: ROM should raise a custom error
-        @env = ROM.finalize.env rescue KeyError
+        @env = ROM.finalize.env rescue Registry::ElementNotFoundError
       end
     end
   end
