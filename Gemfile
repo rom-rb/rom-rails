@@ -14,4 +14,5 @@ group :test do
   gem 'codeclimate-test-reporter', require: nil
   gem 'database_cleaner'
   gem 'capybara'
+  gem 'generator_spec'
 end
