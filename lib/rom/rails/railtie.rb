@@ -1,3 +1,5 @@
+require 'rom/rails/inflections'
+
 module ROM
   module Rails
 

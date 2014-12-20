@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-require 'generators/rom/rails/relation_generator'
+require 'generators/rom/relation_generator'
 
-describe ROM::Rails::RelationGenerator, type: :generator do
-  destination File.expand_path('../../tmp', __FILE__)
+describe ROM::Generators::RelationGenerator do
+  destination File.expand_path('../../../../tmp', __FILE__)
 
   before(:all) do
     prepare_destination

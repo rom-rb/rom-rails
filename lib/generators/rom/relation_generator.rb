@@ -1,9 +1,8 @@
-require 'rails/generators'
+require 'generators/rom'
 
 module ROM
-  module Rails
-    class RelationGenerator < ::Rails::Generators::NamedBase
-      source_root File.expand_path('../templates', __FILE__)
+  module Generators
+    class RelationGenerator < Base
 
       def create_relation_file
         template(
@@ -11,6 +10,7 @@ module ROM
           File.join('app', 'relations', "#{file_name}.rb")
         )
       end
+
     end
   end
 end
