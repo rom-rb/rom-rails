@@ -17,5 +17,4 @@ class UsersController < ApplicationController
   def ping
     head :ok
   end
-
 end
