@@ -16,7 +16,9 @@ module ROM
   module Rails
     class Railtie < ::Rails::Railtie
       def self.load_all
-        %w(relations mappers commands).each { |type| load_files(type, ::Rails.root) }
+        %w(relations mappers commands).each do |type|
+          load_files(type, ::Rails.root)
+        end
       end
 
       def self.load_files(type, root)
