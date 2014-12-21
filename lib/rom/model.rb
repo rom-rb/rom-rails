@@ -38,13 +38,21 @@ module ROM
       def self.included(base)
         base.class_eval do
           include Virtus.model
-          include ActiveModel::Naming
           include ActiveModel::Validations
+          include ActiveModel::Conversion
         end
         base.extend(ClassMethods)
       end
 
       module ClassMethods
+        def param_key(name)
+          class_eval <<-RUBY
+            def self.model_name
+              @model_name ||= ActiveModel::Name.new(self, nil, #{name.to_s.inspect})
+            end
+          RUBY
+        end
+
         def [](input)
           new(input)
         end
