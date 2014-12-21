@@ -14,7 +14,6 @@ end
 
 module ROM
   module Rails
-
     class Railtie < ::Rails::Railtie
       def self.load_all
         %w(relations mappers commands).each { |type| load_files(type, ::Rails.root) }
@@ -56,6 +55,5 @@ module ROM
         ::Rails.root
       end
     end
-
   end
 end
