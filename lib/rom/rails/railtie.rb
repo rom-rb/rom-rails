@@ -1,3 +1,5 @@
+require 'rails'
+
 require 'rom/rails/inflections'
 require 'rom/rails/configuration'
 require 'rom/rails/controller_extension'

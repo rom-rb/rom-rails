@@ -1,6 +1,5 @@
 require 'virtus'
-require 'active_model/naming'
-require 'active_model/validations'
+require 'active_model'
 
 module ROM
   module Model
@@ -13,6 +12,28 @@ module ROM
       end
     end
 
+    # Mixin for validatable and coercible parameters
+    #
+    # @example
+    #
+    #   class UserParams
+    #     include ROM::Model::Params
+    #
+    #     attribute :email, String
+    #     attribute :age, Integer
+    #
+    #     validates :email, :age, presence: true
+    #   end
+    #
+    #   user_params = UserParams.new(email: '', age: '18')
+    #
+    #   user_params.email # => ''
+    #   user_params.age # => 18
+    #
+    #   user_params.valid? # => false
+    #   user_params.errors # => #<ActiveModel::Errors:0x007fd2423fadb0 ...>
+    #
+    # @api public
     module Params
       def self.included(base)
         base.class_eval do
@@ -30,6 +51,27 @@ module ROM
       end
     end
 
+    # Mixin for ROM-compliant validator objects
+    #
+    # @example
+    #
+    #
+    #   class UserParams
+    #     include ROM::Model::Params
+    #
+    #     attribute :name
+    #
+    #     validates :name, presence: true
+    #   end
+    #
+    #   class UserValidator
+    #     include ROM::Model::Validator
+    #   end
+    #
+    #   params = UserParams.new(name: '')
+    #   UserValidator.call(params) # raises ValidationError
+    #
+    # @api public
     module Validator
       def self.included(base)
         base.extend(ClassMethods)
