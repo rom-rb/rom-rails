@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = ROM::Rails::VERSION.dup
   spec.authors       = ["Piotr Solnica"]
   spec.email         = ["piotr.solnica@gmail.com"]
-  spec.summary       = %q{Integrate Ruby Object Mapper with Rails}
+  spec.summary       = 'Integrate Ruby Object Mapper with Rails'
   spec.homepage      = ""
   spec.license       = "MIT"
 
@@ -23,4 +23,5 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake"
+  spec.add_development_dependency "rubocop", "~> 0.28.0"
 end

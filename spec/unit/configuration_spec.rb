@@ -10,7 +10,8 @@ describe ROM::Rails::Configuration do
       config = ROM::Rails::Configuration.rewrite_config(root, db_config)
 
       if RUBY_ENGINE == 'jruby'
-        expect(config).to eql(default: "jdbc:sqlite:///somewhere/testing.sqlite")
+        expect(config)
+          .to eql(default: "jdbc:sqlite:///somewhere/testing.sqlite")
       else
         expect(config).to eql(default: "sqlite:///somewhere/testing.sqlite")
       end
@@ -28,9 +29,11 @@ describe ROM::Rails::Configuration do
       config = ROM::Rails::Configuration.rewrite_config(root, db_config)
 
       if RUBY_ENGINE == 'jruby'
-        expect(config).to eql(default: "jdbc:postgres://piotr:secret@localhost/testing")
+        expect(config)
+          .to eql(default: "jdbc:postgres://piotr:secret@localhost/testing")
       else
-        expect(config).to eql(default: "postgres://piotr:secret@localhost/testing")
+        expect(config)
+          .to eql(default: "postgres://piotr:secret@localhost/testing")
       end
 
       db_config = {
@@ -47,5 +50,4 @@ describe ROM::Rails::Configuration do
       end
     end
   end
-
 end

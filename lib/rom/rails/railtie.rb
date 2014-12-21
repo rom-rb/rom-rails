@@ -14,11 +14,11 @@ end
 
 module ROM
   module Rails
-
     class Railtie < ::Rails::Railtie
-
       def self.load_all
-        %w(relations mappers commands).each { |type| load_files(type, ::Rails.root) }
+        %w(relations mappers commands).each do |type|
+          load_files(type, ::Rails.root)
+        end
       end
 
       def self.load_files(type, root)
@@ -31,16 +31,16 @@ module ROM
         config.rom = ROM::Rails::Configuration.build(app)
       end
 
-      initializer "rom.load_schema" do |app|
+      initializer "rom.load_schema" do |_app|
         require schema_file if schema_file.exist?
       end
 
-      config.after_initialize do |app|
+      config.after_initialize do |_app|
         ApplicationController.send(:include, ControllerExtension)
       end
 
       initializer "rom:prepare" do |app|
-        config.to_prepare do |config|
+        config.to_prepare do |_config|
           app.config.rom.setup!
           app.config.rom.load!
           app.config.rom.finalize!
@@ -56,8 +56,6 @@ module ROM
       def root
         ::Rails.root
       end
-
     end
-
   end
 end

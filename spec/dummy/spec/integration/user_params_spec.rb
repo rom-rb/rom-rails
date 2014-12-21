@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe ROM::Model::Params do
   let(:params) do
-    Class.new {
+    Class.new do
       include ROM::Model::Params
       attribute :name, String
       validates :name, presence: true
@@ -10,7 +10,7 @@ describe ROM::Model::Params do
       def self.name
         'Test'
       end
-    }
+    end
   end
 
   describe '#valid?' do

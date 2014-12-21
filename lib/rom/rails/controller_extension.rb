@@ -3,7 +3,6 @@ module ROM
     RelationParamsMissingError = Class.new(StandardError)
 
     module ControllerExtension
-
       def self.included(klass)
         klass.extend(ClassExtensions)
       end
@@ -13,7 +12,6 @@ module ROM
       end
 
       module ClassExtensions
-
         def relation(path, options)
           root, method = path.split('.').map(&:to_sym)
 
@@ -25,7 +23,6 @@ module ROM
 
             if requires.any? && args.none?
               raise RelationParamsMissingError
-              false
             else
               relation =
                 if args.any?
@@ -44,8 +41,6 @@ module ROM
           end
         end
       end
-
     end
-
   end
 end
