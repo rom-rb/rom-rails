@@ -1,5 +1,4 @@
 ROM.relation(:users) do
-
   def index
     order(:name)
   end
@@ -7,5 +6,4 @@ ROM.relation(:users) do
   def by_name(name)
     index.where(name: name)
   end
-
 end

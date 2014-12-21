@@ -47,5 +47,4 @@ describe ROM::Rails::Configuration do
       end
     end
   end
-
 end
