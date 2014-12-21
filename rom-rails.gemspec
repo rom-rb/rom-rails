@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = ROM::Rails::VERSION.dup
   spec.authors       = ["Piotr Solnica"]
   spec.email         = ["piotr.solnica@gmail.com"]
-  spec.summary       = %q{Integrate Ruby Object Mapper with Rails}
+  spec.summary       = %q(Integrate Ruby Object Mapper with Rails)
   spec.homepage      = ""
   spec.license       = "MIT"
 
