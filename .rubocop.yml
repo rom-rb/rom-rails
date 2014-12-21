@@ -1,0 +1,59 @@
+# FIXME: Lower by refactoring biggest offenders
+Metrics/AbcSize:
+  Max: 26
+
+# FIXME: Lower by refactoring biggest offenders
+Metrics/CyclomaticComplexity:
+  Max: 8
+
+# FIXME: No clue how to fix that one line…
+Metrics/LineLength:
+  Exclude:
+    - lib/rom/rails/configuration.rb
+
+# FIXME: Lower by refactoring biggest offenders
+Metrics/MethodLength:
+  Max: 22
+
+# FIXME: Lower by refactoring biggest offenders
+Metrics/PerceivedComplexity:
+  Max: 10
+
+# Don’t check temp and Rails-generated files
+AllCops:
+  Exclude:
+    - spec/dummy/Rakefile
+    - spec/dummy/config/**/*
+    - spec/dummy/db/schema.rb
+    - spec/dummy/db/seeds.rb
+    - tmp/**/*
+
+# Documentation checked by Inch CI
+Style/Documentation:
+  Enabled: false
+
+# This is a shim file for those who require 'rom-mongo'
+Style/FileName:
+  Exclude:
+    - lib/rom-rails.rb
+
+# Early returns have their vices
+Style/GuardClause:
+  Enabled: false
+
+# Model::Validator uses Model::ValidationError for this
+Style/RaiseArgs:
+  Exclude:
+    - lib/rom/model.rb
+
+# Even a single escaped slash can be confusing
+Style/RegexpLiteral:
+  MaxSlashes: 0
+
+# Don’t introduce semantic fail/raise distinction
+Style/SignalException:
+  EnforcedStyle: only_raise
+
+# Accept both single and double quotes
+Style/StringLiterals:
+  Enabled: false
