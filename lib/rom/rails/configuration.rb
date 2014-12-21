@@ -19,10 +19,16 @@ module ROM
         username = config[:username]
         hostname = config.fetch(:hostname) { 'localhost' }
 
-        adapter = "sqlite" if adapter == "sqlite3"
+        adapter = 'sqlite' if adapter == 'sqlite3'
+
+        # FIXME: config parsing should be sent through adapters
+        #        rom-rails shouldn't refer directly to any adapter constants
+        if defined?(ROM::SQL) && ROM::SQL::Adapter.schemes.include?(adapter.to_sym)
+          adapter.prepend('jdbc:') if RUBY_ENGINE == 'jruby'
+        end
 
         path =
-          if adapter == "sqlite"
+          if adapter.include?('sqlite')
             "#{root}/#{database}"
           else
             db_path = [hostname, database].join('/')

@@ -5,7 +5,11 @@ gemspec
 gem 'rails', '4.2.0'
 
 gem 'sqlite3', platforms: [:mri, :rbx]
-gem 'jdbc-sqlite3', platforms: :jruby
+
+platforms :jruby do
+  gem 'jdbc-sqlite3'
+  gem 'activerecord-jdbc-adapter'
+end
 
 group :test do
   gem 'rom', github: 'rom-rb/rom', branch: 'master'

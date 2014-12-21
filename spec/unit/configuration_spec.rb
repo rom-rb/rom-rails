@@ -9,7 +9,11 @@ describe ROM::Rails::Configuration do
 
       config = ROM::Rails::Configuration.rewrite_config(root, db_config)
 
-      expect(config).to eql(default: "sqlite:///somewhere/testing.sqlite")
+      if RUBY_ENGINE == 'jruby'
+        expect(config).to eql(default: "jdbc:sqlite:///somewhere/testing.sqlite")
+      else
+        expect(config).to eql(default: "sqlite:///somewhere/testing.sqlite")
+      end
     end
 
     it 'rewrites database config hash to a URI for postgres' do
@@ -23,7 +27,11 @@ describe ROM::Rails::Configuration do
 
       config = ROM::Rails::Configuration.rewrite_config(root, db_config)
 
-      expect(config).to eql(default: "postgres://piotr:secret@localhost/testing")
+      if RUBY_ENGINE == 'jruby'
+        expect(config).to eql(default: "jdbc:postgres://piotr:secret@localhost/testing")
+      else
+        expect(config).to eql(default: "postgres://piotr:secret@localhost/testing")
+      end
 
       db_config = {
         adapter: 'postgres',
@@ -32,7 +40,11 @@ describe ROM::Rails::Configuration do
 
       config = ROM::Rails::Configuration.rewrite_config(root, db_config)
 
-      expect(config).to eql(default: "postgres://localhost/testing")
+      if RUBY_ENGINE == 'jruby'
+        expect(config).to eql(default: "jdbc:postgres://localhost/testing")
+      else
+        expect(config).to eql(default: "postgres://localhost/testing")
+      end
     end
   end
 
