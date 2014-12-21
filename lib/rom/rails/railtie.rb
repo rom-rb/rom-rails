@@ -31,16 +31,16 @@ module ROM
         config.rom = ROM::Rails::Configuration.build(app)
       end
 
-      initializer "rom.load_schema" do |app|
+      initializer "rom.load_schema" do |_app|
         require schema_file if schema_file.exist?
       end
 
-      config.after_initialize do |app|
+      config.after_initialize do |_app|
         ApplicationController.send(:include, ControllerExtension)
       end
 
       initializer "rom:prepare" do |app|
-        config.to_prepare do |config|
+        config.to_prepare do |_config|
           app.config.rom.setup!
           app.config.rom.load!
           app.config.rom.finalize!
