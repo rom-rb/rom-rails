@@ -25,7 +25,6 @@ module ROM
 
             if requires.any? && args.none?
               raise RelationParamsMissingError
-              false
             else
               relation =
                 if args.any?
