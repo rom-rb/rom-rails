@@ -39,16 +39,13 @@ module ROM
         require schema_file if schema_file.exist?
       end
 
-      config.after_initialize do |_app|
-        ApplicationController.send(:include, ControllerExtension)
-      end
-
       initializer "rom:prepare" do |app|
         config.to_prepare do |_config|
           Railtie.disconnect
           app.config.rom.setup!
           app.config.rom.load!
           app.config.rom.finalize!
+          ApplicationController.send(:include, ControllerExtension)
         end
       end
 
