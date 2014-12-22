@@ -32,7 +32,7 @@ module ROM
       end
 
       initializer "rom.configure" do |app|
-        config.rom = ROM::Rails::Configuration.build(app)
+        config.rom = Configuration.build(app)
       end
 
       initializer "rom.load_schema" do |_app|
