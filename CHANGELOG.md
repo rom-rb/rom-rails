@@ -1,4 +1,4 @@
-## v0.2.0 2014-12-20
+## v0.2.0 2014-12-31
 
 ### Added
 
@@ -9,7 +9,7 @@
 
 * Setup will be skipped when there are missing elements in the registries (solnic)
 
-[Compare v0.1.0...master](https://github.com/rom-rb/rom-rails/compare/v0.1.0...master)
+[Compare v0.1.0...v0.2.0](https://github.com/rom-rb/rom-rails/compare/v0.1.0...v0.2.0)
 
 ## v0.1.0 2014-12-06
 
