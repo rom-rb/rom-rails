@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Piotr Solnica"]
   spec.email         = ["piotr.solnica@gmail.com"]
   spec.summary       = 'Integrate Ruby Object Mapper with Rails'
-  spec.homepage      = ""
+  spec.homepage      = "http://rom-rb.org"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
