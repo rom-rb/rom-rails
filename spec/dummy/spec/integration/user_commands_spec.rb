@@ -18,4 +18,13 @@ describe 'User commands' do
       expect(result.error.messages[:name]).to include("can't be blank")
     end
   end
+
+  describe 'delete' do
+    it 'deletes record' do
+      users.create.call(name: 'Piotr')
+      result = users.try { delete(:by_name, 'Piotr') }
+
+      expect(result.error).to be(nil)
+    end
+  end
 end
