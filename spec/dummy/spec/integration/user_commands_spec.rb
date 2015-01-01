@@ -7,7 +7,7 @@ describe 'User commands' do
     it 'inserts user with valid params' do
       result = users.try { create(name: 'Jade') }
 
-      expect(result.value).to eql(id: 1, name: 'Jade')
+      expect(result.value).to eql(id: result.value[:id], name: 'Jade')
     end
 
     it 'returns error if params are not valid' do
