@@ -6,7 +6,7 @@ describe 'User model mapping' do
   let(:users) { rom.read(:users) }
 
   before do
-    rom.command(:users).create.call(name: 'Piotr')
+    rom.command(:users).try { create(name: 'Piotr') }
   end
 
   it 'works' do
