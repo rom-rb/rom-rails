@@ -4,4 +4,8 @@ ROM.commands(:users) do
     validator UserValidator
     result :one
   end
+
+  define(:delete) do
+    result :one
+  end
 end
