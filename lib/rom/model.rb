@@ -37,7 +37,7 @@ module ROM
     module Params
       def self.included(base)
         base.class_eval do
-          include Virtus.model
+          include Virtus.model(strict: true)
           include ActiveModel::Validations
           include ActiveModel::Conversion
         end
@@ -55,6 +55,10 @@ module ROM
 
         def [](input)
           new(input)
+        end
+
+        def attribute(name, type, options = {})
+          super(name, type, { required: false }.merge(options))
         end
       end
     end
