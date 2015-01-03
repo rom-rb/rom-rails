@@ -1,3 +1,9 @@
+## v0.2.1 to-be-released
+
+### Changed
+
+* input params uses virtus' `:strict` mode by default (stevehodgkiss)
+
 ## v0.2.0 2014-12-31
 
 ### Added
