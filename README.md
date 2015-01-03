@@ -14,66 +14,22 @@
 [![Test Coverage](https://codeclimate.com/github/rom-rb/rom-rails/badges/coverage.svg)][codeclimate]
 [![Inline docs](http://inch-ci.org/github/rom-rb/rom-rails.svg?branch=master)][inchpages]
 
-Rails integration for [Ruby Object Mapper](https://github.com/rom-rb/rom).
+Rails integration for [Ruby Object Mapper](https://github.com/rom-rb/rom) which
+ships with:
 
-## Installation and setup
+* Params sanitizer/coercer extension
+* Validation extension based on `ActiveModel`
+* Relation generators
+* Mapper generators
+* Command generators
 
-In your Gemfile:
+## Resources
 
-```
-gem 'rom'
-gem 'rom-rails'
-```
+You can read more about ROM and Rails on the official website:
 
-## Schema
+* [Introduction to ROM](rom-rb.org/introduction)
+* [Rails tutorial](rom-rb.org/tutorials/rails)
 
-Defining schema is only required for adapters that don't support inferring schema
-automatically. This means if you're using `rom-sql` you don't have to define the schema.
-In other cases the railtie expects the schema to be in `db/rom/schema.rb` which
-is loaded before relations and mappers.
-
-## Relations and mappers
-
-The railtie automatically loads relations and mappers from `app/relations` and
-`app/mappers` and finalizes the environment afterwards. During the booting process
-rom's setup object is available via `Rails.application.config.rom.setup`.
-
-## Relations in controllers
-
-The recommended way of using relations in controllers is to specify which relations
-are needed for particular actions using a DSL provided by the railtie:
-
-``` ruby
-class UsersController < ApplicationController
-  relation 'users.index', only: :index
-  relation 'users.by_name', only: :search, requires: :name
-
-  def index
-    render
-  end
-
-  def search
-    render :index
-  end
-end
-```
-
-By doing this actions will have access to `users` which is also set as a helper
-method making it available in the views.
-
-This means **no database interaction will take place in the views or helpers**
-as ROM materializes relations when "injecting" them into controller actions.
-
-## Status
-
-This project is still in beta state. For examples of usage please take a look
-at `spec/dummy` app.
-
-Proper documentation will be added once the interface is stable.
-
-## Roadmap
-
-Please refer to [issues](https://github.com/rom-rb/rom-rails/issues).
 
 ## Community
 
