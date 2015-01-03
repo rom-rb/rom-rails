@@ -27,8 +27,8 @@ ships with:
 
 You can read more about ROM and Rails on the official website:
 
-* [Introduction to ROM](rom-rb.org/introduction)
-* [Rails tutorial](rom-rb.org/tutorials/rails)
+* [Introduction to ROM](http://rom-rb.org/introduction)
+* [Rails tutorial](http://rom-rb.org/tutorials/rails)
 
 
 ## Community
