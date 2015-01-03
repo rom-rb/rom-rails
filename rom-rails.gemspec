@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_runtime_dependency 'rom', '~> 0.5', '>= 0.5.0'
-  spec.add_runtime_dependency 'virtus', '~> 1.0'
+  spec.add_runtime_dependency 'virtus', '~> 1.0', '>= 1.0.4'
   spec.add_runtime_dependency 'railties', ['>= 3.0', '< 5.0']
 
   spec.add_development_dependency "bundler"

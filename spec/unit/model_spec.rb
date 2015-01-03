@@ -12,7 +12,7 @@ describe ROM::Model::Params do
   it 'fails loudly when given an incorrect type' do
     expect {
       klass.new(name: [])
-    }.to raise_error(Virtus::CoercionError)
+    }.to raise_error(Virtus::CoercionError, /name/)
   end
 
   it 'does not fail on nil or missing attributes' do
