@@ -42,14 +42,26 @@ module ROM
       initializer "rom:prepare" do |app|
         config.to_prepare do |_config|
           Railtie.disconnect
-          app.config.rom.setup!
-          app.config.rom.load!
-          app.config.rom.finalize!
+          Railtie.setup!
           ActionController::Base.send(:include, ControllerExtension)
         end
       end
 
       private
+
+      def self.setup!
+        ROM.setup(config.rom.config.symbolize_keys)
+
+        load_all
+
+        begin
+          # rescuing fixes the chicken-egg problem where we have a relation
+          # defined but the table doesn't exist yet
+          ROM.finalize.env
+        rescue Registry::ElementNotFoundError => e
+          warn "Skipping ROM setup => #{e.message}"
+        end
+      end
 
       def schema_file
         root.join('db/rom/schema.rb')

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'User model mapping' do
-  let(:rom) { Rails.application.config.rom.env }
+  let(:rom) { ROM.env }
 
   let(:users) { rom.read(:users) }
 

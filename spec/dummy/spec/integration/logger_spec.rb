@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'ROM logger' do
-  let(:rom) { Rails.application.config.rom.env }
+  let(:rom) { ROM.env }
 
   it 'sets up rails logger for all repositories' do
     pending 'this will be re-enabled once we have feature detection on ' \
