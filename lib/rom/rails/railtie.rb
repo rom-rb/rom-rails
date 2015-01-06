@@ -31,7 +31,9 @@ module ROM
         end
       end
 
-      initializer "rom.configure" do |app|
+      # Derive ROM configuration from the application and make it available to
+      # the user via `Rails.application.config` before other initializers run.
+      config.before_initialize do |app|
         config.rom = Configuration.build(app)
       end
 
