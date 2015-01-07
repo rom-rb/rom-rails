@@ -52,7 +52,7 @@ module ROM
       private
 
       def self.setup!
-        ROM.setup(config.rom.config.symbolize_keys)
+        ROM.setup(config.rom.repos.symbolize_keys)
 
         load_all
 
