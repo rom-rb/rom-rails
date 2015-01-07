@@ -1,7 +1,7 @@
 module ROM
   module Rails
     class Configuration
-      attr_reader :repos
+      attr_reader :repositories
 
       # Tries to guess the right ROM configuration for a Rails app.
       #
@@ -10,7 +10,7 @@ module ROM
       #
       # @api private
       def self.build(app)
-        new(repos: derive_repos_from_application(app))
+        new(repositories: derive_repos_from_application(app))
       end
 
       # Uses database configuration from Rails to configure repositories.
@@ -30,7 +30,7 @@ module ROM
       end
 
       def initialize(config)
-        @repos = config.fetch(:repos)
+        @repositories = config.fetch(:repositories)
       end
     end
   end
