@@ -25,5 +25,5 @@ RSpec.configure do |config|
 end
 
 def rom
-  Rails.application.config.rom.env
+  ROM.env
 end

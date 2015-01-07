@@ -1,33 +1,36 @@
 module ROM
   module Rails
     class Configuration
-      attr_reader :config, :setup, :env
+      attr_reader :repositories
 
+      # Tries to guess the right ROM configuration for a Rails app.
+      #
+      # @param [Rails::Application] app
+      # @return [Configuration]
+      #
+      # @api private
       def self.build(app)
-        config = app.config.database_configuration[::Rails.env].
-          symbolize_keys.update(root: app.config.root)
+        new(repositories: derive_repos_from_application(app))
+      end
 
-        new(ROM::Config.build(config))
+      # Uses database configuration from Rails to configure repositories.
+      #
+      # Note that the `DATABASE_URL` environment variable supported by
+      # ActiveRecord will *NOT* be respected.
+      #
+      # @param [Rails::Application] app
+      # @return [Hash]
+      #
+      # @api private
+      def self.derive_repos_from_application(app)
+        config = app.config.database_configuration[::Rails.env].
+                            symbolize_keys.update(root: app.config.root)
+
+        ROM::Config.build(config)
       end
 
       def initialize(config)
-        @config = config
-      end
-
-      def setup!
-        @setup = ROM.setup(@config.symbolize_keys)
-      end
-
-      def load!
-        Railtie.load_all
-      end
-
-      def finalize!
-        # rescuing fixes the chicken-egg problem where we have a relation
-        # defined but the table doesn't exist yet
-        @env = ROM.finalize.env
-      rescue Registry::ElementNotFoundError => e
-        warn "Skipping ROM setup => #{e.message}"
+        @repositories = config.fetch(:repositories)
       end
     end
   end
