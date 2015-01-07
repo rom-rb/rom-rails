@@ -45,7 +45,7 @@ module ROM
           app.config.rom.setup!
           app.config.rom.load!
           app.config.rom.finalize!
-          ApplicationController.send(:include, ControllerExtension)
+          ActionController::Base.send(:include, ControllerExtension)
         end
       end
 
