@@ -41,7 +41,7 @@ module ROM
         require schema_file if schema_file.exist?
       end
 
-      initializer "rom:prepare" do |app|
+      initializer "rom:prepare" do |_app|
         config.to_prepare do |_config|
           Railtie.disconnect
           Railtie.setup!
