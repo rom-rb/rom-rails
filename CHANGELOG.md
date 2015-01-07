@@ -4,6 +4,10 @@
 
 * input params uses virtus' `:strict` mode by default (stevehodgkiss)
 
+### Fixed
+
+* `rom` extension is now mixed into ActionController::Base which addresses #12 (solnic)
+
 ## v0.2.0 2014-12-31
 
 ### Added
