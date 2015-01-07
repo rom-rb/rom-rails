@@ -1,4 +1,4 @@
-## v0.2.1 to-be-released
+## v0.2.1 2015-01-07
 
 ### Changed
 
