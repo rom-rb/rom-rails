@@ -49,6 +49,23 @@ module ROM
         end
       end
 
+      # Behaves like `Railtie#configure` if the given block does not take any
+      # arguments. Otherwise yields the ROM configuration to the block.
+      #
+      # @example
+      #   ROM::Rails::Railtie.configure do |config|
+      #     config.repositories[:yaml] = {uri: 'yaml:///data'}
+      #   end
+      #
+      # @api public
+      def configure(&block)
+        if block.arity == 1
+          block.call(config.rom)
+        else
+          super
+        end
+      end
+
       private
 
       def self.setup!
