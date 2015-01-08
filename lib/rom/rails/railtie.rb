@@ -20,6 +20,8 @@ module ROM
       end
 
       def self.load_all
+        load_schema
+
         %w(relations mappers commands).each do |type|
           load_files(type, ::Rails.root)
         end
@@ -31,14 +33,14 @@ module ROM
         end
       end
 
+      def load_schema
+        load(schema_file) if schema_file.exist?
+      end
+
       # Derive ROM configuration from the application and make it available to
       # the user via `Rails.application.config` before other initializers run.
       config.before_initialize do |app|
         config.rom = Configuration.build(app)
-      end
-
-      initializer "rom.load_schema" do |_app|
-        require schema_file if schema_file.exist?
       end
 
       initializer "rom:prepare" do |_app|
