@@ -43,12 +43,10 @@ module ROM
         config.rom = Configuration.build(app)
       end
 
-      initializer "rom:prepare" do |_app|
-        config.to_prepare do |_config|
-          Railtie.disconnect
-          Railtie.setup!
-          ActionController::Base.send(:include, ControllerExtension)
-        end
+      config.to_prepare do |_config|
+        Railtie.disconnect
+        Railtie.setup!
+        ActionController::Base.send(:include, ControllerExtension)
       end
 
       # Behaves like `Railtie#configure` if the given block does not take any
