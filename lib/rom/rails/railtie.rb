@@ -35,10 +35,9 @@ module ROM
         # but ROM should NOT be yet. Will only be called once.
         fail if ROM.env
 
-        unless config.rom.repositories.key?(:default)
-          config.rom.repositories.merge!(
-            Configuration.derive_repos_from_application(app)
-          )
+        if defined?(ActiveRecord)
+          config.rom.repositories[:default] ||= ActiveRecord::Configuration
+                                                .call(app)
         end
 
         Railtie.setup

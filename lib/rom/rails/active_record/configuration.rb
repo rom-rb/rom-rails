@@ -1,8 +1,7 @@
 module ROM
   module Rails
     module ActiveRecord
-      # Helper class used by ROM internally to deal with ActiveRecord
-      # configuration hashes.
+      # A helper class to derive a repository configuration from ActiveRecord.
       #
       # @private
       class Configuration
@@ -15,6 +14,20 @@ module ROM
           :root
         ].freeze
 
+        # Returns repository configuration for the current environment.
+        #
+        # @note This relies on ActiveRecord being initialized already.
+        # @param [Rails::Application]
+        #
+        # @api private
+        def self.call(app)
+          configuration = ::ActiveRecord::Base.configurations[::Rails.env]
+                          .symbolize_keys
+                          .update(root: app.config.root)
+
+          build(configuration)
+        end
+
         # Builds a configuration hash from a flat database config hash.
         #
         # This is used to support typical database.yml-complaint configs. It
@@ -26,8 +39,6 @@ module ROM
         #
         # @api private
         def self.build(config, options = {})
-          return config_hash(config, options) if config.is_a?(String)
-
           return config unless config[:database]
 
           root = config[:root]
@@ -64,9 +75,9 @@ module ROM
         # @api private
         def self.config_hash(uri, options = {})
           if options.any?
-            { default: { uri: uri, options: options } }
+            { uri: uri, options: options }
           else
-            { default: uri }
+            uri
           end
         end
       end
