@@ -5,15 +5,6 @@ module ROM
     class Configuration
       attr_reader :repositories
 
-      # Tries to guess the right ROM configuration for a Rails app.
-      #
-      # @param [Rails::Application] app
-      # @return [Configuration]
-      #
-      # @api private
-      def self.build(app)
-        new(repositories: derive_repos_from_application(app))
-      end
 
       # Uses database configuration from Rails to configure repositories.
       #
@@ -31,8 +22,8 @@ module ROM
         ActiveRecord::Configuration.build(config)
       end
 
-      def initialize(config)
-        @repositories = config.fetch(:repositories)
+      def initialize(config = Hash.new)
+        @repositories = config.fetch(:repositories) { Hash.new }
       end
     end
   end
