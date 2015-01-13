@@ -1,3 +1,5 @@
+require 'rom/rails/active_record/configuration'
+
 module ROM
   module Rails
     class Configuration
@@ -26,7 +28,7 @@ module ROM
         config = app.config.database_configuration[::Rails.env].
                             symbolize_keys.update(root: app.config.root)
 
-        ROM::Config.build(config)
+        ActiveRecord::Configuration.build(config)
       end
 
       def initialize(config)
