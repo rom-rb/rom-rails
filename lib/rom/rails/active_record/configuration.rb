@@ -5,6 +5,8 @@ module ROM
       #
       # @private
       class Configuration
+        SCHEME_MAP = {'sqlite3' => 'sqlite', 'postgresql' => 'postgres'}.freeze
+
         BASE_OPTIONS = [
           :adapter,
           :database,
@@ -38,23 +40,18 @@ module ROM
         # @return [Hash]
         #
         # @api private
-        def self.build(config, options = {})
-          return config unless config[:database]
-
+        def self.build(config)
           root = config[:root]
-
-          raw_scheme = config[:adapter]
 
           database = config[:database]
           password = config.fetch(:password) { '' }
           username = config[:username]
           hostname = config.fetch(:hostname) { 'localhost' }
 
-          adapter = Adapter[raw_scheme]
-          scheme = adapter.normalize_scheme(raw_scheme)
+          raw_scheme = scheme_for_adapter(config[:adapter])
 
           path =
-            if adapter.database_file?(scheme)
+            if raw_scheme == 'sqlite'
               [root, database].compact.join('/')
             else
               db_path = [hostname, database].join('/')
@@ -69,7 +66,29 @@ module ROM
           other_keys = config.keys - BASE_OPTIONS
           options = Hash[other_keys.zip(config.values_at(*other_keys))]
 
+          # JRuby connection strings require special care.
+          scheme = if RUBY_ENGINE == 'jruby'
+                     scheme_for_jruby(scheme)
+                   else
+                     raw_scheme
+                   end
+
           config_hash("#{scheme}://#{path}", options)
+        end
+
+        # Returns a Sequel-compatible scheme for an ActiveRecord adapter name.
+        #
+        # @api private
+        def self.scheme_for_adapter(scheme)
+          SCHEME_MAP.fetch(scheme) { |scheme| scheme }
+        end
+
+        # Rewrites schemes to use JDBC if appropriate.
+        #
+        # @api private
+        def self.scheme_for_jruby(scheme)
+          return scheme if scheme == 'postgres'
+          "jdbc:#{scheme}"
         end
 
         # @api private
