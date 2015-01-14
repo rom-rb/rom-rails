@@ -6,6 +6,10 @@ describe ROM::Model::Validator do
       include ROM::Model::Validator
 
       validates :name, presence: true
+
+      def self.name
+        'Test'
+      end
     end
   end
 
@@ -15,7 +19,9 @@ describe ROM::Model::Validator do
     end
 
     it 'raises error when invalid' do
-      expect { validator.call(name: nil) }.to raise_error
+      expect { validator.call(name: nil) }.to raise_error(
+        ROM::Model::ValidationError
+      )
     end
   end
 end
