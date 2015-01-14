@@ -75,7 +75,10 @@ module ROM
         end
 
         def self.postgresql_uri(config)
-          generic_uri(config.merge(scheme: 'postgres'))
+          generic_uri(config.merge(
+            host: config.fetch(:host) { '' },
+            scheme: 'postgres'
+          ))
         end
 
         def self.mysql_uri(config)

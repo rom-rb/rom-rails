@@ -57,6 +57,11 @@ describe ROM::Rails::ActiveRecord::Configuration do
       uri = uri_for(adapter: 'postgresql', database: 'test')
       expect(parse(uri).userinfo).to be_nil
     end
+
+    it 'properly handles configuration without a host' do
+      uri = uri_for(adapter: 'postgresql', database: 'test')
+      expect(uri).to eql('postgres:///test')
+    end
   end
 
   context 'with mysql adapter' do
