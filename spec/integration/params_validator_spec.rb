@@ -2,16 +2,6 @@ require 'spec_helper'
 
 describe 'Params validation' do
   it 'works' do
-    setup = ROM.setup('sqlite::memory')
-
-    setup.default.adapter.connection.create_table(:users) do
-      primary_key :id
-      String :name
-      String :email
-    end
-
-    rom = ROM.finalize.env
-
     class UserParams
       include ROM::Model::Params
 
