@@ -86,25 +86,15 @@ module ROM
       end
 
       def load_all
-        load_schema
-
         %w(relations mappers commands).each do |type|
-          load_files(type, root)
+          load_files(type)
         end
       end
 
-      def load_schema
-        load(schema_file) if schema_file.exist?
-      end
-
-      def load_files(type, root)
+      def load_files(type)
         Dir[root.join("app/#{type}/**/*.rb").to_s].each do |path|
           load(path)
         end
-      end
-
-      def schema_file
-        root.join('db/rom/schema.rb')
       end
 
       def root
