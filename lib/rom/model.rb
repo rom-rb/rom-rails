@@ -6,9 +6,9 @@ module ROM
     class ValidationError < CommandError
       attr_reader :params, :messages
 
-      def initialize(params)
+      def initialize(params, errors)
         @params = params
-        @messages = params.errors
+        @messages = errors
       end
     end
 
@@ -40,7 +40,6 @@ module ROM
       def self.included(base)
         base.class_eval do
           include VirtusModel
-          include ActiveModel::Validations
           include ActiveModel::Conversion
         end
         base.extend(ClassMethods)
@@ -84,12 +83,33 @@ module ROM
     # @api public
     module Validator
       def self.included(base)
-        base.extend(ClassMethods)
+        base.class_eval do
+          extend ClassMethods
+          include ActiveModel::Validations
+        end
+      end
+
+      attr_reader :params
+
+      def initialize(params)
+        @params = params
+      end
+
+      def call
+        raise ValidationError.new(params, errors) unless valid?
+        params
+      end
+
+      private
+
+      def method_missing(name)
+        params[name]
       end
 
       module ClassMethods
         def call(params)
-          raise ValidationError.new(params) unless params.valid?
+          validator = new(params)
+          validator.call
         end
       end
     end
