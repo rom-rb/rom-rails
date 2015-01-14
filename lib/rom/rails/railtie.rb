@@ -11,42 +11,36 @@ end
 module ROM
   module Rails
     class Railtie < ::Rails::Railtie
-      def self.disconnect
-        return unless ROM.env
-
-        ROM.env.repositories.each_value do |repository|
-          repository.adapter.disconnect
+      initializer 'rom.configure_action_controller' do
+        ActiveSupport.on_load(:action_controller) do
+          ActionController::Base.send(:include, ControllerExtension)
         end
       end
 
-      def self.load_all
-        load_schema
-
-        %w(relations mappers commands).each do |type|
-          load_files(type, ::Rails.root)
-        end
+      # Make `ROM::Rails::Configuration` instance available to the user via
+      # `Rails.application.config` before other initializers run.
+      config.before_initialize do |_app|
+        config.rom = Configuration.new
       end
 
-      def self.load_files(type, root)
-        Dir[root.join("app/#{type}/**/*.rb").to_s].each do |path|
-          load(path)
-        end
-      end
-
-      def load_schema
-        load(schema_file) if schema_file.exist?
-      end
-
-      # Derive ROM configuration from the application and make it available to
-      # the user via `Rails.application.config` before other initializers run.
-      config.before_initialize do |app|
-        config.rom = Configuration.build(app)
-      end
-
+      # Reload ROM-related application code on each request.
       config.to_prepare do |_config|
-        Railtie.disconnect
-        Railtie.setup!
-        ActionController::Base.send(:include, ControllerExtension)
+        Railtie.reload if ROM.env
+      end
+
+      # This is where the initial setup of ROM occurs.
+      # TODO: Freeze the configuration.
+      config.after_initialize do |app|
+        # At this point ActiveRecord::Base.configurations are already populated,
+        # but ROM should NOT be yet. Will only be called once.
+        fail if ROM.env
+
+        if defined?(ActiveRecord)
+          config.rom.repositories[:default] ||= ActiveRecord::Configuration
+                                                .call(app)
+        end
+
+        Railtie.setup
       end
 
       # Behaves like `Railtie#configure` if the given block does not take any
@@ -66,9 +60,18 @@ module ROM
         end
       end
 
-      private
+      def reload
+        Railtie.disconnect
+        Railtie.setup
+      end
 
-      def self.setup!
+      def disconnect
+        ROM.env.repositories.each_value do |repository|
+          repository.adapter.disconnect
+        end
+      end
+
+      def setup
         ROM.setup(config.rom.repositories.symbolize_keys)
 
         load_all
@@ -79,6 +82,24 @@ module ROM
           ROM.finalize.env
         rescue Registry::ElementNotFoundError => e
           warn "Skipping ROM setup => #{e.message}"
+        end
+      end
+
+      def load_all
+        load_schema
+
+        %w(relations mappers commands).each do |type|
+          load_files(type, root)
+        end
+      end
+
+      def load_schema
+        load(schema_file) if schema_file.exist?
+      end
+
+      def load_files(type, root)
+        Dir[root.join("app/#{type}/**/*.rb").to_s].each do |path|
+          load(path)
         end
       end
 
