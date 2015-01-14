@@ -31,8 +31,13 @@ describe ROM::Rails::ActiveRecord::Configuration do
     end
 
     it 'only includes username if no password is given' do
-      pending 'bug in the current implementation'
-      uri = uri_for(adapter: 'postgresql', database: 'test', username: 'user')
+      uri = uri_for(
+        adapter: 'postgresql',
+        host: 'example.com',
+        database: 'test',
+        username: 'user'
+      )
+
       expect(parse(uri).userinfo).to eql('user')
     end
 
@@ -41,7 +46,8 @@ describe ROM::Rails::ActiveRecord::Configuration do
         adapter: 'postgresql',
         database: 'test',
         username: 'user',
-        password: 'password'
+        password: 'password',
+        host: 'example.com'
       )
 
       expect(parse(uri).userinfo).to eql('user:password')
@@ -55,7 +61,7 @@ describe ROM::Rails::ActiveRecord::Configuration do
 
   context 'with mysql adapter' do
     it 'sets default password to an empty string' do
-      uri = uri_for(adapter: 'mysql', database: 'test', username: 'root')
+      uri = uri_for(adapter: 'mysql', database: 'test', username: 'root', host: 'example.com')
       expect(parse(uri).userinfo).to eql('root:')
     end
 
