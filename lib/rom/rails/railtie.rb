@@ -67,7 +67,7 @@ module ROM
 
       def disconnect
         ROM.env.repositories.each_value do |repository|
-          repository.adapter.disconnect
+          repository.disconnect
         end
       end
 
