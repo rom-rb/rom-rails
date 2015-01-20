@@ -1,8 +1,6 @@
 module ROM
   module Model
     class Form
-      include Charlatan.new(:params)
-
       class << self
         attr_reader :params, :validator, :commands, :key
       end
@@ -17,6 +15,20 @@ module ROM
           include ROM::Model::Params
         }
         @params.class_eval(&block)
+        @params.attribute_set.each do |attribute|
+          if public_instance_methods.include?(attribute.name)
+            raise(
+              ArgumentError,
+              "#{attribute.name} attribute is in conflict with #{self}##{attribute.name}"
+            )
+          end
+
+          class_eval <<-RUBY, __FILE__, __LINE__ + 1
+            def #{attribute.name}
+              params[:#{attribute.name}]
+            end
+          RUBY
+        end
         self
       end
 
@@ -38,7 +50,7 @@ module ROM
         commands = self.commands.each_with_object({}) { |name, h|
           h[name] = rom.command(name)
         }
-        new(params.new(input), commands)
+        new(input, commands)
       end
 
       def self.rom
@@ -48,7 +60,6 @@ module ROM
       attr_reader :params, :result
 
       def initialize(params = {}, options = {})
-        super
         @params = params
         @result = nil
         options.each do |key, value|
@@ -64,12 +75,12 @@ module ROM
         self.class.key || [:id]
       end
 
-      def commit
+      def commit!
         raise NotImplementedError
       end
 
       def save
-        @result = commit
+        @result = commit!
         self
       end
 

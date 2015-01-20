@@ -15,7 +15,7 @@ class UserForm < ROM::Model::Form
     validates :email, uniqueness: true
   end
 
-  def commit
+  def commit!
     users.try { |command| command.create(params) }
   end
 end
