@@ -37,16 +37,16 @@ module ROM
       end
 
       module ClassMethods
-        def param_key(name)
-          class_eval <<-RUBY
-            def self.model_name
-              @model_name ||= ActiveModel::Name.new(self, nil, #{name.to_s.inspect})
-            end
-          RUBY
-        end
-
         def [](input)
           input.is_a?(self) ? input : new(input)
+        end
+
+        def set_model_name(name)
+          class_eval <<-RUBY
+            def self.model_name
+              @model_name ||= ActiveModel::Name.new(self, nil, #{name.inspect})
+            end
+          RUBY
         end
       end
     end

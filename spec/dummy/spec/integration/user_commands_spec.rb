@@ -23,7 +23,7 @@ describe 'User commands' do
 
   describe 'delete' do
     it 'deletes record' do
-      users.create.call(name: 'Piotr')
+      users.create.call(name: 'Piotr', email: 'piotr@test.com')
       result = users.try { delete(:by_name, 'Piotr') }
 
       expect(result.error).to be(nil)

@@ -1,3 +1,5 @@
+require 'rom/rails/model/validator/uniqueness_validator'
+
 module ROM
   module Model
     # Mixin for ROM-compliant validator objects
@@ -22,27 +24,11 @@ module ROM
     #
     # @api public
     module Validator
-      class UniquenessValidator < ActiveModel::EachValidator
-        attr_reader :relation
-
-        def initialize(options)
-          super
-          @relation = ROM.env.relations[options[:class].relation]
-        end
-
-        def validate_each(validator, name, value)
-          validator.errors.add(name, :taken) unless unique?(name, value)
-        end
-
-        def unique?(name, value)
-          relation.where(name => value).count.zero?
-        end
-      end
-
       def self.included(base)
         base.class_eval do
           extend ClassMethods
           include ActiveModel::Validations
+          include Equalizer.new(:params, :errors)
         end
       end
 

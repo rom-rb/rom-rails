@@ -11,8 +11,8 @@ module ROM
       end
 
       def self.input(&block)
-        @params = Class.new {
-          include ROM::Model::Params
+        @params = ClassBuilder.new(name: "#{name}::Params", parent: Object).call { |klass|
+          klass.send(:include, ROM::Model::Params)
         }
         @params.class_eval(&block)
         @params.attribute_set.each do |attribute|
@@ -33,8 +33,8 @@ module ROM
       end
 
       def self.validations(&block)
-        @validator = Class.new {
-          include ROM::Model::Validator
+        @validator = ClassBuilder.new(name: "#{name}::Validator", parent: Object).call { |klass|
+          klass.send(:include, ROM::Model::Validator)
         }
         @validator.class_eval(&block)
         self

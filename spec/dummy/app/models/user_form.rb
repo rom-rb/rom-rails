@@ -2,7 +2,7 @@ class UserForm < ROM::Model::Form
   inject_commands_for :users
 
   input do
-    param_key :user
+    set_model_name 'User'
 
     attribute :name, String
     attribute :email, String
