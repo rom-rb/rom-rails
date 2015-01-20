@@ -53,7 +53,7 @@ module ROM
       end
 
       def call
-        raise ValidationError.new(params, errors) unless valid?
+        raise ValidationError.new(errors) unless valid?
         params
       end
 

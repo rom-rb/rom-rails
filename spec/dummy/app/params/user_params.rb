@@ -3,4 +3,6 @@ class UserParams
 
   attribute :name, String
   attribute :email, String
+
+  param_key :user
 end

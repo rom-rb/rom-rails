@@ -3,15 +3,6 @@ require 'active_model/conversion'
 
 module ROM
   module Model
-    class ValidationError < CommandError
-      attr_reader :params, :messages
-
-      def initialize(params, errors)
-        @params = params
-        @messages = errors
-      end
-    end
-
     # Mixin for validatable and coercible parameters
     #
     # @example
@@ -55,7 +46,7 @@ module ROM
         end
 
         def [](input)
-          new(input)
+          input.is_a?(self) ? input : new(input)
         end
       end
     end

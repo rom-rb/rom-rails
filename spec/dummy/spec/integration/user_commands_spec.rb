@@ -17,7 +17,7 @@ describe 'User commands' do
 
       expect(result.value).to be(nil)
       expect(result.error).to be_instance_of(ROM::Model::ValidationError)
-      expect(result.error.messages[:name]).to include("can't be blank")
+      expect(result.error[:name]).to include("can't be blank")
     end
   end
 

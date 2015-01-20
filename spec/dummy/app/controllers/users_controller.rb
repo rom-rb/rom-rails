@@ -10,6 +10,20 @@ class UsersController < ApplicationController
     render
   end
 
+  def new
+    render :new, locals: { user: UserForm.build }
+  end
+
+  def create
+    user_form = UserForm.build(params[:user]).save
+
+    if user_form.success?
+      redirect_to :users
+    else
+      render :new, locals: { user: user_form }
+    end
+  end
+
   def search
     render :index
   end
