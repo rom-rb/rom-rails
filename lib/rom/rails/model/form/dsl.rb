@@ -35,6 +35,8 @@ module ROM
             RUBY
           end
 
+          const_set(:Params, @params)
+
           @model = ClassBuilder.new(name: "#{name}::Model", parent: @params).call { |klass|
             klass.class_eval do
               def persisted?
@@ -44,6 +46,8 @@ module ROM
           }
           key.each { |name| @model.attribute(name) }
 
+          const_set(:Model, @model)
+
           self
         end
 
@@ -52,6 +56,7 @@ module ROM
             klass.send(:include, ROM::Model::Validator)
           }
           @validator.class_eval(&block)
+          const_set(:Validator, @validator)
           self
         end
 

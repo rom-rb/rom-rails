@@ -25,11 +25,13 @@ describe 'Form' do
 
   describe 'input DSL' do
     it 'defines params handler' do
+      expect(form.const_defined?(:Params)).to be(true)
       expect(form.params.attribute_set.map(&:name)).to eql([:email])
       expect(form.params.model_name).to eql('User')
     end
 
     it 'defines a model' do
+      expect(form.const_defined?(:Model)).to be(true)
       expect(form.model.attribute_set.map(&:name)).to match_array([:id, :email])
     end
 
@@ -46,6 +48,8 @@ describe 'Form' do
 
   describe 'validator DSL' do
     it 'defines validator' do
+      expect(form.const_defined?(:Validator)).to be(true)
+
       expect(form.validator).not_to be(nil)
 
       expect { form.validator.call(email: 'jane@doe') }.not_to raise_error
