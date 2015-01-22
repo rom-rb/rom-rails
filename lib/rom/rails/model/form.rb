@@ -47,9 +47,14 @@ module ROM
       end
 
       def self.build(input = {})
-        commands = self.commands.each_with_object({}) { |name, h|
-          h[name] = rom.command(name)
-        }
+        commands =
+          if @commands
+            self.commands.each_with_object({}) { |name, h|
+              h[name] = rom.command(name)
+            }
+          else
+            {}
+          end
         new(input, commands)
       end
 
@@ -79,8 +84,8 @@ module ROM
         raise NotImplementedError
       end
 
-      def save
-        @result = commit!
+      def save(*args)
+        @result = commit!(*args)
         self
       end
 
