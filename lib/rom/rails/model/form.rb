@@ -36,12 +36,13 @@ module ROM
           RUBY
         end
 
-        @model = @params.clone
-        @model.class_eval do
-          def persisted?
-            !to_key.nil?
+        @model = ClassBuilder.new(name: "#{name}::Model", parent: @params).call { |klass|
+          klass.class_eval do
+            def persisted?
+              !to_key.nil?
+            end
           end
-        end
+        }
         key.each { |name| @model.attribute(name) }
 
         self
@@ -77,7 +78,10 @@ module ROM
         ROM.env
       end
 
-      attr_reader :params, :result
+      attr_reader :params, :model, :result
+
+      delegate :model_name, :persisted?, to: :model
+      alias_method :to_model, :model
 
       def initialize(params = {}, options = {})
         @params = params
@@ -103,10 +107,6 @@ module ROM
 
       def errors
         result && result.error
-      end
-
-      def to_model
-        @model
       end
     end
   end

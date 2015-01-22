@@ -25,8 +25,12 @@ describe 'Form' do
 
   describe 'input DSL' do
     it 'defines params handler' do
-      expect(form.params.attribute_set[:email]).not_to be(nil)
+      expect(form.params.attribute_set.map(&:name)).to eql([:email])
       expect(form.params.model_name).to eql('User')
+    end
+
+    it 'defines a model' do
+      expect(form.model.attribute_set.map(&:name)).to match_array([:id, :email])
     end
 
     it 'raises error when attribute is in conflict with form interface' do
@@ -49,6 +53,25 @@ describe 'Form' do
       expect { form.validator.call(email: '') }.to raise_error(
         ROM::Model::ValidationError
       )
+    end
+  end
+
+  describe '#model_name' do
+    it 'delegates to model' do
+      form_object = form.build
+      expect(form_object.model_name).to be(form_object.model.model_name)
+    end
+  end
+
+  describe '#persisted?' do
+    it 'delegates to model' do
+      form_object = form.build
+      expect(form_object).not_to be_persisted
+      expect(form_object.persisted?).to be(form_object.model.persisted?)
+
+      form_object = form.build({}, id: 1)
+      expect(form_object).to be_persisted
+      expect(form_object.persisted?).to be(form_object.model.persisted?)
     end
   end
 
