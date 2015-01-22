@@ -36,6 +36,10 @@ module ROM
         base.extend(ClassMethods)
       end
 
+      def model_name
+        self.class.model_name
+      end
+
       module ClassMethods
         def [](input)
           input.is_a?(self) ? input : new(input)

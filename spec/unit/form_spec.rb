@@ -9,6 +9,7 @@ describe 'Form' do
 
       input do
         set_model_name 'User'
+
         attribute :email, String
       end
 
@@ -48,6 +49,32 @@ describe 'Form' do
       expect { form.validator.call(email: '') }.to raise_error(
         ROM::Model::ValidationError
       )
+    end
+  end
+
+  describe '#to_model' do
+    context 'with a new model' do
+      it 'returns model object without key set' do
+        model = form.build(email: 'jane@doe').to_model
+
+        expect(model.id).to be(nil)
+        expect(model.model_name).to eql('User')
+        expect(model.to_key).to be(nil)
+        expect(model.to_param).to be(nil)
+        expect(model).not_to be_persisted
+      end
+    end
+
+    context 'with a persisted model' do
+      it 'returns model object with key set' do
+        model = form.build({ email: 'jane@doe' }, { id: 312 }).to_model
+
+        expect(model.id).to be(312)
+        expect(model.model_name).to eql('User')
+        expect(model.to_key).to eql([312])
+        expect(model.to_param).to eql('312')
+        expect(model).to be_persisted
+      end
     end
   end
 

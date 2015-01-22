@@ -2,12 +2,18 @@ module ROM
   module Model
     class Form
       class << self
-        attr_reader :params, :validator, :commands, :key
+        attr_reader :params, :validator, :commands, :model
       end
 
-      def self.primary_key(key)
-        @primary_key = key
-        self
+      def self.key(*key)
+        if key.any? && !@key
+          @key = key
+          attr_reader key
+        elsif !@key
+          @key = [:id]
+          attr_reader :id
+        end
+        @key
       end
 
       def self.input(&block)
@@ -29,6 +35,15 @@ module ROM
             end
           RUBY
         end
+
+        @model = @params.clone
+        @model.class_eval do
+          def persisted?
+            !to_key.nil?
+          end
+        end
+        key.each { |name| @model.attribute(name) }
+
         self
       end
 
@@ -46,7 +61,7 @@ module ROM
         self
       end
 
-      def self.build(input = {})
+      def self.build(input = {}, options = {})
         commands =
           if @commands
             self.commands.each_with_object({}) { |name, h|
@@ -55,7 +70,7 @@ module ROM
           else
             {}
           end
-        new(input, commands)
+        new(input, options.merge(commands))
       end
 
       def self.rom
@@ -66,18 +81,11 @@ module ROM
 
       def initialize(params = {}, options = {})
         @params = params
+        @model = self.class.model.new(params.merge(options.slice(*self.class.key)))
         @result = nil
         options.each do |key, value|
           instance_variable_set("@#{key}", value)
         end
-      end
-
-      def model_name
-        self.class.params.model_name
-      end
-
-      def to_key
-        self.class.key || [:id]
       end
 
       def commit!
@@ -89,19 +97,16 @@ module ROM
         self
       end
 
-      # FIXME: we need inheritance (probably) here where:
-      #        Form::New#persisted? => false
-      #        Form::Update#persisted? => true
-      def persisted?
-        false
-      end
-
       def success?
         errors.nil?
       end
 
       def errors
         result && result.error
+      end
+
+      def to_model
+        @model
       end
     end
   end
