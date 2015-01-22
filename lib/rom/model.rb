@@ -2,6 +2,7 @@ module ROM
   module Model
     class ValidationError < CommandError
       include Charlatan.new(:errors)
+      include Equalizer.new(:errors)
     end
   end
 end

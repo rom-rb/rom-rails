@@ -3,6 +3,7 @@ require 'rom/rails/model/form/dsl'
 module ROM
   module Model
     class Form
+      include Equalizer.new(:params, :model, :result)
       extend Form::DSL
 
       attr_reader :params, :model, :result
