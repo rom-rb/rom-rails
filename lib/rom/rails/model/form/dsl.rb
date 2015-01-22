@@ -73,6 +73,8 @@ module ROM
           new(input, options.merge(commands))
         end
 
+        private
+
         def rom
           ROM.env
         end
