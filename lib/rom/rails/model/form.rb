@@ -11,6 +11,10 @@ module ROM
       delegate :model_name, :persisted?, to: :model
       alias_method :to_model, :model
 
+      def self.model_name
+        params.model_name
+      end
+
       def initialize(params = {}, options = {})
         @params = params
         @model = self.class.model.new(params.merge(options.slice(*self.class.key)))

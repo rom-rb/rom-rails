@@ -23,6 +23,12 @@ describe 'Form' do
     end
   end
 
+  describe '.model_name' do
+    it 'delegates to Params.model_name' do
+      expect(form.model_name).to be(form.params.model_name)
+    end
+  end
+
   describe 'input DSL' do
     it 'defines params handler' do
       expect(form.const_defined?(:Params)).to be(true)
