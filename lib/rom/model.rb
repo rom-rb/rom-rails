@@ -58,6 +58,11 @@ module ROM
         def [](input)
           new(input)
         end
+
+        def timestamps
+          attribute :created_at, DateTime, default: proc { DateTime.now }
+          attribute :updated_at, DateTime, default: proc { DateTime.now }
+        end
       end
     end
 
