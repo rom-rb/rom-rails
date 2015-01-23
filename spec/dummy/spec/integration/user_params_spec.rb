@@ -9,10 +9,17 @@ describe ROM::Model::Params do
       attribute :name, String
       validates :name, presence: true
 
+      timestamps
+
       def self.name
         'Test'
       end
     end
+  end
+
+  it 'provides a way to specify timestamps with default values' do
+    expect(params.new.created_at).to be_a(DateTime)
+    expect(params.new.updated_at).to be_a(DateTime)
   end
 
   describe '#valid?' do
