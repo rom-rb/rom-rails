@@ -38,6 +38,14 @@ module ROM
         @params = params
       end
 
+      def to_model
+        params
+      end
+
+      def model_name
+        params.model_name
+      end
+
       def call
         raise ValidationError.new(errors) unless valid?
         params
@@ -53,6 +61,10 @@ module ROM
         def relation(name = nil)
           @relation = name if name
           @relation
+        end
+
+        def model_name
+          params.model_name
         end
 
         def call(params)
