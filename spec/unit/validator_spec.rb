@@ -18,7 +18,7 @@ describe 'Validation' do
 
       relation :users
 
-      validates :name, presence: true
+      validates :name, presence: true, uniqueness: { message: 'TAKEN!' }
       validates :email, uniqueness: true
 
       def self.name
@@ -52,9 +52,16 @@ describe 'Validation' do
       rom.relations.users.insert(name: 'Jane', email: 'jane@doe.org')
     end
 
-    it 'sets error messages' do
+    it 'sets default error messages' do
       expect(validator).to_not be_valid
       expect(validator.errors[:email]).to eql(['has already been taken'])
+    end
+
+    it 'sets custom error messages' do
+      rom.relations.users.insert(name: 'Jane', email: 'jane@doe.org')
+
+      expect(validator).to_not be_valid
+      expect(validator.errors[:name]).to eql(['TAKEN!'])
     end
   end
 end

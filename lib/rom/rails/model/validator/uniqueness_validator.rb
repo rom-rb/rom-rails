@@ -2,15 +2,16 @@ module ROM
   module Model
     module Validator
       class UniquenessValidator < ActiveModel::EachValidator
-        attr_reader :klass
+        attr_reader :klass, :message
 
         def initialize(options)
           super
           @klass = options.fetch(:class)
+          @message = options.fetch(:message) { :taken }
         end
 
         def validate_each(validator, name, value)
-          validator.errors.add(name, :taken) unless unique?(name, value)
+          validator.errors.add(name, message) unless unique?(name, value)
         end
 
         private
