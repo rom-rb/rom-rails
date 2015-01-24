@@ -28,7 +28,7 @@ module ROM
         end
 
         def unique?(name, value)
-          relation.where(name => value).count.zero?
+          relation.unique?(name => value)
         end
       end
     end
