@@ -13,6 +13,21 @@ feature 'Users' do
     expect(page).to have_content('Joe')
   end
 
+  scenario 'I save a new user' do
+    visit '/users/new'
+
+    click_on 'Create User'
+    expect(page).to have_content("can't be blank")
+
+    find('#user_email').set('jade@doe.org')
+    find('#user_name').set('Jade')
+    click_on 'Create User'
+
+    expect(page).to have_content('Jade')
+    expect(page).to have_content('Jane')
+    expect(page).to have_content('Joe')
+  end
+
   scenario 'I can search users' do
     visit '/users/search?name=Jane'
 

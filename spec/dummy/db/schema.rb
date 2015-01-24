@@ -11,17 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141220203134) do
-  create_table "cars", force: true do |_t|
-  end
+ActiveRecord::Schema.define(version: 20141110205016) do
 
-  create_table "planes", force: true do |_t|
-  end
-
-  create_table "stuffs", force: true do |_t|
-  end
-
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string "name"
+    t.string "email"
   end
+
 end
