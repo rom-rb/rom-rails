@@ -4,13 +4,15 @@ module ROM
       module DSL
         attr_reader :params, :validator, :commands, :model
 
-        def key(*key)
-          if key.any? && !@key
-            @key = key
-            attr_reader key
+        def key(*keys)
+          if keys.any? && !@key
+            @key = keys
+            attr_reader(*keys)
           elsif !@key
             @key = [:id]
             attr_reader :id
+          elsif keys.any?
+            @key = keys
           end
           @key
         end
@@ -38,11 +40,15 @@ module ROM
           const_set(:Params, @params)
 
           @model = ClassBuilder.new(name: "#{name}::Model", parent: @params).call { |klass|
-            klass.class_eval do
+            klass.class_eval <<-RUBY, __FILE__, __LINE__ + 1
               def persisted?
-                !to_key.nil?
+                to_key.any?
               end
-            end
+
+              def to_key
+                to_h.values_at(#{key.map(&:inspect).join(', ')}).compact
+              end
+            RUBY
           }
           key.each { |name| @model.attribute(name) }
 

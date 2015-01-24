@@ -8,7 +8,7 @@ module ROM
 
       attr_reader :params, :model, :result
 
-      delegate :model_name, :persisted?, to: :model
+      delegate :model_name, :persisted?, :to_key, to: :model
       alias_method :to_model, :model
 
       def self.model_name
@@ -19,13 +19,11 @@ module ROM
         @params = params
         @model = self.class.model.new(params.merge(options.slice(*self.class.key)))
         @result = nil
-        options.each do |key, value|
-          instance_variable_set("@#{key}", value)
-        end
+        options.each { |key, value| instance_variable_set("@#{key}", value) }
       end
 
       def commit!
-        raise NotImplementedError
+        raise NotImplementedError, "#{self.class}#commit! must be implemented"
       end
 
       def save(*args)

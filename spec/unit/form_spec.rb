@@ -23,6 +23,32 @@ describe 'Form' do
     end
   end
 
+  describe '.key' do
+    it 'returns default key' do
+      expect(form.key).to eql([:id])
+      expect(form.new({}, id: 312).to_key).to eql([312])
+    end
+
+    it 'sets a custom composite key' do
+      form = Class.new(ROM::Model::Form) do
+        def self.name
+          'UserForm'
+        end
+
+        key :foo_id, :bar_id
+
+        input do
+          set_model_name 'User'
+
+          attribute :email, String
+        end
+      end
+
+      expect(form.key).to eql([:foo_id, :bar_id])
+      expect(form.new({}, foo_id: 312, bar_id: 132).to_key).to eql([312, 132])
+    end
+  end
+
   describe '.model_name' do
     it 'delegates to Params.model_name' do
       expect(form.model_name).to be(form.params.model_name)
@@ -92,7 +118,7 @@ describe 'Form' do
 
         expect(model.id).to be(nil)
         expect(model.model_name).to eql('User')
-        expect(model.to_key).to be(nil)
+        expect(model.to_key).to eql([])
         expect(model.to_param).to be(nil)
         expect(model).not_to be_persisted
       end
