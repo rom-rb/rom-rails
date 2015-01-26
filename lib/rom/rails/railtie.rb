@@ -35,9 +35,11 @@ module ROM
         # but ROM should NOT be yet. Will only be called once.
         fail if ROM.env
 
-        if defined?(ActiveRecord)
-          config.rom.repositories[:default] ||= ActiveRecord::Configuration
-                                                .call(app)
+        if defined?(ActiveRecord) && !config.rom.repositories.key?(:default)
+          uri, opts = ActiveRecord::Configuration.call(app)
+                                                 .values_at(:uri, :options)
+
+          config.rom.repositories[:default] = [:sql, uri, opts]
         end
 
         Railtie.setup
