@@ -53,9 +53,15 @@ module ROM
           RUBY
         end
 
-        def timestamps
-          attribute :created_at, DateTime, default: proc { DateTime.now }
-          attribute :updated_at, DateTime, default: proc { DateTime.now }
+        def timestamps(*attrs)
+          if attrs.empty?
+            attribute :created_at, DateTime, default: proc { DateTime.now }
+            attribute :updated_at, DateTime, default: proc { DateTime.now }
+          else
+            attrs.each do |attr|
+              attribute attr, DateTime, default: proc { DateTime.now }
+            end
+          end
         end
       end
     end
