@@ -3,6 +3,7 @@ require 'rails'
 require 'rom/rails/inflections'
 require 'rom/rails/configuration'
 require 'rom/rails/controller_extension'
+require 'rom/rails/active_record/configuration'
 
 if defined?(Spring)
   Spring.after_fork { ROM::Rails::Railtie.disconnect }
@@ -17,6 +18,14 @@ module ROM
         end
       end
 
+      initializer 'rom.adjust_eager_load_paths' do |app|
+        paths = %w(commands mappers relations).map do |directory|
+          ::Rails.root.join('app', directory).to_s
+        end
+
+        app.config.eager_load_paths -=  paths
+      end
+
       # Make `ROM::Rails::Configuration` instance available to the user via
       # `Rails.application.config` before other initializers run.
       config.before_initialize do |_app|
@@ -25,23 +34,7 @@ module ROM
 
       # Reload ROM-related application code on each request.
       config.to_prepare do |_config|
-        Railtie.reload if ROM.env
-      end
-
-      # This is where the initial setup of ROM occurs.
-      # TODO: Freeze the configuration.
-      config.after_initialize do |app|
-        # At this point ActiveRecord::Base.configurations are already populated,
-        # but ROM should NOT be yet. Will only be called once.
-        fail if ROM.env
-
-        if defined?(ActiveRecord) && !config.rom.repositories.key?(:default)
-          uri, opts = ActiveRecord::Configuration.call(app)
-                                                 .values_at(:uri, :options)
-
-          config.rom.repositories[:default] = [:sql, uri, opts]
-        end
-
+        Railtie.disconnect if ROM.env
         Railtie.setup
       end
 
@@ -62,29 +55,29 @@ module ROM
         end
       end
 
-      def reload
-        Railtie.disconnect
-        Railtie.setup
-      end
-
       def disconnect
+        # TODO: Add `ROM.env.disconnect` to core.
         ROM.env.repositories.each_value do |repository|
           repository.disconnect
         end
       end
 
       def setup
-        ROM.setup(config.rom.repositories.symbolize_keys)
+        repositories = config.rom.repositories
 
+        # If there's no default repository configured, try to infer it from
+        # other sources, e.g. ActiveRecord.
+        repositories[:default] ||= infer_default_repository
+
+        ROM.setup(repositories.symbolize_keys)
         load_all
+        ROM.finalize
+      end
 
-        begin
-          # rescuing fixes the chicken-egg problem where we have a relation
-          # defined but the table doesn't exist yet
-          ROM.finalize.env
-        rescue Registry::ElementNotFoundError => e
-          warn "Skipping ROM setup => #{e.message}"
-        end
+      def infer_default_repository
+        return unless defined?(ActiveRecord)
+        spec = ActiveRecord::Configuration.call
+        [:sql, spec[:uri], spec[:options]]
       end
 
       def load_all

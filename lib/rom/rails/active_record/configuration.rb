@@ -23,12 +23,9 @@ module ROM
         # @param [Rails::Application]
         #
         # @api private
-        def self.call(app)
-          configuration = ::ActiveRecord::Base.configurations[::Rails.env]
-                          .symbolize_keys
-                          .update(root: app.config.root)
-
-          build(configuration)
+        def self.call
+          configuration = ::ActiveRecord::Base.configurations.fetch(::Rails.env)
+          build(configuration.symbolize_keys.update(root: ::Rails.root))
         end
 
         # Builds a configuration hash from a flat database config hash.
