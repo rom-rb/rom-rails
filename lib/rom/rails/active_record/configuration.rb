@@ -3,7 +3,7 @@ require 'addressable/uri'
 module ROM
   module Rails
     module ActiveRecord
-      # A helper class to derive a repository configuration from ActiveRecord.
+      # A helper class to derive `rom-sql` configuration from ActiveRecord.
       #
       # @private
       class Configuration
@@ -23,12 +23,9 @@ module ROM
         # @param [Rails::Application]
         #
         # @api private
-        def self.call(app)
-          configuration = ::ActiveRecord::Base.configurations[::Rails.env]
-                          .symbolize_keys
-                          .update(root: app.config.root)
-
-          build(configuration)
+        def self.call
+          configuration = ::ActiveRecord::Base.configurations.fetch(::Rails.env)
+          build(configuration.symbolize_keys.update(root: ::Rails.root))
         end
 
         # Builds a configuration hash from a flat database config hash.
@@ -61,7 +58,7 @@ module ROM
                    uri
                  end
 
-          config_hash(uri, other_options)
+          {uri: uri, options: other_options}
         end
 
         def self.sqlite3_uri(config)
@@ -102,15 +99,6 @@ module ROM
 
         def self.build_uri(attrs)
           Addressable::URI.new(attrs).to_s
-        end
-
-        # @api private
-        def self.config_hash(uri, options = {})
-          if options.any?
-            { uri: uri, options: options }
-          else
-            uri
-          end
         end
       end
     end

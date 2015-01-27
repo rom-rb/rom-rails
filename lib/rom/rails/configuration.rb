@@ -1,13 +1,11 @@
-require 'rom/rails/active_record/configuration'
+require 'virtus'
 
 module ROM
   module Rails
     class Configuration
-      attr_reader :repositories
+      include Virtus.model(strict: true)
 
-      def initialize(config = Hash.new)
-        @repositories = config.fetch(:repositories) { Hash.new }
-      end
+      attribute :repositories, Hash, default: Hash.new
     end
   end
 end
