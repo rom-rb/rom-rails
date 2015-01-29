@@ -1,4 +1,6 @@
-ROM.relation(:users) do
+class Users < ROM::Relation[:sql]
+  base_name :users
+
   def index
     order(:name)
   end

@@ -1,8 +1,8 @@
-ROM.mappers do
-  define(:users) do
-    model User
+class UserMapper < ROM::Mapper
+  relation :users
 
-    attribute :id
-    attribute :name
-  end
+  model User
+
+  attribute :id
+  attribute :name
 end

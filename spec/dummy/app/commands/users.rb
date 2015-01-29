@@ -1,11 +1,13 @@
-ROM.commands(:users) do
-  define(:create) do
-    input UserForm.params
-    validator UserForm.validator
-    result :one
-  end
+class CreateUser < ROM::Command
+  relation :users
+  type :create
+  input UserForm.params
+  validator UserForm.validator
+  result :one
+end
 
-  define(:delete) do
-    result :one
-  end
+class DeleteUser < ROM::Command
+  relation :users
+  type :delete
+  result :one
 end
