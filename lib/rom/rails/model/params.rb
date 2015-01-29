@@ -41,6 +41,8 @@ module ROM
       end
 
       module ClassMethods
+        DEFAULT_TIMESTAMPS = [:created_at, :updated_at].freeze
+
         def [](input)
           input.is_a?(self) ? input : new(input)
         end
@@ -53,9 +55,16 @@ module ROM
           RUBY
         end
 
-        def timestamps
-          attribute :created_at, DateTime, default: proc { DateTime.now }
-          attribute :updated_at, DateTime, default: proc { DateTime.now }
+        def timestamps(*attrs)
+          if attrs.empty?
+            DEFAULT_TIMESTAMPS.each do |t|
+              attribute t, DateTime, default: proc { DateTime.now }
+            end
+          else
+            attrs.each do |attr|
+              attribute attr, DateTime, default: proc { DateTime.now }
+            end
+          end
         end
       end
     end
