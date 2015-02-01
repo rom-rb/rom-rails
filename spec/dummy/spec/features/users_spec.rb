@@ -28,6 +28,21 @@ feature 'Users' do
     expect(page).to have_content('Joe')
   end
 
+  scenario 'I edit an existing user' do
+    jane = rom.relations.users.by_name('Jane').first
+    visit "/users/#{jane[:id]}/edit"
+
+    click_on 'Update User'
+    expect(page).to have_content("can't be blank")
+
+    find('#user_email').set('jane.doe@example.org')
+    find('#user_name').set('Jane Doe')
+    click_on 'Update User'
+
+    expect(page).to have_content('Jane Doe')
+    expect(page).to have_content('Joe')
+  end
+
   scenario 'I can search users' do
     visit '/users/search?name=Jane'
 

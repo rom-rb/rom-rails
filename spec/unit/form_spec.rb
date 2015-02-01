@@ -148,4 +148,35 @@ describe 'Form' do
       expect(result).to eql('it works [1, 2, 3]')
     end
   end
+
+  describe 'inheritance' do
+    let(:child_form) do
+      Class.new(form) do
+        def self.name
+          "NewUserForm"
+        end
+      end
+    end
+
+    it 'copies model_name' do
+      expect(child_form.model_name.name).to eql(form.model_name.name)
+    end
+
+    it 'copies input' do
+      expect(child_form.params.attribute_set[:email]).to_not be(nil)
+      expect(child_form.params).to_not be(form.params)
+    end
+
+    it 'copies model' do
+      expect(child_form.model.attribute_set[:email]).to_not be(nil)
+      expect(child_form.model).to_not be(form.model)
+    end
+
+    it 'copies validator' do
+      expect(child_form.validator.validators.first).to be_instance_of(
+        ActiveModel::Validations::PresenceValidator
+      )
+      expect(child_form.validator).to_not be(form.validator)
+    end
+  end
 end

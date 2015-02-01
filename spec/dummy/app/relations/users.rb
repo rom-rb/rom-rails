@@ -1,6 +1,10 @@
 class Users < ROM::Relation[:sql]
   base_name :users
 
+  def by_id(id)
+    where(id: id)
+  end
+
   def index
     order(:name)
   end
