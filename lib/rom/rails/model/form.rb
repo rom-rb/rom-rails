@@ -32,11 +32,11 @@ module ROM
       end
 
       def success?
-        errors.nil?
+        !errors.any?
       end
 
       def errors
-        result && result.error
+        (result && result.error) || ActiveModel::Errors.new([])
       end
     end
   end

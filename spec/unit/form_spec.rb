@@ -149,6 +149,23 @@ describe 'Form' do
     end
   end
 
+  describe "#errors" do
+
+    context "with a new model" do
+      it "exposes an activemodel compatible error"  do
+        errors = form.build({}).errors
+
+        expect(errors).to be_instance_of(
+          ActiveModel::Errors
+        )
+
+        expect(errors[:email]).to eq []
+      end
+    end
+
+  end
+
+
   describe 'inheritance' do
     let(:child_form) do
       Class.new(form) do
