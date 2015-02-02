@@ -52,7 +52,22 @@ module ROM
             else
               {}
             end
-          new(input, options.merge(commands))
+          new(clear_input(input), options.merge(commands))
+        end
+
+        def clear_input(input)
+          input.each_with_object({}) { |(key, value), object|
+            next if value.is_a?(String) && value.blank?
+
+            object[key] =
+              if value.kind_of?(Hash)
+                clear_input(value)
+              elsif value.kind_of?(Array)
+                value.map { |v| v.kind_of?(Hash) ? clear_input(v) : v }
+              else
+                value
+              end
+          }.symbolize_keys
         end
 
         def define_params!(block)

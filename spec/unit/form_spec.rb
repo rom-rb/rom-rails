@@ -23,6 +23,22 @@ describe 'Form' do
     end
   end
 
+  describe '.build' do
+    it 'rejects blank strings from params' do
+      input = {
+        'name' =>'Jane',
+        'hash' => { 'one' => '', 'two' => 2 },
+        'array' => [{ 'three' => '', 'four' => 4 }, 5]
+      }
+
+      form_object = form.build(input)
+
+      expect(form_object.params).to eql(
+        name: 'Jane', hash: { two: 2 }, array: [{ four: 4 }, 5]
+      )
+    end
+  end
+
   describe '.key' do
     it 'returns default key' do
       expect(form.key).to eql([:id])
@@ -150,7 +166,6 @@ describe 'Form' do
   end
 
   describe "#errors" do
-
     context "with a new model" do
       it "exposes an activemodel compatible error"  do
         errors = form.build({}).errors
@@ -162,9 +177,7 @@ describe 'Form' do
         expect(errors[:email]).to eq []
       end
     end
-
   end
-
 
   describe 'inheritance' do
     let(:child_form) do
