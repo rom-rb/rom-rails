@@ -4,7 +4,11 @@ module ROM
   module Model
     class Form
       include Equalizer.new(:params, :model, :result)
+
+      extend ROM::ClassMacros
       extend Form::DSL
+
+      defines :relation
 
       attr_reader :params, :model, :result
 

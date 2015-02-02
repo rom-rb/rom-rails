@@ -1,6 +1,4 @@
 class UserForm < ROM::Model::Form
-  inject_commands_for :users
-
   input do
     set_model_name 'User'
 

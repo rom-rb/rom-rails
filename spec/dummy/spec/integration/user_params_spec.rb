@@ -10,6 +10,7 @@ describe ROM::Model::Params do
       timestamps
     end
   end
+
   describe '.timestamps' do
     it 'provides a way to specify timestamps with default values' do
       expect(params.new.created_at).to be_a(DateTime)
@@ -43,6 +44,5 @@ describe ROM::Model::Params do
         expect(model).to respond_to(:revised_at)
       end
     end
-
   end
 end

@@ -2,14 +2,21 @@ module ROM
   module Model
     class Form
       module DSL
-        attr_reader :params, :validator, :commands, :model,
-          :input_block, :validations_block
+        attr_reader :params, :validator, :self_commands, :injectible_commands,
+          :model, :input_block, :validations_block
 
         def inherited(klass)
-          klass.inject_commands_for(*commands)
+          klass.inject_commands_for(*injectible_commands) if injectible_commands
+          klass.commands(*self_commands) if self_commands
           klass.input(readers: false, &input_block) if input_block
           klass.validations(&validations_block) if validations_block
           super
+        end
+
+        def commands(names)
+          names.each { |relation, action| attr_reader(relation) }
+          @self_commands = names
+          self
         end
 
         def key(*keys)
@@ -35,24 +42,47 @@ module ROM
 
         def validations(&block)
           define_validator!(block)
+          self
         end
 
         def inject_commands_for(*names)
-          @commands = names
+          @injectible_commands = names
           names.each { |name| attr_reader(name) }
           self
         end
 
         def build(input = {}, options = {})
           commands =
-            if @commands
-              self.commands.each_with_object({}) { |name, h|
+            if injectible_commands
+              injectible_commands.each_with_object({}) { |name, h|
                 h[name] = rom.command(name)
               }
             else
-              {}
+              command_registry
             end
+
           new(clear_input(input), options.merge(commands))
+        end
+
+        def command_registry
+          @command_registry ||=
+            begin
+              if self_commands
+                self_commands.each_with_object({}) do |(relation, name), h|
+                  klass = Command.build_class(name, relation, adapter: adapter)
+
+                  klass.result :one
+                  klass.input @params
+                  klass.validator @validator
+
+                  command = klass.build(rom.relations[relation])
+
+                  h[relation] = CommandRegistry.new(name => command)
+                end
+              else
+                {}
+              end
+            end
         end
 
         def clear_input(input)
@@ -125,6 +155,10 @@ module ROM
 
         def rom
           ROM.env
+        end
+
+        def adapter
+          ROM.adapters.keys.first
         end
       end
     end

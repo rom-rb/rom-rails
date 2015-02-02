@@ -39,6 +39,31 @@ describe 'Form' do
     end
   end
 
+  describe '.commands' do
+    it 'builds its own command registry' do
+      form = Class.new(ROM::Model::Form) {
+        commands users: :create
+        input { attribute :name }
+        validations { validates :name, presence: true }
+
+        def commit!
+          users.try { |c| c.create(params) }
+        end
+      }
+
+      form_object = form.build(name: '').save
+
+      expect(form_object).not_to be_success
+      expect(form_object.errors[:name]).to include("can't be blank")
+      expect(rom.relations.users.first).to be(nil)
+
+      form_object = form.build(name: 'Jane').save
+
+      expect(form_object).to be_success
+      expect(rom.relations.users.first).to include({ name: 'Jane' })
+    end
+  end
+
   describe '.key' do
     it 'returns default key' do
       expect(form.key).to eql([:id])

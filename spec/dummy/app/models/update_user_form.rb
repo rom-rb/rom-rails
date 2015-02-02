@@ -1,4 +1,6 @@
 class UpdateUserForm < UserForm
+  commands users: :update
+
   params.timestamps(:updated_at)
 
   def commit!

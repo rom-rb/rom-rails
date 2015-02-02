@@ -6,7 +6,7 @@ describe 'User model mapping' do
   let(:users) { rom.read(:users) }
 
   before do
-    rom.command(:users).try { create(name: 'Piotr', email: 'piotr@test.com') }
+    rom.relations.users.insert(name: 'Piotr', email: 'piotr@test.com')
   end
 
   it 'works' do
