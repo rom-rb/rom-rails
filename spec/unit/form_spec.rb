@@ -42,6 +42,7 @@ describe 'Form' do
   describe '.commands' do
     it 'builds its own command registry' do
       form = Class.new(ROM::Model::Form) {
+        inject_commands_for :tasks
         commands users: :create
         input { attribute :name }
         validations { validates :name, presence: true }
@@ -61,6 +62,8 @@ describe 'Form' do
 
       expect(form_object).to be_success
       expect(rom.relations.users.first).to include({ name: 'Jane' })
+
+      expect(form_object.tasks).to be(rom.command(:tasks))
     end
   end
 

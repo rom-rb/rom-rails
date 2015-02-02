@@ -52,23 +52,16 @@ module ROM
         end
 
         def build(input = {}, options = {})
-          commands =
-            if injectible_commands
-              injectible_commands.each_with_object({}) { |name, h|
-                h[name] = rom.command(name)
-              }
-            else
-              command_registry
-            end
-
-          new(clear_input(input), options.merge(commands))
+          new(clear_input(input), options.merge(command_registry))
         end
 
         def command_registry
           @command_registry ||=
             begin
+              commands = {}
+
               if self_commands
-                self_commands.each_with_object({}) do |(relation, name), h|
+                self_commands.each do |relation, name|
                   klass = Command.build_class(name, relation, adapter: adapter)
 
                   klass.result :one
@@ -77,11 +70,17 @@ module ROM
 
                   command = klass.build(rom.relations[relation])
 
-                  h[relation] = CommandRegistry.new(name => command)
+                  commands[relation] = CommandRegistry.new(name => command)
                 end
-              else
-                {}
               end
+
+              if injectible_commands
+                injectible_commands.each do |relation|
+                  commands[relation] = rom.command(relation)
+                end
+              end
+
+              commands
             end
         end
 
