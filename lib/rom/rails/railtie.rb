@@ -34,7 +34,6 @@ module ROM
 
       # Reload ROM-related application code on each request.
       config.to_prepare do |_config|
-        Railtie.disconnect if ROM.env
         Railtie.setup
       end
 
@@ -63,13 +62,17 @@ module ROM
       end
 
       def setup
-        repositories = config.rom.repositories
+        if ROM.env
+          ROM.setup(ROM.env.repositories)
+        else
+          repositories = config.rom.repositories
 
-        # If there's no default repository configured, try to infer it from
-        # other sources, e.g. ActiveRecord.
-        repositories[:default] ||= infer_default_repository
+          # If there's no default repository configured, try to infer it from
+          # other sources, e.g. ActiveRecord.
+          repositories[:default] ||= infer_default_repository
 
-        ROM.setup(repositories.symbolize_keys)
+          ROM.setup(repositories.symbolize_keys)
+        end
         clear_classes
         load_all
         ROM.finalize
