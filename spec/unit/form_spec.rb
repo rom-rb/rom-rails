@@ -207,6 +207,19 @@ describe 'Form' do
     end
   end
 
+  describe "#validate!" do
+
+    it "runs validations and assigns errors" do
+      form_object = form.build({})
+      form_object.validate!
+
+      expect(form_object.errors[:email]).to include "can't be blank"
+    end
+
+  end
+
+
+
   describe 'inheritance' do
     let(:child_form) do
       Class.new(form) do

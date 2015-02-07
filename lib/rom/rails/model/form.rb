@@ -36,11 +36,21 @@ module ROM
       end
 
       def success?
-        !errors.any?
+        errors.nil? || !errors.any?
+      end
+
+      def validate!
+        self.class::Validator.call(params)
+      rescue ROM::Model::ValidationError => e
+        @errors = e.errors
       end
 
       def errors
-        (result && result.error) || ActiveModel::Errors.new([])
+        if result
+          result.error
+        else
+          @errors ||=  ActiveModel::Errors.new([])
+        end
       end
     end
   end
