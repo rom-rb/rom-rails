@@ -61,16 +61,20 @@ module ROM
               commands = {}
 
               if self_commands
-                self_commands.each do |relation, name|
-                  klass = Command.build_class(name, relation, adapter: adapter)
+                self_commands.each do |rel_name, name|
+                  klass = Command.build_class(name, rel_name, adapter: adapter)
 
                   klass.result :one
                   klass.input @params
                   klass.validator @validator
 
-                  command = klass.build(rom.relations[relation])
+                  relation = rom.relations[rel_name]
+                  repository = rom.repositories[relation.repository]
+                  repository.extend_command_class(klass, relation.dataset)
 
-                  commands[relation] = CommandRegistry.new(name => command)
+                  command = klass.build(relation)
+
+                  commands[rel_name] = CommandRegistry.new(name => command)
                 end
               end
 

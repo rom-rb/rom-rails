@@ -6,7 +6,7 @@ describe 'User commands' do
   describe 'delete' do
     it 'deletes record' do
       rom.relations.users.insert(name: 'Piotr', email: 'piotr@test.com')
-      result = users.try { delete(:by_name, 'Piotr') }
+      result = users.try { users.delete.by_name('Piotr') }
 
       expect(result.error).to be(nil)
     end
