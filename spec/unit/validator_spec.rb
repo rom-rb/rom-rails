@@ -36,6 +36,16 @@ describe 'Validation' do
     end
   end
 
+  describe "#validate" do
+    let(:params) { {} }
+
+    it "sets errors when params are not valid" do
+      validator.validate
+      expect(validator.errors[:name]).to eql(["can't be blank"])
+    end
+
+  end
+
   describe ':presence' do
     let(:params) { user_params.new(name: '') }
 

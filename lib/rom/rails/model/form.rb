@@ -40,9 +40,9 @@ module ROM
       end
 
       def validate!
-        self.class::Validator.call(params)
-      rescue ROM::Model::ValidationError => e
-        @errors = e.errors
+        validator = self.class::Validator.new(params)
+        validator.validate
+        @errors =  validator.errors
       end
 
       def errors
