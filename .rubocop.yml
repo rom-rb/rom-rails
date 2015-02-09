@@ -41,6 +41,10 @@ Style/AsciiComments:
 Style/Blocks:
   Enabled: false
 
+Style/BracesAroundHashParameters:
+  Enabled: true
+  EnforcedStyle: context_dependent
+
 # Documentation checked by Inch CI
 Style/Documentation:
   Enabled: false
