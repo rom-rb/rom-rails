@@ -207,6 +207,27 @@ describe 'Form' do
     end
   end
 
+  describe "#attributes" do
+    it "returns processed attributes" do
+      form = Class.new(ROM::Model::Form) do
+        def self.name
+          'UserForm'
+        end
+
+        key :foo_id, :bar_id
+
+        input do
+          set_model_name 'User'
+
+          attribute :uid, Integer
+        end
+      end
+
+      form_object = form.build(uid: "12345")
+      expect(form_object.attributes[:uid]).to eq 12345
+    end
+  end
+
   describe "#validate!" do
 
     it "runs validations and assigns errors" do

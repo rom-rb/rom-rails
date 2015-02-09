@@ -46,6 +46,10 @@ module ROM
         @errors =  validator.errors
       end
 
+      def attributes
+        self.class.params[params]
+      end
+
       def errors
         (result && result.error) || @errors
       end
