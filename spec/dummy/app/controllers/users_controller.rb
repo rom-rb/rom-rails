@@ -25,7 +25,7 @@ class UsersController < ApplicationController
   end
 
   def edit
-    user_form = UpdateUserForm.build({}, {id: params[:id]})
+    user_form = UpdateUserForm.build({}, { id: params[:id] })
 
     render :edit, locals: { user: user_form }
   end

@@ -50,15 +50,14 @@ module ROM
                   generic_uri(uri_options)
                 end
 
-
           # JRuby connection strings require special care.
           uri = if RUBY_ENGINE == 'jruby' && adapter != 'postgresql'
                   "jdbc:#{uri}"
                 else
-                   uri
+                  uri
                 end
 
-          {uri: uri, options: other_options}
+          { uri: uri, options: other_options }
         end
 
         def self.sqlite3_uri(config)
