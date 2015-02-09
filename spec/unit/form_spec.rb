@@ -237,6 +237,33 @@ describe 'Form' do
       expect(form_object.errors[:email]).to include "can't be blank"
     end
 
+    it "uses processed parameters" do
+      form = Class.new(ROM::Model::Form) do
+        def self.name
+          'UserForm'
+        end
+
+        key :foo_id, :bar_id
+
+        input do
+          set_model_name 'User'
+
+          attribute :email, String
+          attribute :country, String, default: "Unkown"
+        end
+
+        validations do
+          validates :email, presence: true
+          validates :country, presence: true
+        end
+      end
+
+      form_object = form.build(uid: "12345")
+      form_object.validate!
+
+      expect(form_object.errors[:country]).to be_blank
+    end
+
   end
 
 

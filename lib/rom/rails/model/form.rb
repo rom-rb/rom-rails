@@ -41,9 +41,10 @@ module ROM
       end
 
       def validate!
-        validator = self.class::Validator.new(params)
+        validator = self.class::Validator.new(attributes)
         validator.validate
-        @errors =  validator.errors
+
+        @errors = validator.errors
       end
 
       def attributes
