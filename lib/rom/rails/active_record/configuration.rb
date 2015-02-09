@@ -54,9 +54,9 @@ module ROM
           # JRuby connection strings require special care.
           uri = if RUBY_ENGINE == 'jruby' && adapter != 'postgresql'
                   "jdbc:#{uri}"
-                 else
+                else
                    uri
-                 end
+                end
 
           {uri: uri, options: other_options}
         end

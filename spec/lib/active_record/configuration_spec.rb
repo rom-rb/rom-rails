@@ -10,7 +10,7 @@ describe ROM::Rails::ActiveRecord::Configuration do
   end
 
   def read(config)
-    result = described_class.build(config.merge(root: root))
+    described_class.build(config.merge(root: root))
   end
 
   def parse(uri)
