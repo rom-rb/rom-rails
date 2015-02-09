@@ -207,6 +207,67 @@ describe 'Form' do
     end
   end
 
+  describe "#attributes" do
+    it "returns processed attributes" do
+      form = Class.new(ROM::Model::Form) do
+        def self.name
+          'UserForm'
+        end
+
+        key :foo_id, :bar_id
+
+        input do
+          set_model_name 'User'
+
+          attribute :uid, Integer
+        end
+      end
+
+      form_object = form.build(uid: "12345")
+      expect(form_object.attributes[:uid]).to eq 12345
+    end
+  end
+
+  describe "#validate!" do
+
+    it "runs validations and assigns errors" do
+      form_object = form.build({})
+      form_object.validate!
+
+      expect(form_object.errors[:email]).to include "can't be blank"
+    end
+
+    it "uses processed parameters" do
+      form = Class.new(ROM::Model::Form) do
+        def self.name
+          'UserForm'
+        end
+
+        key :foo_id, :bar_id
+
+        input do
+          set_model_name 'User'
+
+          attribute :email, String
+          attribute :country, String, default: "Unkown"
+        end
+
+        validations do
+          validates :email, presence: true
+          validates :country, presence: true
+        end
+      end
+
+      form_object = form.build(uid: "12345")
+      form_object.validate!
+
+      expect(form_object.errors[:country]).to be_blank
+    end
+
+  end
+
+
+
   describe 'inheritance' do
     let(:child_form) do
       Class.new(form) do

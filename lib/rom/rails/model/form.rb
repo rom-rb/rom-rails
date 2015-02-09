@@ -21,8 +21,9 @@ module ROM
 
       def initialize(params = {}, options = {})
         @params = params
-        @model = self.class.model.new(params.merge(options.slice(*self.class.key)))
+        @model  = self.class.model.new(params.merge(options.slice(*self.class.key)))
         @result = nil
+        @errors =  ActiveModel::Errors.new([])
         options.each { |key, value| instance_variable_set("@#{key}", value) }
       end
 
@@ -36,11 +37,22 @@ module ROM
       end
 
       def success?
-        !errors.any?
+        errors.nil? || !errors.any?
+      end
+
+      def validate!
+        validator = self.class::Validator.new(attributes)
+        validator.validate
+
+        @errors = validator.errors
+      end
+
+      def attributes
+        self.class.params[params]
       end
 
       def errors
-        (result && result.error) || ActiveModel::Errors.new([])
+        (result && result.error) || @errors
       end
     end
   end
