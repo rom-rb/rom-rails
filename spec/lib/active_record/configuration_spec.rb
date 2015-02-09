@@ -10,7 +10,7 @@ describe ROM::Rails::ActiveRecord::Configuration do
   end
 
   def read(config)
-    result = described_class.build(config.merge(root: root))
+    described_class.build(config.merge(root: root))
   end
 
   def parse(uri)
@@ -78,7 +78,7 @@ describe ROM::Rails::ActiveRecord::Configuration do
 
   context 'with sqlite3 adapter' do
     let(:database) { Pathname.new('db/development.sqlite3') }
-    let(:config) { {adapter: adapter, database: database} }
+    let(:config) { { adapter: adapter, database: database } }
 
     it 'rewrites the scheme' do
       uri = uri_for(adapter: 'sqlite3', database: database)

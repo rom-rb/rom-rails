@@ -26,8 +26,8 @@ describe 'Form' do
   describe '.build' do
     it 'rejects blank strings from params' do
       input = {
-        'name' =>'Jane',
-        'hash' => { 'one' => '', 'two' => 2 },
+        'name'  => 'Jane',
+        'hash'  => { 'one' => '', 'two' => 2 },
         'array' => [{ 'three' => '', 'four' => 4 }, 5]
       }
 
@@ -61,7 +61,7 @@ describe 'Form' do
       form_object = form.build(name: 'Jane').save
 
       expect(form_object).to be_success
-      expect(rom.relations.users.first).to include({ name: 'Jane' })
+      expect(rom.relations.users.first).to include(name: 'Jane')
 
       expect(form_object.tasks).to be(rom.command(:tasks))
     end
@@ -70,7 +70,7 @@ describe 'Form' do
   describe '.key' do
     it 'returns default key' do
       expect(form.key).to eql([:id])
-      expect(form.new({}, id: 312).to_key).to eql([312])
+      expect(form.new({}, { id: 312 }).to_key).to eql([312])
     end
 
     it 'sets a custom composite key' do
@@ -89,7 +89,7 @@ describe 'Form' do
       end
 
       expect(form.key).to eql([:foo_id, :bar_id])
-      expect(form.new({}, foo_id: 312, bar_id: 132).to_key).to eql([312, 132])
+      expect(form.new({}, { foo_id: 312, bar_id: 132 }).to_key).to eql([312, 132])
     end
   end
 
@@ -149,7 +149,7 @@ describe 'Form' do
       expect(form_object).not_to be_persisted
       expect(form_object.persisted?).to be(form_object.model.persisted?)
 
-      form_object = form.build({}, id: 1)
+      form_object = form.build({}, { id: 1 })
       expect(form_object).to be_persisted
       expect(form_object.persisted?).to be(form_object.model.persisted?)
     end

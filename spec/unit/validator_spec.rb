@@ -27,7 +27,6 @@ describe 'Validation' do
     }
   end
 
-
   describe '#call' do
     let(:params) { {} }
 

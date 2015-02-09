@@ -14,7 +14,7 @@ module ROM
         end
 
         def commands(names)
-          names.each { |relation, action| attr_reader(relation) }
+          names.each { |relation, _action| attr_reader(relation) }
           @self_commands = names
           self
         end

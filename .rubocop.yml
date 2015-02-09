@@ -8,6 +8,7 @@ Metrics/CyclomaticComplexity:
 
 # FIXME: No clue how to fix that one line…
 Metrics/LineLength:
+  Max: 100
   Exclude:
     - lib/rom/rails/configuration.rb
 
@@ -28,6 +29,22 @@ AllCops:
     - spec/dummy/db/seeds.rb
     - tmp/**/*
 
+# The enforced style doesn’t match Vim’s defaults
+Style/AlignParameters:
+  Enabled: false
+
+# UTF-8 is perfectly fine in comments
+Style/AsciiComments:
+  Enabled: false
+
+# Allow using braces for value-returning blocks
+Style/Blocks:
+  Enabled: false
+
+Style/BracesAroundHashParameters:
+  Enabled: true
+  EnforcedStyle: context_dependent
+
 # Documentation checked by Inch CI
 Style/Documentation:
   Enabled: false
@@ -39,6 +56,10 @@ Style/FileName:
 
 # Early returns have their vices
 Style/GuardClause:
+  Enabled: false
+
+# Multiline block chains are ok
+Style/MultilineBlockChain:
   Enabled: false
 
 # Model::Validator uses Model::ValidationError for this
