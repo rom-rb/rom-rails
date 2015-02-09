@@ -8,6 +8,7 @@ Metrics/CyclomaticComplexity:
 
 # FIXME: No clue how to fix that one line…
 Metrics/LineLength:
+  Max: 100
   Exclude:
     - lib/rom/rails/configuration.rb
 
