@@ -16,13 +16,12 @@ describe ROM::Generators::RelationGenerator do
         directory 'relations' do
           file 'users.rb' do
             contains <<-CONTENT.strip_heredoc
-              ROM.relation(:users) do
+              class Users < ROM::Relation
                 # define your methods here ie:
                 #
                 # def all
                 #   select(:id, :name).order(:id)
                 # end
-                #
               end
             CONTENT
           end

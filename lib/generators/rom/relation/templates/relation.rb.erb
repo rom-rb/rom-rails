@@ -1,8 +1,7 @@
-ROM.relation(:<%= class_name.underscore %>) do
+class <%= class_name.camelcase %> < ROM::Relation
   # define your methods here ie:
   #
   # def all
   #   select(:id, :name).order(:id)
   # end
-  #
 end
