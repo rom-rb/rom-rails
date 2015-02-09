@@ -1,3 +1,5 @@
+require 'charlatan'
+
 module ROM
   module Model
     class ValidationError < CommandError
