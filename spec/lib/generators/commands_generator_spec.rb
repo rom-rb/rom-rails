@@ -5,12 +5,13 @@ require 'generators/rom/commands_generator'
 describe ROM::Generators::CommandsGenerator do
   destination File.expand_path('../../../../tmp', __FILE__)
 
-  before(:all) do
+  before(:each) do
     prepare_destination
-    run_generator ['users']
   end
 
   specify do
+    run_generator ['users']
+
     expect(destination_root).to have_structure {
       directory 'app' do
         directory 'commands' do
@@ -55,4 +56,19 @@ describe ROM::Generators::CommandsGenerator do
       end
     }
   end
+
+  specify "with given adapter" do
+    run_generator ['users', '--adapter=memory']
+
+    create = File.read(File.join(destination_root, 'app', 'commands', 'users', 'create.rb'))
+    expect(create).to include("class UserCommands::Create < ROM::Commands::Create[:memory]")
+
+    update = File.read(File.join(destination_root, 'app', 'commands', 'users', 'update.rb'))
+    expect(update).to include("class UserCommands::Update < ROM::Commands::Update[:memory]")
+
+    delete = File.read(File.join(destination_root, 'app', 'commands', 'users', 'delete.rb'))
+    expect(delete).to include("class UserCommands::Delete < ROM::Commands::Delete[:memory]")
+  end
+
+
 end

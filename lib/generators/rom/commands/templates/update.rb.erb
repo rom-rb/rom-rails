@@ -1,4 +1,4 @@
-class <%= class_name.singularize.camelcase %>Commands::Update < ROM::Commands::Update
+class <%= class_name.singularize.camelcase %>Commands::Update < ROM::Commands::Update<%= "[:#{options[:adapter]}]" if options[:adapter] %>
   relation :<%= class_name.pluralize.underscore %>
   register_as :update
   result :one
