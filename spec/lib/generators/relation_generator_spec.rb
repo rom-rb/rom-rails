@@ -11,13 +11,14 @@ describe ROM::Generators::RelationGenerator, type: :generator do
 
   specify do
     run_generator ['users']
+    default_adapter = ROM.adapters.keys.first
 
     expect(destination_root).to have_structure {
       directory 'app' do
         directory 'relations' do
           file 'users.rb' do
             contains <<-CONTENT.strip_heredoc
-              class Users < ROM::Relation
+              class Users < ROM::Relation[:#{default_adapter}]
                 # define your methods here ie:
                 #
                 # def all

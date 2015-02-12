@@ -12,13 +12,15 @@ describe ROM::Generators::CommandsGenerator do
   specify do
     run_generator ['users']
 
+    default_adapter = ROM.adapters.keys.first
+
     expect(destination_root).to have_structure {
       directory 'app' do
         directory 'commands' do
           directory 'users' do
             file 'create.rb' do
               contains <<-CONTENT.strip_heredoc
-                class UserCommands::Create < ROM::Commands::Create
+                class UserCommands::Create < ROM::Commands::Create[:#{default_adapter}]
                   relation :users
                   register_as :create
                   result :one
@@ -31,7 +33,7 @@ describe ROM::Generators::CommandsGenerator do
 
             file 'update.rb' do
               contains <<-CONTENT.strip_heredoc
-                class UserCommands::Update < ROM::Commands::Update
+                class UserCommands::Update < ROM::Commands::Update[:#{default_adapter}]
                   relation :users
                   register_as :update
                   result :one
@@ -44,7 +46,7 @@ describe ROM::Generators::CommandsGenerator do
 
             file 'delete.rb' do
               contains <<-CONTENT.strip_heredoc
-                class UserCommands::Delete < ROM::Commands::Delete
+                class UserCommands::Delete < ROM::Commands::Delete[:#{default_adapter}]
                   relation :users
                   register_as :delete
                   result :one
