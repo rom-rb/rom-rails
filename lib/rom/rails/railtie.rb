@@ -79,7 +79,7 @@ module ROM
       end
 
       def infer_default_repository
-        return unless defined?(ActiveRecord)
+        return unless defined?(::ActiveRecord)
         spec = ActiveRecord::Configuration.call
         [:sql, spec[:uri], spec[:options]]
       end
