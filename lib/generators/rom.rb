@@ -4,8 +4,6 @@ require 'rom/rails/inflections'
 module ROM
   module Generators
     class Base < ::Rails::Generators::NamedBase
-      class_option :adapter, default: nil
-
       def self.base_name
         'rom'
       end

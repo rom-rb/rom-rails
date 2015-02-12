@@ -3,7 +3,8 @@ require 'generators/rom'
 module ROM
   module Generators
     class CommandsGenerator < Base
-
+      class_option :adapter, banner: "--adapter=adapter",
+        desc: "specify an adapter to use"
 
       def create_create_command
         template 'create.rb.erb', command_file(:create)
