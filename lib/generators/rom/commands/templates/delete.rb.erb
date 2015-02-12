@@ -1,0 +1,5 @@
+class <%= class_name.singularize.camelcase %>Commands::Delete < ROM::Commands::Delete
+  relation :<%= class_name.pluralize.underscore %>
+  register_as :delete
+  result :one
+end

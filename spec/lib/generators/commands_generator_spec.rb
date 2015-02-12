@@ -14,24 +14,42 @@ describe ROM::Generators::CommandsGenerator do
     expect(destination_root).to have_structure {
       directory 'app' do
         directory 'commands' do
-          file 'users.rb' do
-            contains <<-CONTENT.strip_heredoc
-              ROM.commands(:users) do
+          directory 'users' do
+            file 'create.rb' do
+              contains <<-CONTENT.strip_heredoc
+                class UserCommands::Create < ROM::Commands::Create
+                  relation :users
+                  register_as :create
+                  result :one
 
-                define(:create) do
+                  # define a validator to use
+                  # validator UserValidator
+                end
+              CONTENT
+            end
+
+            file 'update.rb' do
+              contains <<-CONTENT.strip_heredoc
+                class UserCommands::Update < ROM::Commands::Update
+                  relation :users
+                  register_as :update
+                  result :one
+
+                  # define a validator to use
+                  # validator UserValidator
+                end
+              CONTENT
+            end
+
+            file 'delete.rb' do
+              contains <<-CONTENT.strip_heredoc
+                class UserCommands::Delete < ROM::Commands::Delete
+                  relation :users
+                  register_as :delete
                   result :one
                 end
-
-                define(:update) do
-                  result :one
-                end
-
-                define(:delete) do
-                  result :one
-                end
-
-              end
-            CONTENT
+              CONTENT
+            end
           end
         end
       end

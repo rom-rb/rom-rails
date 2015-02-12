@@ -1,0 +1,8 @@
+class <%= class_name.singularize.camelcase %>Commands::Update < ROM::Commands::Update
+  relation :<%= class_name.pluralize.underscore %>
+  register_as :update
+  result :one
+
+  # define a validator to use
+  # validator <%= class_name.singularize.camelcase %>Validator
+end

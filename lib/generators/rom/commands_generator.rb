@@ -5,8 +5,18 @@ module ROM
     class CommandsGenerator < Base
       def create_commands_file
         template(
-          'commands.rb.erb',
-          File.join('app', 'commands', "#{file_name}.rb")
+          'create.rb.erb',
+          File.join('app', 'commands', file_name, 'create.rb')
+        )
+
+        template(
+          'update.rb.erb',
+          File.join('app', 'commands', file_name, 'update.rb')
+        )
+
+        template(
+          'delete.rb.erb',
+          File.join('app', 'commands', file_name, 'delete.rb')
         )
       end
     end
