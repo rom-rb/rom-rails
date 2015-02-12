@@ -1,4 +1,4 @@
-class <%= class_name.camelcase %> < ROM::Relation
+class <%= class_name.camelcase %> < ROM::Relation<%= "[:#{options[:adapter]}]" if options[:adapter] %>
   # define your methods here ie:
   #
   # def all

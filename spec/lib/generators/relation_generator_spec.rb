@@ -2,15 +2,16 @@ require 'spec_helper'
 
 require 'generators/rom/relation_generator'
 
-describe ROM::Generators::RelationGenerator do
+describe ROM::Generators::RelationGenerator, type: :generator do
   destination File.expand_path('../../../../tmp', __FILE__)
 
-  before(:all) do
+  before(:each) do
     prepare_destination
-    run_generator ['users']
   end
 
   specify do
+    run_generator ['users']
+
     expect(destination_root).to have_structure {
       directory 'app' do
         directory 'relations' do
@@ -29,4 +30,14 @@ describe ROM::Generators::RelationGenerator do
       end
     }
   end
+
+
+  specify "with given adapter" do
+    run_generator ['users', '--adapter=memory']
+
+    relation = File.read(File.join(destination_root, 'app', 'relations', 'users.rb'))
+    expect(relation).to include("class Users < ROM::Relation[:memory]")
+  end
+
+
 end
