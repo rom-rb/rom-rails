@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'rom/rails/active_record/configuration'
+require 'rom/rails/repository_configuration'
 
-describe ROM::Rails::ActiveRecord::Configuration do
+describe ROM::Rails::RepositoryConfiguration do
   let(:root) { Pathname.new('/path/to/app') }
 
   def uri_for(config)

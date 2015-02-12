@@ -3,7 +3,7 @@ require 'rails'
 require 'rom/rails/inflections'
 require 'rom/rails/configuration'
 require 'rom/rails/controller_extension'
-require 'rom/rails/active_record/configuration'
+require 'rom/rails/repository_configuration'
 
 if defined?(Spring)
   Spring.after_fork { ROM::Rails::Railtie.disconnect }
@@ -79,9 +79,12 @@ module ROM
       end
 
       def infer_default_repository
-        return unless defined?(ActiveRecord)
-        spec = ActiveRecord::Configuration.call
-        [:sql, spec[:uri], spec[:options]]
+        if RepositoryConfiguration.inferrable?
+          spec = RepositoryConfiguration.infer
+          [:sql, spec[:uri], spec[:options]]
+        elsif ENV['DATABASE_URL']
+          [:sql, ENV['DATABASE_URL']]
+        end
       end
 
       def load_all
