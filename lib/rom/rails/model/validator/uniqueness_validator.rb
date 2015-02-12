@@ -1,3 +1,5 @@
+require 'active_model/validator'
+
 module ROM
   module Model
     module Validator
