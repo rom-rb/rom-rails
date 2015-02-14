@@ -73,7 +73,6 @@ module ROM
 
           ROM.setup(repositories.symbolize_keys)
         end
-        clear_classes
         load_all
         ROM.finalize
       end
@@ -94,15 +93,6 @@ module ROM
         Dir[root.join("app/#{type}/**/*.rb").to_s].each do |path|
           require_dependency(path)
         end
-      end
-
-      def clear_classes
-        [Relation, Mapper, Command].each { |klass| clear_descendants(klass) }
-      end
-
-      def clear_descendants(klass)
-        klass.descendants.each { |descendant| clear_descendants(descendant) }
-        klass.instance_variable_set('@descendants', [])
       end
 
       def root
