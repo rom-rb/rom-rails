@@ -1,4 +1,6 @@
-class <%= class_name.camelcase %> < ROM::Relation<%= "[:#{options[:adapter]}]" %>
+class <%= class_name.camelcase %>Relation < ROM::Relation<%= "[:#{options[:adapter]}]" %>
+  dataset :<%= class_name.underscore.pluralize %>
+
   # define your methods here ie:
   #
   # def all

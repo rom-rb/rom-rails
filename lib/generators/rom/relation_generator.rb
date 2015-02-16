@@ -10,7 +10,7 @@ module ROM
       def create_relation_file
         template(
           'relation.rb.erb',
-          File.join('app', 'relations', "#{file_name}.rb")
+          File.join('app', 'relations', "#{file_name}_relation.rb")
         )
       end
     end

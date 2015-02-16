@@ -16,9 +16,11 @@ describe ROM::Generators::RelationGenerator, type: :generator do
     expect(destination_root).to have_structure {
       directory 'app' do
         directory 'relations' do
-          file 'users.rb' do
+          file 'users_relation.rb' do
             contains <<-CONTENT.strip_heredoc
-              class Users < ROM::Relation[:#{default_adapter}]
+              class UsersRelation < ROM::Relation[:#{default_adapter}]
+                dataset :users
+
                 # define your methods here ie:
                 #
                 # def all
@@ -36,8 +38,8 @@ describe ROM::Generators::RelationGenerator, type: :generator do
   specify "with given adapter" do
     run_generator ['users', '--adapter=memory']
 
-    relation = File.read(File.join(destination_root, 'app', 'relations', 'users.rb'))
-    expect(relation).to include("class Users < ROM::Relation[:memory]")
+    relation = File.read(File.join(destination_root, 'app', 'relations', 'users_relation.rb'))
+    expect(relation).to include("class UsersRelation < ROM::Relation[:memory]")
   end
 
 
