@@ -1,12 +1,10 @@
-ROM.mappers do
-
-  define(:<%= class_name.underscore %>) do
-    # specify model and attributes ie
-    #
-    # model <%= class_name.classify %>
-    #
-    # attribute :name
-    # attribute :email
-  end
-
+class <%= class_name.singularize.camelcase %>Mapper < ROM::Mapper
+  # relation :<%= class_name.pluralize.underscore %>
+  #
+  # specify model and attributes ie
+  #
+  # model <%= class_name.classify %>
+  #
+  # attribute :name
+  # attribute :email
 end
