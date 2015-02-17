@@ -28,7 +28,7 @@ describe ROM::Generators::FormGenerator do
                   # define form input attributes
                   # attribute :name, String
 
-                  timestamps :created_at, :updated_at
+                  timestamps
                 end
 
                 validations do
