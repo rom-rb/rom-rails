@@ -4,6 +4,6 @@ class UpdateUserForm < UserForm
   params.timestamps(:updated_at)
 
   def commit!
-    users.try { users.update.by_id(id).set(params) }
+    users.try { users.update.by_id(id).set(attributes) }
   end
 end
