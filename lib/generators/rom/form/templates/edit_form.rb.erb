@@ -18,7 +18,7 @@ class Edit<%= model_name %>Form < ROM::Model::Form
   end
 
   def commit!
-    <%= relation %>.try { <%= relation %>.update.by_id(id).set(attributes) }
+    <%= relation %>.try { <%= relation %>.update.by_id(id).set(params) }
   end
 
 end
