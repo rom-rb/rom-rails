@@ -4,6 +4,6 @@ class NewUserForm < UserForm
   params.timestamps(:created_at)
 
   def commit!
-    users.try { users.create.call(attributes) }
+    users.try { users.create.call(params) }
   end
 end
