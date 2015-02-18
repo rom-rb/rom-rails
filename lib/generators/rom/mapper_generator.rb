@@ -6,7 +6,7 @@ module ROM
       def create_mapper_file
         template(
           'mapper.rb.erb',
-          File.join('app', 'mappers', "#{file_name}.rb")
+          File.join('app', 'mappers', "#{file_name.singularize}_mapper.rb")
         )
       end
     end
