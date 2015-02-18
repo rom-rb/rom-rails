@@ -1,10 +1,10 @@
-module <%= class_name.singularize.camelcase %>Commands
-  class Create < ROM::Commands::Create<%= "[:#{options[:adapter]}]" %>
-    relation :<%= class_name.pluralize.underscore %>
+module <%= model_name %>Commands
+  class Create < ROM::Commands::Create<%= "[:#{adapter}]" %>
+    relation :<%= relation %>
     register_as :create
     result :one
 
     # define a validator to use
-    # validator <%= class_name.singularize.camelcase %>Validator
+    # validator <%= model_name %>Validator
   end
 end

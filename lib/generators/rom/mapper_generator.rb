@@ -9,6 +9,17 @@ module ROM
           File.join('app', 'mappers', "#{file_name.singularize}_mapper.rb")
         )
       end
+
+
+    private
+
+      def model_name
+        class_name.singularize
+      end
+
+      def relation
+        class_name.pluralize.underscore
+      end
     end
   end
 end

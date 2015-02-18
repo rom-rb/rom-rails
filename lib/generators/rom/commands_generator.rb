@@ -25,6 +25,18 @@ module ROM
         File.join('app', 'commands', file_name, "#{command}.rb")
       end
 
+      def relation
+        class_name.pluralize.underscore
+      end
+
+      def model_name
+        class_name.singularize
+      end
+
+      def adapter
+        options[:adapter]
+      end
+
     end
   end
 end
