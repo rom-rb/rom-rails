@@ -12,9 +12,17 @@ describe ROM::Rails::ConfigurationBuilder::ConfigurationHashTransformer do
     { 'adapter' => 'sqlite3', 'database' => 'db/development.sqlite3' }
   end
 
+  let(:expected_uri) do
+    if RUBY_ENGINE == 'jruby'
+      'jdbc:sqlite:///path/to/app/db/development.sqlite3'
+    else
+      'sqlite:///path/to/app/db/development.sqlite3'
+    end
+  end
+
   it 'builds a configuration' do
     expect(described_class.transform(config))
-      .to eq([:sql, 'sqlite:///path/to/app/db/development.sqlite3', {}])
+      .to eq([:sql, expected_uri, {}])
   end
 
   def uri_for(config)
