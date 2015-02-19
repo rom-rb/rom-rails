@@ -3,7 +3,8 @@ require 'generators/rom'
 module ROM
   module Generators
     class CommandsGenerator < Base
-      class_option :adapter, banner: "--adapter=adapter",
+      class_option :adapter,
+        banner: "--adapter=adapter",
         desc: "specify an adapter to use", required: true,
         default: ROM.adapters.keys.first
 
@@ -19,7 +20,7 @@ module ROM
         template 'delete.rb.erb', command_file(:delete)
       end
 
-    private
+      private
 
       def command_file(command)
         File.join('app', 'commands', file_name, "#{command}.rb")
@@ -36,7 +37,6 @@ module ROM
       def adapter
         options[:adapter]
       end
-
     end
   end
 end

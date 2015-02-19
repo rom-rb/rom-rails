@@ -33,6 +33,7 @@ module ROM
       end
 
       attr_reader :params
+      delegate :model_name, to: :params
 
       def initialize(params)
         @params = params
@@ -42,12 +43,8 @@ module ROM
         params
       end
 
-      def model_name
-        params.model_name
-      end
-
       def call
-        raise ValidationError.new(errors) unless valid?
+        raise ValidationError, errors unless valid?
         params
       end
 

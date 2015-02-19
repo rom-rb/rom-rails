@@ -28,6 +28,7 @@ AllCops:
     - spec/dummy/db/schema.rb
     - spec/dummy/db/seeds.rb
     - tmp/**/*
+    - vendor/**/*
 
 # The enforced style doesn’t match Vim’s defaults
 Style/AlignParameters:
@@ -78,3 +79,7 @@ Style/SignalException:
 # Accept both single and double quotes
 Style/StringLiterals:
   Enabled: false
+
+Style/AccessorMethodName:
+  Exclude:
+    - lib/rom/rails/model/params.rb

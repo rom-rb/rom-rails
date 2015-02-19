@@ -77,6 +77,4 @@ describe ROM::Generators::CommandsGenerator do
     delete = File.read(File.join(destination_root, 'app', 'commands', 'users', 'delete.rb'))
     expect(delete).to include("class Delete < ROM::Commands::Delete[:memory]")
   end
-
-
 end

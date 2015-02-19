@@ -42,7 +42,6 @@ describe 'Validation' do
       validator.validate
       expect(validator.errors[:name]).to eql(["can't be blank"])
     end
-
   end
 
   describe ':presence' do

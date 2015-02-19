@@ -15,8 +15,8 @@ module ROM
       delegate :model_name, :persisted?, :to_key, to: :model
       alias_method :to_model, :model
 
-      def self.model_name
-        params.model_name
+      class << self
+        delegate :model_name, to: :params
       end
 
       def initialize(params = {}, options = {})
