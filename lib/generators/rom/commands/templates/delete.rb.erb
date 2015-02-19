@@ -1,6 +1,6 @@
-module <%= class_name.singularize.camelcase %>Commands
-  class Delete < ROM::Commands::Delete<%= "[:#{options[:adapter]}]" %>
-    relation :<%= class_name.pluralize.underscore %>
+module <%= model_name %>Commands
+  class Delete < ROM::Commands::Delete<%= "[:#{adapter}]" %>
+    relation :<%= relation %>
     register_as :delete
     result :one
   end

@@ -14,7 +14,7 @@ describe ROM::Generators::MapperGenerator do
     expect(destination_root).to have_structure {
       directory 'app' do
         directory 'mappers' do
-          file 'users.rb' do
+          file 'user_mapper.rb' do
             contains <<-CONTENT.strip_heredoc
               class UserMapper < ROM::Mapper
                 # relation :users

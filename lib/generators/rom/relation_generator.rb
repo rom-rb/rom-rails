@@ -13,6 +13,19 @@ module ROM
           File.join('app', 'relations', "#{file_name}_relation.rb")
         )
       end
+
+    private
+
+      def dataset
+        class_name.underscore.pluralize
+      end
+
+      def adapter
+        options[:adapter]
+      end
+
+
+
     end
   end
 end
