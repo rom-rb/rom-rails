@@ -10,8 +10,7 @@ module ROM
         )
       end
 
-
-    private
+      private
 
       def model_name
         class_name.singularize

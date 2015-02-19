@@ -5,9 +5,7 @@ require 'rom/rails/configuration'
 require 'rom/rails/controller_extension'
 require 'rom/rails/active_record/configuration'
 
-if defined?(Spring)
-  Spring.after_fork { ROM::Rails::Railtie.disconnect }
-end
+Spring.after_fork { ROM::Rails::Railtie.disconnect } if defined?(Spring)
 
 module ROM
   module Rails
@@ -56,9 +54,7 @@ module ROM
 
       def disconnect
         # TODO: Add `ROM.env.disconnect` to core.
-        ROM.env.repositories.each_value do |repository|
-          repository.disconnect
-        end
+        ROM.env.repositories.each_value(&:disconnect)
       end
 
       def setup

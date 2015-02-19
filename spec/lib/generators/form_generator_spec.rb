@@ -12,8 +12,6 @@ describe ROM::Generators::FormGenerator do
   specify "a create form" do
     run_generator ['users', '--command=create']
 
-    default_adapter = ROM.adapters.keys.first
-
     expect(destination_root).to have_structure {
       directory 'app' do
         directory 'forms' do
@@ -53,8 +51,6 @@ describe ROM::Generators::FormGenerator do
   specify "an edit form" do
     run_generator ['users', '--command=update']
 
-    default_adapter = ROM.adapters.keys.first
-
     expect(destination_root).to have_structure {
       directory 'app' do
         directory 'forms' do
@@ -90,5 +86,4 @@ describe ROM::Generators::FormGenerator do
       end
     }
   end
-
 end

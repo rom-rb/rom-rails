@@ -5,7 +5,7 @@ module ROM
     class Configuration
       include Virtus.model(strict: true)
 
-      attribute :repositories, Hash, default: Hash.new
+      attribute :repositories, Hash, default: {}
     end
   end
 end

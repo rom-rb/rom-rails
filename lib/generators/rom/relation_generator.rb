@@ -3,7 +3,8 @@ require 'generators/rom'
 module ROM
   module Generators
     class RelationGenerator < Base
-      class_option :adapter, banner: "--adapter=adapter",
+      class_option :adapter,
+        banner: "--adapter=adapter",
         desc: "specify an adapter to use", required: true,
         default: ROM.adapters.keys.first
 
@@ -14,7 +15,7 @@ module ROM
         )
       end
 
-    private
+      private
 
       def dataset
         class_name.underscore.pluralize
@@ -23,9 +24,6 @@ module ROM
       def adapter
         options[:adapter]
       end
-
-
-
     end
   end
 end

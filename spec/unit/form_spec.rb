@@ -224,12 +224,11 @@ describe 'Form' do
       end
 
       form_object = form.build(uid: "12345")
-      expect(form_object.attributes[:uid]).to eq 12345
+      expect(form_object.attributes[:uid]).to eq 12_345
     end
   end
 
   describe "#validate!" do
-
     it "runs validations and assigns errors" do
       form_object = form.build({})
       form_object.validate!
@@ -263,10 +262,7 @@ describe 'Form' do
 
       expect(form_object.errors[:country]).to be_blank
     end
-
   end
-
-
 
   describe 'inheritance' do
     let(:child_form) do

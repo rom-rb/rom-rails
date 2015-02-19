@@ -56,36 +56,7 @@ module ROM
         end
 
         def command_registry
-          @command_registry ||=
-            begin
-              commands = {}
-
-              if self_commands
-                self_commands.each do |rel_name, name|
-                  klass = Command.build_class(name, rel_name, adapter: adapter)
-
-                  klass.result :one
-                  klass.input @params
-                  klass.validator @validator
-
-                  relation = rom.relations[rel_name]
-                  repository = rom.repositories[relation.repository]
-                  repository.extend_command_class(klass, relation.dataset)
-
-                  command = klass.build(relation)
-
-                  commands[rel_name] = CommandRegistry.new(name => command)
-                end
-              end
-
-              if injectible_commands
-                injectible_commands.each do |relation|
-                  commands[relation] = rom.command(relation)
-                end
-              end
-
-              commands
-            end
+          @command_registry ||= setup_command_registry
         end
 
         def clear_input(input)
@@ -93,10 +64,10 @@ module ROM
             next if value.is_a?(String) && value.blank?
 
             object[key] =
-              if value.kind_of?(Hash)
+              if value.is_a?(Hash)
                 clear_input(value)
-              elsif value.kind_of?(Array)
-                value.map { |v| v.kind_of?(Hash) ? clear_input(v) : v }
+              elsif value.is_a?(Array)
+                value.map { |v| v.is_a?(Hash) ? clear_input(v) : v }
               else
                 value
               end
@@ -162,6 +133,39 @@ module ROM
 
         def adapter
           ROM.adapters.keys.first
+        end
+
+        def setup_command_registry
+          commands = {}
+
+          if self_commands
+            self_commands.each do |rel_name, name|
+              command = build_command(name, rel_name)
+              commands[rel_name] = CommandRegistry.new(name => command)
+            end
+          end
+
+          if injectible_commands
+            injectible_commands.each do |relation|
+              commands[relation] = rom.command(relation)
+            end
+          end
+
+          commands
+        end
+
+        def build_command(name, rel_name)
+          klass = Command.build_class(name, rel_name, adapter: adapter)
+
+          klass.result :one
+          klass.input @params
+          klass.validator @validator
+
+          relation = rom.relations[rel_name]
+          repository = rom.repositories[relation.repository]
+          repository.extend_command_class(klass, relation.dataset)
+
+          klass.build(relation)
         end
       end
     end
