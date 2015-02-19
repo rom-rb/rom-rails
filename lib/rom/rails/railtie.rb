@@ -3,7 +3,7 @@ require 'rails'
 require 'rom/rails/inflections'
 require 'rom/rails/configuration'
 require 'rom/rails/controller_extension'
-require 'rom/rails/repository_configuration'
+require 'rom/rails/configuration_builder'
 
 if defined?(Spring)
   Spring.after_fork { ROM::Rails::Railtie.disconnect }
@@ -69,21 +69,12 @@ module ROM
 
           # If there's no default repository configured, try to infer it from
           # other sources, e.g. ActiveRecord.
-          repositories[:default] ||= infer_default_repository
+          repositories[:default] ||= ConfigurationBuilder.build
 
           ROM.setup(repositories.symbolize_keys)
         end
         load_all
         ROM.finalize
-      end
-
-      def infer_default_repository
-        if RepositoryConfiguration.inferrable?
-          spec = RepositoryConfiguration.infer
-          [:sql, spec[:uri], spec[:options]]
-        elsif ENV['DATABASE_URL']
-          [:sql, ENV['DATABASE_URL']]
-        end
       end
 
       def load_all
