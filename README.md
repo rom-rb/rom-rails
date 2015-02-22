@@ -23,6 +23,10 @@ ships with:
 * Mapper generators
 * Command generators
 
+## Issues
+
+Please report any issues in the main [rom-rb/rom](https://github.com/rom-rb/rom/issues) issue tracker.
+
 ## Resources
 
 You can read more about ROM and Rails on the official website:
