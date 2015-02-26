@@ -1,3 +1,15 @@
+## v0.3.0 to-be-released
+
+### Added
+
+* `ROM::Model::Form` for modeling and setting up web-forms (solnic)
+
+### Changed
+
+* TODO
+
+[Compare v0.2.1...master](https://github.com/rom-rb/rom-rails/compare/v0.2.1...master)
+
 ## v0.2.1 2015-01-07
 
 ### Changed
@@ -7,6 +19,8 @@
 ### Fixed
 
 * `rom` extension is now mixed into ActionController::Base which addresses #12 (solnic)
+
+[Compare v0.2.1...v0.2.0](https://github.com/rom-rb/rom-rails/compare/v0.2.0...v0.2.1)
 
 ## v0.2.0 2014-12-31
 
