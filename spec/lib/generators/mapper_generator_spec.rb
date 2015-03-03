@@ -17,8 +17,8 @@ describe ROM::Generators::MapperGenerator do
           file 'user_mapper.rb' do
             contains <<-CONTENT.strip_heredoc
               class UserMapper < ROM::Mapper
-                # relation :users
-                #
+                relation :users
+              
                 # specify model and attributes ie
                 #
                 # model User
