@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe 'Validation' do
-  subject(:validator) { user_validator.new(params) }
+  subject(:validator) { user_validator.new(attributes) }
 
-  let(:user_params) do
+  let(:user_attrs) do
     Class.new {
       include ROM::Model::Attributes
 
@@ -28,24 +28,24 @@ describe 'Validation' do
   end
 
   describe '#call' do
-    let(:params) { {} }
+    let(:attributes) { {} }
 
-    it 'raises validation error when params are not valid' do
+    it 'raises validation error when attributes are not valid' do
       expect { validator.call }.to raise_error(ROM::Model::ValidationError)
     end
   end
 
   describe "#validate" do
-    let(:params) { {} }
+    let(:attributes) { {} }
 
-    it "sets errors when params are not valid" do
+    it "sets errors when attributes are not valid" do
       validator.validate
       expect(validator.errors[:name]).to eql(["can't be blank"])
     end
   end
 
   describe ':presence' do
-    let(:params) { user_params.new(name: '') }
+    let(:attributes) { user_attrs.new(name: '') }
 
     it 'sets error messages' do
       expect(validator).to_not be_valid
@@ -54,7 +54,7 @@ describe 'Validation' do
   end
 
   describe ':uniqueness' do
-    let(:params) { user_params.new(name: 'Jane', email: 'jane@doe.org') }
+    let(:attributes) { user_attrs.new(name: 'Jane', email: 'jane@doe.org') }
 
     before do
       rom.relations.users.insert(name: 'Jane', email: 'jane@doe.org')

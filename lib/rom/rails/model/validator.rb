@@ -7,8 +7,8 @@ module ROM
     # @example
     #
     #
-    #   class UserParams
-    #     include ROM::Model::Params
+    #   class UserAttributes
+    #     include ROM::Model::Attributes
     #
     #     attribute :name
     #
@@ -19,8 +19,8 @@ module ROM
     #     include ROM::Model::Validator
     #   end
     #
-    #   params = UserParams.new(name: '')
-    #   UserValidator.call(params) # raises ValidationError
+    #   attrs = UserAttributes.new(name: '')
+    #   UserValidator.call(attrs) # raises ValidationError
     #
     # @api public
     module Validator
@@ -28,30 +28,30 @@ module ROM
         base.class_eval do
           extend ClassMethods
           include ActiveModel::Validations
-          include Equalizer.new(:params, :errors)
+          include Equalizer.new(:attributes, :errors)
         end
       end
 
-      attr_reader :params
-      delegate :model_name, to: :params
+      attr_reader :attributes
+      delegate :model_name, to: :attributes
 
-      def initialize(params)
-        @params = params
+      def initialize(attributes)
+        @attributes = attributes
       end
 
       def to_model
-        params
+        attributes
       end
 
       def call
         raise ValidationError, errors unless valid?
-        params
+        attributes
       end
 
       private
 
       def method_missing(name)
-        params[name]
+        attributes[name]
       end
 
       module ClassMethods
@@ -61,11 +61,11 @@ module ROM
         end
 
         def model_name
-          params.model_name
+          attributes.model_name
         end
 
-        def call(params)
-          validator = new(params)
+        def call(attributes)
+          validator = new(attributes)
           validator.call
         end
       end

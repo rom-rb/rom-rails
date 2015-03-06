@@ -7,8 +7,8 @@ module ROM
     #
     # @example
     #
-    #   class UserParams
-    #     include ROM::Model::Params
+    #   class UserAttributes
+    #     include ROM::Model::Attributes
     #
     #     attribute :email, String
     #     attribute :age, Integer
@@ -16,13 +16,13 @@ module ROM
     #     validates :email, :age, presence: true
     #   end
     #
-    #   user_params = UserParams.new(email: '', age: '18')
+    #   user_attrs = UserAttributes.new(email: '', age: '18')
     #
-    #   user_params.email # => ''
-    #   user_params.age # => 18
+    #   user_attrs.email # => ''
+    #   user_attrs.age # => 18
     #
-    #   user_params.valid? # => false
-    #   user_params.errors # => #<ActiveModel::Errors:0x007fd2423fadb0 ...>
+    #   user_attrs.valid? # => false
+    #   user_attrs.errors # => #<ActiveModel::Errors:0x007fd2423fadb0 ...>
     #
     # @api public
     module Attributes
