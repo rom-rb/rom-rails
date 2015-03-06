@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe ROM::Model::Params do
+describe ROM::Model::Attributes do
   let(:klass) {
     Class.new do
-      include ROM::Model::Params
+      include ROM::Model::Attributes
 
       attribute :name, String
     end

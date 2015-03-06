@@ -77,11 +77,11 @@ module ROM
 
         def define_params!(block)
           @input_block = block
-          @params = ClassBuilder.new(name: "#{name}::Params", parent: Object).call { |klass|
-            klass.send(:include, ROM::Model::Params)
+          @params = ClassBuilder.new(name: "#{name}::Attributes", parent: Object).call { |klass|
+            klass.send(:include, ROM::Model::Attributes)
           }
           @params.class_eval(&block)
-          const_set(:Params, @params)
+          const_set(:Attributes, @params)
         end
 
         def define_attribute_readers!

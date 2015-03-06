@@ -9,6 +9,6 @@ module ROM
   end
 end
 
-require 'rom/rails/model/params'
+require 'rom/rails/model/attributes'
 require 'rom/rails/model/validator'
 require 'rom/rails/model/form'

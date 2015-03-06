@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe ROM::Model::Params do
+describe ROM::Model::Attributes do
   let(:params) do
     Class.new do
-      include ROM::Model::Params
+      include ROM::Model::Attributes
 
       attribute :name, String
 
@@ -20,7 +20,7 @@ describe ROM::Model::Params do
     context 'passing in arbritrary names' do
       it 'excludes :created_at when passing in :updated_at' do
         params = Class.new {
-          include ROM::Model::Params
+          include ROM::Model::Attributes
 
           timestamps(:updated_at)
         }
@@ -33,7 +33,7 @@ describe ROM::Model::Params do
 
       it 'accepts multiple timestamp attribute names' do
         params = Class.new {
-          include ROM::Model::Params
+          include ROM::Model::Attributes
 
           timestamps(:published_at, :revised_at)
         }

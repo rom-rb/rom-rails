@@ -106,14 +106,14 @@ describe 'Form' do
   end
 
   describe '.model_name' do
-    it 'delegates to Params.model_name' do
+    it 'delegates to Attributes.model_name' do
       expect(form.model_name).to be(form.params.model_name)
     end
   end
 
   describe 'input DSL' do
     it 'defines params handler' do
-      expect(form.const_defined?(:Params)).to be(true)
+      expect(form.const_defined?(:Attributes)).to be(true)
       expect(form.params.attribute_set.map(&:name)).to eql([:email])
       expect(form.params.model_name).to eql('User')
     end

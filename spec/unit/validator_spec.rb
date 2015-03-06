@@ -5,7 +5,7 @@ describe 'Validation' do
 
   let(:user_params) do
     Class.new {
-      include ROM::Model::Params
+      include ROM::Model::Attributes
 
       attribute :name, String
       attribute :email, String

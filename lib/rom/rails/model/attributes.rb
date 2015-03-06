@@ -25,7 +25,7 @@ module ROM
     #   user_params.errors # => #<ActiveModel::Errors:0x007fd2423fadb0 ...>
     #
     # @api public
-    module Params
+    module Attributes
       VirtusModel = Virtus.model(strict: true, required: false)
 
       def self.included(base)
