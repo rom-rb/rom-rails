@@ -16,7 +16,7 @@ module ROM
       alias_method :to_model, :model
 
       class << self
-        delegate :model_name, to: :params
+        delegate :model_name, to: :attributes
       end
 
       def initialize(params = {}, options = {})
@@ -48,7 +48,7 @@ module ROM
       end
 
       def attributes
-        self.class.params[params]
+        self.class.attributes[params]
       end
 
       def errors

@@ -107,15 +107,15 @@ describe 'Form' do
 
   describe '.model_name' do
     it 'delegates to Attributes.model_name' do
-      expect(form.model_name).to be(form.params.model_name)
+      expect(form.model_name).to be(form.attributes.model_name)
     end
   end
 
   describe 'input DSL' do
     it 'defines params handler' do
       expect(form.const_defined?(:Attributes)).to be(true)
-      expect(form.params.attribute_set.map(&:name)).to eql([:email])
-      expect(form.params.model_name).to eql('User')
+      expect(form.attributes.attribute_set.map(&:name)).to eql([:email])
+      expect(form.attributes.model_name).to eql('User')
     end
 
     it 'defines a model' do
@@ -290,8 +290,8 @@ describe 'Form' do
     end
 
     it 'copies input' do
-      expect(child_form.params.attribute_set[:email]).to_not be(nil)
-      expect(child_form.params).to_not be(form.params)
+      expect(child_form.attributes.attribute_set[:email]).to_not be(nil)
+      expect(child_form.attributes).to_not be(form.attributes)
     end
 
     it 'copies model' do

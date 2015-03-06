@@ -2,7 +2,7 @@ module ROM
   module Model
     class Form
       module DSL
-        attr_reader :params, :validator, :self_commands, :injectible_commands,
+        attr_reader :attributes, :validator, :self_commands, :injectible_commands,
           :model, :input_block, :validations_block
 
         def inherited(klass)
@@ -34,7 +34,7 @@ module ROM
 
         def input(options = {}, &block)
           readers = options.fetch(:readers) { true }
-          define_params!(block)
+          define_attributes!(block)
           define_attribute_readers! if readers
           define_model!
           self
@@ -75,17 +75,17 @@ module ROM
           ActiveSupport::HashWithIndifferentAccess.new(hash)
         end
 
-        def define_params!(block)
+        def define_attributes!(block)
           @input_block = block
-          @params = ClassBuilder.new(name: "#{name}::Attributes", parent: Object).call { |klass|
+          @attributes = ClassBuilder.new(name: "#{name}::Attributes", parent: Object).call { |klass|
             klass.send(:include, ROM::Model::Attributes)
           }
-          @params.class_eval(&block)
-          const_set(:Attributes, @params)
+          @attributes.class_eval(&block)
+          const_set(:Attributes, @attributes)
         end
 
         def define_attribute_readers!
-          @params.attribute_set.each do |attribute|
+          @attributes.attribute_set.each do |attribute|
             if public_instance_methods.include?(attribute.name)
               raise(
                 ArgumentError,
@@ -95,14 +95,14 @@ module ROM
 
             class_eval <<-RUBY, __FILE__, __LINE__ + 1
               def #{attribute.name}
-                params[:#{attribute.name}]
+                attributes[:#{attribute.name}]
               end
             RUBY
           end
         end
 
         def define_model!
-          @model = ClassBuilder.new(name: "#{name}::Model", parent: @params).call { |klass|
+          @model = ClassBuilder.new(name: "#{name}::Model", parent: @attributes).call { |klass|
             klass.class_eval <<-RUBY, __FILE__, __LINE__ + 1
               def persisted?
                 to_key.any?
