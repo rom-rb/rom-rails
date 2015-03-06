@@ -34,7 +34,9 @@ describe 'Form' do
       form_object = form.build(input)
 
       expect(form_object.params).to eql(
-        name: 'Jane', hash: { two: 2 }, array: [{ four: 4 }, 5]
+        'name' =>'Jane',
+        'hash' => { 'two' => 2 },
+        'array' => [{ 'four' => 4 }, 5]
       )
     end
   end

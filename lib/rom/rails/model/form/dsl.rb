@@ -71,7 +71,7 @@ module ROM
               else
                 value
               end
-          }.symbolize_keys
+          }
         end
 
         def define_params!(block)
