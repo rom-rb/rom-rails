@@ -37,7 +37,7 @@ describe ROM::Generators::FormGenerator do
                 end
 
                 def commit!
-                  users.try { users.create.call(params) }
+                  users.try { users.create.call(attributes) }
                 end
 
               end
@@ -76,7 +76,7 @@ describe ROM::Generators::FormGenerator do
                 end
 
                 def commit!
-                  users.try { users.update.by_id(id).set(params) }
+                  users.try { users.update.by_id(id).set(attributes) }
                 end
 
               end

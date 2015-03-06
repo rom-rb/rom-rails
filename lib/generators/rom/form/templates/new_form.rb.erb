@@ -18,7 +18,7 @@ class New<%= model_name %>Form < ROM::Model::Form
   end
 
   def commit!
-    <%= relation %>.try { <%= relation %>.create.call(params) }
+    <%= relation %>.try { <%= relation %>.create.call(attributes) }
   end
 
 end
