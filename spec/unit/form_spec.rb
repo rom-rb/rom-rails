@@ -44,6 +44,10 @@ describe 'Form' do
       params = { 'email' => 'jane@doe.org' }
       form_object = form.build(params)
       expect(form_object.email).to eql('jane@doe.org')
+
+      params = { email: 'jane@doe.org' }
+      form_object = form.build(params)
+      expect(form_object.email).to eql('jane@doe.org')
     end
   end
 

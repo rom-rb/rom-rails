@@ -60,7 +60,7 @@ module ROM
         end
 
         def clear_input(input)
-          input.each_with_object({}) { |(key, value), object|
+          hash = input.each_with_object({}) { |(key, value), object|
             next if value.is_a?(String) && value.blank?
 
             object[key] =
@@ -72,6 +72,7 @@ module ROM
                 value
               end
           }
+          ActiveSupport::HashWithIndifferentAccess.new(hash)
         end
 
         def define_params!(block)
@@ -94,7 +95,7 @@ module ROM
 
             class_eval <<-RUBY, __FILE__, __LINE__ + 1
               def #{attribute.name}
-                params['#{attribute.name}']
+                params[:#{attribute.name}]
               end
             RUBY
           end
