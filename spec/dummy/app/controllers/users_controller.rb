@@ -3,11 +3,14 @@ class UsersController < ApplicationController
     head :bad_request
   end
 
-  relation 'users.index', only: :index
-  relation 'users.by_name', only: :search, requires: :name
-
   def index
-    render
+    render :index, locals: { users: rom.relation(:users).as(:users) }
+  end
+
+  def search
+    render :index, locals: {
+      users: rom.relation(:users).as(:users).by_name(params[:name])
+    }
   end
 
   def new
@@ -38,10 +41,6 @@ class UsersController < ApplicationController
     else
       render :edit, locals: { user: user_form }
     end
-  end
-
-  def search
-    render :index
   end
 
   def ping
