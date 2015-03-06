@@ -39,6 +39,12 @@ describe 'Form' do
         'array' => [{ 'four' => 4 }, 5]
       )
     end
+
+    it 'exposes param values' do
+      params = { 'email' => 'jane@doe.org' }
+      form_object = form.build(params)
+      expect(form_object.email).to eql('jane@doe.org')
+    end
   end
 
   describe '.commands' do

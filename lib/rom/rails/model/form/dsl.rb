@@ -94,7 +94,7 @@ module ROM
 
             class_eval <<-RUBY, __FILE__, __LINE__ + 1
               def #{attribute.name}
-                params[:#{attribute.name}]
+                params['#{attribute.name}']
               end
             RUBY
           end
