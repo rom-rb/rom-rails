@@ -5,7 +5,6 @@
 * `ROM::Model::Form` for modeling and setting up web-forms (solnic + cflipse)
 * Support for timestamps attributes in Form objects (kchien)
 
-
 ### Changed
 
 * Improved initialization process which works with AR-style configurations (aflatter)
