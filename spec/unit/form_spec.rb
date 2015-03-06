@@ -50,7 +50,7 @@ describe 'Form' do
         validations { validates :name, presence: true }
 
         def commit!
-          users.try { users.create.call(params) }
+          users.try { users.create.call(attributes) }
         end
       }
 

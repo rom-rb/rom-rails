@@ -158,7 +158,6 @@ module ROM
           klass = Command.build_class(name, rel_name, adapter: adapter)
 
           klass.result :one
-          klass.input @params
           klass.validator @validator
 
           relation = rom.relations[rel_name]
