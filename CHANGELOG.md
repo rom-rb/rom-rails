@@ -7,6 +7,7 @@
 
 ### Changed
 
+* [BREAKING] Model::Params renamed to Model::Attributes (solnic)
 * Improved initialization process which works with AR-style configurations (aflatter)
 * Allow setup using a configuration block from railtie (aflatter)
 
