@@ -1,4 +1,4 @@
-require 'rom/rails/model/form/dsl'
+require 'rom/rails/model/form/class_interface'
 
 module ROM
   module Model
@@ -6,7 +6,7 @@ module ROM
       include Equalizer.new(:params, :model, :result)
 
       extend ROM::ClassMacros
-      extend Form::DSL
+      extend Form::ClassInterface
 
       defines :relation
 

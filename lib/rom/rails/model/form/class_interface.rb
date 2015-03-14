@@ -1,7 +1,7 @@
 module ROM
   module Model
     class Form
-      module DSL
+      module ClassInterface
         attr_reader :attributes, :validator, :self_commands, :injectible_commands,
           :model, :input_block, :validations_block
 
