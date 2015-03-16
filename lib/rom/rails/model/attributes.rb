@@ -26,7 +26,7 @@ module ROM
     #
     # @api public
     module Attributes
-      VirtusModel = Virtus.model(strict: true, required: false)
+      VirtusModel = Virtus.model
 
       def self.included(base)
         base.class_eval do
