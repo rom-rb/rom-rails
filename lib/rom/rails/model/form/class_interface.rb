@@ -234,7 +234,7 @@ module ROM
         #
         # @api public
         def build(input = {}, options = {})
-          new(clear_input(input), options.merge(command_registry))
+          new(input, options.merge(command_registry))
         end
 
         private
@@ -244,27 +244,6 @@ module ROM
         # @api private
         def command_registry
           @command_registry ||= setup_command_registry
-        end
-
-        # Remove empty strings from input
-        #
-        # TODO: this will go away when virtus supports :nullify_blank option
-        #
-        # @api private
-        def clear_input(input)
-          hash = input.each_with_object({}) { |(key, value), object|
-            next if value.is_a?(String) && value.blank?
-
-            object[key] =
-              if value.is_a?(Hash)
-                clear_input(value)
-              elsif value.is_a?(Array)
-                value.map { |v| v.is_a?(Hash) ? clear_input(v) : v }
-              else
-                value
-              end
-          }
-          ActiveSupport::HashWithIndifferentAccess.new(hash)
         end
 
         # Create attribute handler class

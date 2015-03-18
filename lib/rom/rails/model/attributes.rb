@@ -26,7 +26,7 @@ module ROM
     #
     # @api public
     module Attributes
-      VirtusModel = Virtus.model
+      VirtusModel = Virtus.model(nullify_blank: true)
 
       # Inclusion hook used to extend a class with required interfaces
       #

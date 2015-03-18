@@ -25,19 +25,11 @@ describe 'Form' do
 
   describe '.build' do
     it 'rejects blank strings from params' do
-      input = {
-        'name'  => 'Jane',
-        'hash'  => { 'one' => '', 'two' => 2 },
-        'array' => [{ 'three' => '', 'four' => 4 }, 5]
-      }
+      input = { 'name'  => '' }
 
       form_object = form.build(input)
 
-      expect(form_object.params).to eql(
-        'name' =>'Jane',
-        'hash' => { 'two' => 2 },
-        'array' => [{ 'four' => 4 }, 5]
-      )
+      expect(form_object.attributes.to_h).to eql(email: nil)
     end
 
     it 'exposes param values' do
