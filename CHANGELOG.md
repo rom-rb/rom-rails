@@ -11,7 +11,7 @@
 * [BREAKING] Model::Params renamed to Model::Attributes (solnic + cflipse)
 * Improved initialization process which works with AR-style configurations (aflatter)
 
-[Compare v0.2.1...master](https://github.com/rom-rb/rom-rails/compare/v0.2.1...master)
+[Compare v0.2.1...v0.3.0](https://github.com/rom-rb/rom-rails/compare/v0.2.1...v0.3.0)
 
 ## v0.2.1 2015-01-07
 
