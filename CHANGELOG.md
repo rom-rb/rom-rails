@@ -1,15 +1,15 @@
-## v0.3.0 to-be-released
+## v0.3.0 2015-03-22
 
 ### Added
 
 * `ROM::Model::Form` for modeling and setting up web-forms (solnic + cflipse)
 * Support for timestamps attributes in Form objects (kchien)
+* Allow setup using a configuration block from railtie (aflatter)
 
 ### Changed
 
-* [BREAKING] Model::Params renamed to Model::Attributes (solnic)
+* [BREAKING] Model::Params renamed to Model::Attributes (solnic + cflipse)
 * Improved initialization process which works with AR-style configurations (aflatter)
-* Allow setup using a configuration block from railtie (aflatter)
 
 [Compare v0.2.1...master](https://github.com/rom-rb/rom-rails/compare/v0.2.1...master)
 
