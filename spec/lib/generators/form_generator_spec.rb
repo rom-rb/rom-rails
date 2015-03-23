@@ -9,6 +9,38 @@ describe ROM::Generators::FormGenerator do
     prepare_destination
   end
 
+  shared_examples_for "generates a base user form" do
+    it "populates a base form file" do
+      expect(destination_root).to have_structure {
+        directory 'app' do
+          directory 'forms' do
+            file 'user_form.rb' do
+              contains <<-CONTENT.strip_heredoc
+              class UserForm < ROM::Model::Form
+
+                input do
+                  set_model_name 'User'
+
+                  # define always-present form input attributes
+                  # attribute :name, String
+                end
+
+                validations do
+                  relation :users
+
+                  # Add invariant form validations
+                  # validates :name, presence: true
+                end
+
+              end
+              CONTENT
+            end
+          end
+        end
+      }
+    end
+  end
+
   shared_examples_for "generates a create user form" do
     it "populates a create form file" do
       expect(destination_root).to have_structure {
@@ -20,8 +52,6 @@ describe ROM::Generators::FormGenerator do
                 commands users: :create
 
                 input do
-                  set_model_name 'User'
-
                   # define form input attributes
                   # attribute :name, String
 
@@ -29,8 +59,6 @@ describe ROM::Generators::FormGenerator do
                 end
 
                 validations do
-                  relation :users
-
                   # Add form validations
                   # validates :name, presence: true
                 end
@@ -60,8 +88,6 @@ describe ROM::Generators::FormGenerator do
                 commands users: :update
 
                 input do
-                  set_model_name 'User'
-
                   # define form input attributes
                   # attribute :name, String
 
@@ -69,8 +95,6 @@ describe ROM::Generators::FormGenerator do
                 end
 
                 validations do
-                  relation :users
-
                   # Add form validations
                   # validates :name, presence: true
                 end
@@ -102,6 +126,7 @@ describe ROM::Generators::FormGenerator do
       run_generator ['users', '--command=create']
     end
 
+    it_should_behave_like "generates a base user form"
     it_should_behave_like "generates a create user form"
   end
 
@@ -110,6 +135,7 @@ describe ROM::Generators::FormGenerator do
       run_generator ['users', '--command=update']
     end
 
+    it_should_behave_like "generates a base user form"
     it_should_behave_like "generates an edit user form"
   end
 

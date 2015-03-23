@@ -1,2 +1,17 @@
 class <%= model_name %>Form < ROM::Model::Form
+
+  input do
+    set_model_name '<%= model_name %>'
+
+    # define always-present form input attributes
+    # attribute :name, String
+  end
+
+  validations do
+    relation :<%= relation %>
+
+    # Add invariant form validations
+    # validates :name, presence: true
+  end
+
 end
