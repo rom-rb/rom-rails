@@ -9,7 +9,6 @@ describe ROM::Generators::FormGenerator do
     prepare_destination
   end
 
-
   shared_examples_for "generates a create user form" do
     it "populates a create form file" do
       expect(destination_root).to have_structure {
@@ -89,9 +88,16 @@ describe ROM::Generators::FormGenerator do
     end
   end
 
+  describe "rom:form users" do
+    before do
+      run_generator ['users']
+    end
 
+    it_should_behave_like "generates a create user form"
+    it_should_behave_like "generates an edit user form"
+  end
 
-  describe "users --command=create" do
+  describe "rom:form users --command=create" do
     before do
       run_generator ['users', '--command=create']
     end
@@ -99,7 +105,7 @@ describe ROM::Generators::FormGenerator do
     it_should_behave_like "generates a create user form"
   end
 
-  describe "users --command=update" do
+  describe "rom:form users --command=update" do
     before do
       run_generator ['users', '--command=update']
     end

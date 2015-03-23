@@ -5,7 +5,7 @@ module ROM
     class FormGenerator < Base
       class_option :command,
         banner: "--command=command",
-        desc: "specify command to use", required: true
+        desc: "specify command to use"
 
       def create_new
         create(:new) if create_new_form?
@@ -23,11 +23,11 @@ module ROM
       end
 
       def create_new_form?
-        %w(new create).include? options[:command].to_s.downcase
+        options[:command].blank? || %w(new create).include?(options[:command].to_s.downcase)
       end
 
       def create_edit_form?
-        %w(edit update).include? options[:command].to_s.downcase
+        options[:command].blank? || %w(edit update).include?(options[:command].to_s.downcase)
       end
 
       def model_name
