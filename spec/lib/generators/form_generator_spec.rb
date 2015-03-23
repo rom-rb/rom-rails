@@ -9,14 +9,14 @@ describe ROM::Generators::FormGenerator do
     prepare_destination
   end
 
-  specify "a create form" do
-    run_generator ['users', '--command=create']
 
-    expect(destination_root).to have_structure {
-      directory 'app' do
-        directory 'forms' do
-          file 'new_user_form.rb' do
-            contains <<-CONTENT.strip_heredoc
+  shared_examples_for "generates a create user form" do
+    it "populates a create form file" do
+      expect(destination_root).to have_structure {
+        directory 'app' do
+          directory 'forms' do
+            file 'new_user_form.rb' do
+              contains <<-CONTENT.strip_heredoc
               class NewUserForm < ROM::Model::Form
                 commands users: :create
 
@@ -41,21 +41,22 @@ describe ROM::Generators::FormGenerator do
                 end
 
               end
-            CONTENT
+              CONTENT
+            end
           end
         end
-      end
-    }
+      }
+    end
   end
 
-  specify "an edit form" do
-    run_generator ['users', '--command=update']
+  shared_examples_for "generates an edit user form" do
 
-    expect(destination_root).to have_structure {
-      directory 'app' do
-        directory 'forms' do
-          file 'edit_user_form.rb' do
-            contains <<-CONTENT.strip_heredoc
+    it "populates a edit form file" do
+      expect(destination_root).to have_structure {
+        directory 'app' do
+          directory 'forms' do
+            file 'edit_user_form.rb' do
+              contains <<-CONTENT.strip_heredoc
               class EditUserForm < ROM::Model::Form
                 commands users: :update
 
@@ -80,10 +81,31 @@ describe ROM::Generators::FormGenerator do
                 end
 
               end
-            CONTENT
+              CONTENT
+            end
           end
         end
-      end
-    }
+      }
+    end
   end
+
+
+
+  describe "users --command=create" do
+    before do
+      run_generator ['users', '--command=create']
+    end
+
+    it_should_behave_like "generates a create user form"
+  end
+
+  describe "users --command=update" do
+    before do
+      run_generator ['users', '--command=update']
+    end
+
+    it_should_behave_like "generates an edit user form"
+  end
+
+
 end
