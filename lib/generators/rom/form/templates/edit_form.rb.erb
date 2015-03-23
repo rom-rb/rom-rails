@@ -1,4 +1,4 @@
-class Edit<%= model_name %>Form < ROM::Model::Form
+class Edit<%= model_name %>Form < <%= model_name %>Form
   commands <%= relation %>: :update
 
   input do

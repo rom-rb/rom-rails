@@ -7,6 +7,11 @@ module ROM
         banner: "--command=command",
         desc: "specify command to use"
 
+      def create_base_form
+        template "base_form.rb.erb",
+          File.join("app", "forms", "#{file_name.singularize}_form.rb")
+      end
+
       def create_new
         create(:new) if create_new_form?
       end

@@ -1,4 +1,4 @@
-class New<%= model_name %>Form < ROM::Model::Form
+class New<%= model_name %>Form < <%= model_name %>Form
   commands <%= relation %>: :create
 
   input do

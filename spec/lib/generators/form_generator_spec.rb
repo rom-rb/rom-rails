@@ -16,7 +16,7 @@ describe ROM::Generators::FormGenerator do
           directory 'forms' do
             file 'new_user_form.rb' do
               contains <<-CONTENT.strip_heredoc
-              class NewUserForm < ROM::Model::Form
+              class NewUserForm < UserForm
                 commands users: :create
 
                 input do
@@ -56,7 +56,7 @@ describe ROM::Generators::FormGenerator do
           directory 'forms' do
             file 'edit_user_form.rb' do
               contains <<-CONTENT.strip_heredoc
-              class EditUserForm < ROM::Model::Form
+              class EditUserForm < UserForm
                 commands users: :update
 
                 input do
