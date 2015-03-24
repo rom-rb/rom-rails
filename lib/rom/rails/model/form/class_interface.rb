@@ -70,13 +70,6 @@ module ROM
         # @api private
         attr_reader :injectible_commands
 
-        # input block stored to be used in inherited hook
-        #
-        # @return [Proc]
-        #
-        # @api private
-        attr_reader :input_block
-
         # validation block stored to be used in inherited hook
         #
         # @return [Proc]
@@ -90,7 +83,7 @@ module ROM
         def inherited(klass)
           klass.inject_commands_for(*injectible_commands) if injectible_commands
           klass.commands(*self_commands) if self_commands
-          klass.input(readers: false, &input_block) if input_block
+          input_blocks.each{|block| klass.input(readers: false, &block) }
           klass.validations(&validations_block) if validations_block
           super
         end
@@ -246,17 +239,29 @@ module ROM
           @command_registry ||= setup_command_registry
         end
 
+        # input block stored to be used in inherited hook
+        #
+        # @return [Proc]
+        #
+        # @api private
+        def input_blocks
+          @input_blocks ||= []
+        end
+
         # Create attribute handler class
         #
         # @return [Class]
         #
         # @api private
         def define_attributes!(block)
-          @input_block = block
+          input_blocks << block
           @attributes = ClassBuilder.new(name: "#{name}::Attributes", parent: Object).call { |klass|
             klass.send(:include, ROM::Model::Attributes)
           }
-          @attributes.class_eval(&block)
+          input_blocks.each do |input_block|
+            @attributes.class_eval(&input_block)
+          end
+
           update_const(:Attributes, @attributes)
         end
 

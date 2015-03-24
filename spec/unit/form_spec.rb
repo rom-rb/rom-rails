@@ -293,6 +293,23 @@ describe 'Form' do
       expect(child_form.attributes).to_not be(form.attributes)
     end
 
+    it 'expands input' do
+      child_form = Class.new(form) do
+        def self.name
+          "NewUserForm"
+        end
+
+        input do
+          attribute :login, String
+        end
+      end
+
+      expect(child_form.attributes.attribute_set[:login]).to_not be(nil)
+      expect(child_form.attributes.attribute_set[:email]).to_not be(nil)
+
+      expect(child_form.attributes).to_not be(form.attributes)
+    end
+
     it 'copies model' do
       expect(child_form.model.attribute_set[:email]).to_not be(nil)
       expect(child_form.model).to_not be(form.model)
