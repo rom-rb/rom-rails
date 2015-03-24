@@ -231,9 +231,7 @@ module ROM
         #
         # @api private
         def reserved_attributes
-          [ :commit!, :save, :attributes, :params, :validator, :errors,
-            :validate!, :result, :model_name, :to_model, :to_key,
-            :persisted?, :success? ]
+          ROM::Model::Form.public_instance_methods
         end
 
         # @return [Hash<Symbol=>ROM::CommandRegistry>]
