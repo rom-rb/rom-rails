@@ -257,7 +257,7 @@ module ROM
             klass.send(:include, ROM::Model::Attributes)
           }
           @attributes.class_eval(&block)
-          const_set(:Attributes, @attributes)
+          update_const(:Attributes, @attributes)
         end
 
         # Define attribute readers for the form
@@ -308,7 +308,8 @@ module ROM
             RUBY
           }
           key.each { |name| @model.attribute(name) }
-          const_set(:Model, @model)
+
+          update_const(:Model, @model)
         end
 
         # Define attribute validator class
@@ -322,7 +323,7 @@ module ROM
             klass.send(:include, ROM::Model::Validator)
           }
           @validator.class_eval(&block)
-          const_set(:Validator, @validator)
+          update_const(:Validator, @validator)
         end
 
         # Shortcut to global ROM env
@@ -389,6 +390,19 @@ module ROM
           repository.extend_command_class(klass, relation.dataset)
 
           klass.build(relation)
+        end
+
+
+        # Silently update a constant, replacing any existing definition without
+        # warning
+        #
+        # @param [Symbol] name the name of the constant
+        # @param [Class] klass class to assign
+        #
+        # @api private
+        def update_const(name, klass)
+          remove_const(name) if const_defined?(name, false)
+          const_set(name, klass)
         end
       end
     end
