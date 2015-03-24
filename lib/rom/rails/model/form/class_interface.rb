@@ -225,6 +225,17 @@ module ROM
 
         private
 
+        # retrieve a list of reserved method names
+        #
+        # @return [Array<Symbol>]
+        #
+        # @api private
+        def reserved_attributes
+          [ :commit!, :save, :attributes, :params, :validator, :errors,
+            :validate!, :result, :model_name, :to_model, :to_key,
+            :persisted?, :success? ]
+        end
+
         # @return [Hash<Symbol=>ROM::CommandRegistry>]
         #
         # @api private
@@ -277,8 +288,14 @@ module ROM
         #
         # @api private
         def define_attribute_readers!
+          reserved = reserved_attributes
           @attributes.attribute_set.each do |attribute|
-            next if public_instance_methods.include?(attribute.name)
+            if reserved.include?(attribute.name)
+              raise(
+                ArgumentError,
+                "#{attribute.name} attribute is in conflict with #{self}##{attribute.name}"
+              )
+            end
 
             class_eval <<-RUBY, __FILE__, __LINE__ + 1
               def #{attribute.name}

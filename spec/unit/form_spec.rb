@@ -116,13 +116,6 @@ describe 'Form' do
     end
 
     it 'raises error when attribute is in conflict with form interface' do
-      pending <<-PENDING.strip_heredoc
-      I've updated the builder to _skip_ already existing methods, rather
-      than raising a warning.
-      1) It's needed for allowing input to be called multiple times
-      2) If you've already defined a method, good on ya?
-      DISCUSS
-      PENDING
       expect {
         Class.new(ROM::Model::Form) do
           input do
