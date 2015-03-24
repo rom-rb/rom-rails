@@ -271,12 +271,7 @@ module ROM
         # @api private
         def define_attribute_readers!
           @attributes.attribute_set.each do |attribute|
-            if public_instance_methods.include?(attribute.name)
-              raise(
-                ArgumentError,
-                "#{attribute.name} attribute is in conflict with #{self}##{attribute.name}"
-              )
-            end
+            next if public_instance_methods.include?(attribute.name)
 
             class_eval <<-RUBY, __FILE__, __LINE__ + 1
               def #{attribute.name}
