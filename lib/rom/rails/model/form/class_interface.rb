@@ -70,13 +70,6 @@ module ROM
         # @api private
         attr_reader :injectible_commands
 
-        # validation block stored to be used in inherited hook
-        #
-        # @return [Proc]
-        #
-        # @api private
-        attr_reader :validations_block
-
         # Copy input attributes, validator and model to the descendant
         #
         # @api private
@@ -84,7 +77,7 @@ module ROM
           klass.inject_commands_for(*injectible_commands) if injectible_commands
           klass.commands(*self_commands) if self_commands
           input_blocks.each{|block| klass.input(readers: false, &block) }
-          klass.validations(&validations_block) if validations_block
+          validation_blocks.each{|block| klass.validations(&block) }
           super
         end
 
@@ -248,6 +241,15 @@ module ROM
           @input_blocks ||= []
         end
 
+        # validation blocks stored to be used in inherited hook
+        #
+        # @return [Proc]
+        #
+        # @api private
+        def validation_blocks
+          @validation_blocks ||= []
+        end
+
         # Create attribute handler class
         #
         # @return [Class]
@@ -323,11 +325,11 @@ module ROM
         #
         # @api private
         def define_validator!(block)
-          @validations_block = block
+          validation_blocks << block
           @validator = ClassBuilder.new(name: "#{name}::Validator", parent: Object).call { |klass|
             klass.send(:include, ROM::Model::Validator)
           }
-          @validator.class_eval(&block)
+          validation_blocks.each{|validation| @validator.class_eval(&validation) }
           update_const(:Validator, @validator)
         end
 
