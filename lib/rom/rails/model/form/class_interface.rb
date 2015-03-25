@@ -70,28 +70,14 @@ module ROM
         # @api private
         attr_reader :injectible_commands
 
-        # input block stored to be used in inherited hook
-        #
-        # @return [Proc]
-        #
-        # @api private
-        attr_reader :input_block
-
-        # validation block stored to be used in inherited hook
-        #
-        # @return [Proc]
-        #
-        # @api private
-        attr_reader :validations_block
-
         # Copy input attributes, validator and model to the descendant
         #
         # @api private
         def inherited(klass)
           klass.inject_commands_for(*injectible_commands) if injectible_commands
           klass.commands(*self_commands) if self_commands
-          klass.input(readers: false, &input_block) if input_block
-          klass.validations(&validations_block) if validations_block
+          input_blocks.each{|block| klass.input(readers: false, &block) }
+          validation_blocks.each{|block| klass.validations(&block) }
           super
         end
 
@@ -239,11 +225,38 @@ module ROM
 
         private
 
+        # retrieve a list of reserved method names
+        #
+        # @return [Array<Symbol>]
+        #
+        # @api private
+        def reserved_attributes
+          ROM::Model::Form.public_instance_methods
+        end
+
         # @return [Hash<Symbol=>ROM::CommandRegistry>]
         #
         # @api private
         def command_registry
           @command_registry ||= setup_command_registry
+        end
+
+        # input block stored to be used in inherited hook
+        #
+        # @return [Proc]
+        #
+        # @api private
+        def input_blocks
+          @input_blocks ||= []
+        end
+
+        # validation blocks stored to be used in inherited hook
+        #
+        # @return [Proc]
+        #
+        # @api private
+        def validation_blocks
+          @validation_blocks ||= []
         end
 
         # Create attribute handler class
@@ -252,12 +265,15 @@ module ROM
         #
         # @api private
         def define_attributes!(block)
-          @input_block = block
+          input_blocks << block
           @attributes = ClassBuilder.new(name: "#{name}::Attributes", parent: Object).call { |klass|
             klass.send(:include, ROM::Model::Attributes)
           }
-          @attributes.class_eval(&block)
-          const_set(:Attributes, @attributes)
+          input_blocks.each do |input_block|
+            @attributes.class_eval(&input_block)
+          end
+
+          update_const(:Attributes, @attributes)
         end
 
         # Define attribute readers for the form
@@ -270,8 +286,9 @@ module ROM
         #
         # @api private
         def define_attribute_readers!
+          reserved = reserved_attributes
           @attributes.attribute_set.each do |attribute|
-            if public_instance_methods.include?(attribute.name)
+            if reserved.include?(attribute.name)
               raise(
                 ArgumentError,
                 "#{attribute.name} attribute is in conflict with #{self}##{attribute.name}"
@@ -313,7 +330,8 @@ module ROM
             RUBY
           }
           key.each { |name| @model.attribute(name) }
-          const_set(:Model, @model)
+
+          update_const(:Model, @model)
         end
 
         # Define attribute validator class
@@ -322,12 +340,12 @@ module ROM
         #
         # @api private
         def define_validator!(block)
-          @validations_block = block
+          validation_blocks << block
           @validator = ClassBuilder.new(name: "#{name}::Validator", parent: Object).call { |klass|
             klass.send(:include, ROM::Model::Validator)
           }
-          @validator.class_eval(&block)
-          const_set(:Validator, @validator)
+          validation_blocks.each{|validation| @validator.class_eval(&validation) }
+          update_const(:Validator, @validator)
         end
 
         # Shortcut to global ROM env
@@ -394,6 +412,19 @@ module ROM
           repository.extend_command_class(klass, relation.dataset)
 
           klass.build(relation)
+        end
+
+
+        # Silently update a constant, replacing any existing definition without
+        # warning
+        #
+        # @param [Symbol] name the name of the constant
+        # @param [Class] klass class to assign
+        #
+        # @api private
+        def update_const(name, klass)
+          remove_const(name) if const_defined?(name, false)
+          const_set(name, klass)
         end
       end
     end

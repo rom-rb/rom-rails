@@ -286,6 +286,23 @@ describe 'Form' do
       expect(child_form.attributes).to_not be(form.attributes)
     end
 
+    it 'expands input' do
+      child_form = Class.new(form) do
+        def self.name
+          "NewUserForm"
+        end
+
+        input do
+          attribute :login, String
+        end
+      end
+
+      expect(child_form.attributes.attribute_set[:login]).to_not be(nil)
+      expect(child_form.attributes.attribute_set[:email]).to_not be(nil)
+
+      expect(child_form.attributes).to_not be(form.attributes)
+    end
+
     it 'copies model' do
       expect(child_form.model.attribute_set[:email]).to_not be(nil)
       expect(child_form.model).to_not be(form.model)
@@ -297,5 +314,33 @@ describe 'Form' do
       )
       expect(child_form.validator).to_not be(form.validator)
     end
+
+    it "expands existing validators" do
+      child_form = Class.new(form) do
+        def self.name
+          "NewUserForm"
+        end
+
+        input do
+          attribute :login, String
+        end
+
+        validations do
+          validates :login, length: { minimum: 4 }
+        end
+      end
+
+      expect(child_form.validator.validators.first).to be_instance_of(
+        ActiveModel::Validations::PresenceValidator
+      )
+
+      expect(child_form.validator.validators.last).to be_instance_of(
+        ActiveModel::Validations::LengthValidator
+      )
+
+      expect(child_form.validator).to_not be(form.validator)
+    end
+
+
   end
 end
