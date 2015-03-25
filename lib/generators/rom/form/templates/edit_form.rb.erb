@@ -1,9 +1,7 @@
-class Edit<%= model_name %>Form < ROM::Model::Form
+class Edit<%= model_name %>Form < <%= model_name %>Form
   commands <%= relation %>: :update
 
   input do
-    set_model_name '<%= model_name %>'
-
     # define form input attributes
     # attribute :name, String
 
@@ -11,8 +9,6 @@ class Edit<%= model_name %>Form < ROM::Model::Form
   end
 
   validations do
-    relation :<%= relation %>
-
     # Add form validations
     # validates :name, presence: true
   end
