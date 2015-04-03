@@ -7,6 +7,8 @@ describe 'Form with injected commands' do
 
   let(:form_class) do
     Class.new(ROM::Model::Form) do
+      commands users: :create
+
       inject_commands_for :tasks
 
       mappings tasks: :entity

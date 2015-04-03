@@ -222,8 +222,15 @@ module ROM
         def build(input = {}, options = {})
           commands =
             if mappings
-              mappings.each_with_object({}) { |(relation, mapper), h|
-                h[relation] = command_registry[relation].as(mapper)
+              command_registry.each_with_object({}) { |(relation, registry), h|
+                mapper = mappings[relation]
+
+                h[relation] =
+                  if mapper
+                    registry.as(mapper)
+                  else
+                    registry
+                  end
               }
             else
               command_registry
