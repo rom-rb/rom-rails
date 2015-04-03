@@ -1,3 +1,13 @@
+## v0.3.1 2015-04-03
+
+### Added
+
+* `Form.mappings` which sets up auto-mapping command results (solnic)
+* Form descendants can use `input` and `validations` blocks (cflipse)
+* Form generators can generate a shared base form class for new/update forms (cflipse)
+
+[Compare v0.3.0...v0.3.1](https://github.com/rom-rb/rom-rails/compare/v0.3.0...v0.3.1)
+
 ## v0.3.0 2015-03-22
 
 ### Added
