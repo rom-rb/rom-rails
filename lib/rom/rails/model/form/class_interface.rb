@@ -396,7 +396,12 @@ module ROM
             self_commands.each do |rel_name, name|
               command = build_command(name, rel_name)
               elements = { name => command }
-              options = { mappers: rom.mappers[rel_name] }
+              options =
+                if rom.mappers.key?(rel_name)
+                  { mappers: rom.mappers[rel_name] }
+                else
+                  {}
+                end
 
               commands[rel_name] = CommandRegistry.new(elements, options)
             end
