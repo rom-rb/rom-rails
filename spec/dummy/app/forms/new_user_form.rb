@@ -3,7 +3,9 @@ class NewUserForm < UserForm
 
   mappings users: :entity
 
-  attributes.timestamps(:created_at)
+  input do
+    timestamps(:created_at)
+  end
 
   def commit!
     users.try { users.create.call(attributes) }
