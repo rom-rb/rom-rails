@@ -31,8 +31,8 @@ Please report any issues in the main [rom-rb/rom](https://github.com/rom-rb/rom/
 
 You can read more about ROM and Rails on the official website:
 
-* [Introduction to ROM](http://rom-rb.org/introduction)
-* [Rails tutorial](http://rom-rb.org/tutorials/rails)
+* [Introduction to ROM](http://rom-rb.org/introduction/)
+* [Rails tutorial](http://rom-rb.org/tutorials/todo-app-with-rails/)
 
 
 ## Community
