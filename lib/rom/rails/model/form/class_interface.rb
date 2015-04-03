@@ -220,7 +220,15 @@ module ROM
         #
         # @api public
         def build(input = {}, options = {})
-          new(input, options.merge(command_registry))
+          commands =
+            if mappings
+              mappings.each_with_object({}) { |(relation, mapper), h|
+                h[relation] = command_registry[relation].as(mapper)
+              }
+            else
+              command_registry
+            end
+          new(input, options.merge(commands))
         end
 
         private
@@ -380,7 +388,10 @@ module ROM
           if self_commands
             self_commands.each do |rel_name, name|
               command = build_command(name, rel_name)
-              commands[rel_name] = CommandRegistry.new(name => command)
+              elements = { name => command }
+              options = { mappers: rom.mappers[rel_name] }
+
+              commands[rel_name] = CommandRegistry.new(elements, options)
             end
           end
 

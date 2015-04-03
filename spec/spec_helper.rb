@@ -13,6 +13,11 @@ require 'database_cleaner'
 require 'capybara/rails'
 require 'generator_spec'
 
+begin
+  require 'byebug'
+rescue LoadError
+end
+
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 

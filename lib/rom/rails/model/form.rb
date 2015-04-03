@@ -48,7 +48,7 @@ module ROM
       extend ROM::ClassMacros
       extend Form::ClassInterface
 
-      defines :relation
+      defines :relation, :mappings
 
       # Return raw params received from the request
       #
