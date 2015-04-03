@@ -67,7 +67,7 @@ describe 'Form' do
       expect(form_object).to be_success
       expect(rom.relations.users.first).to include(name: 'Jane')
 
-      expect(form_object.tasks).to be(rom.command(:tasks))
+      expect(form_object.tasks).to_not be(nil)
     end
   end
 
