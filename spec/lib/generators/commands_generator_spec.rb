@@ -17,7 +17,7 @@ describe ROM::Generators::CommandsGenerator do
     expect(destination_root).to have_structure {
       directory 'app' do
         directory 'commands' do
-          directory 'users' do
+          directory 'user_commands' do
             file 'create.rb' do
               contains <<-CONTENT.strip_heredoc
                 module UserCommands
@@ -68,13 +68,13 @@ describe ROM::Generators::CommandsGenerator do
   specify "with given adapter" do
     run_generator ['users', '--adapter=memory']
 
-    create = File.read(File.join(destination_root, 'app', 'commands', 'users', 'create.rb'))
+    create = File.read(File.join(destination_root, 'app', 'commands', 'user_commands', 'create.rb'))
     expect(create).to include("class Create < ROM::Commands::Create[:memory]")
 
-    update = File.read(File.join(destination_root, 'app', 'commands', 'users', 'update.rb'))
+    update = File.read(File.join(destination_root, 'app', 'commands', 'user_commands', 'update.rb'))
     expect(update).to include("class Update < ROM::Commands::Update[:memory]")
 
-    delete = File.read(File.join(destination_root, 'app', 'commands', 'users', 'delete.rb'))
+    delete = File.read(File.join(destination_root, 'app', 'commands', 'user_commands', 'delete.rb'))
     expect(delete).to include("class Delete < ROM::Commands::Delete[:memory]")
   end
 end
