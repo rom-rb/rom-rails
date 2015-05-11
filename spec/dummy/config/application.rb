@@ -12,5 +12,7 @@ require 'rspec-rails'
 module Dummy
   class Application < Rails::Application
     config.assets.enabled = false
+
+    require 'rom/test_adapter'
   end
 end
