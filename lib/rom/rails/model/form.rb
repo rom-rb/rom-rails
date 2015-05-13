@@ -113,7 +113,7 @@ module ROM
       #
       # @api public
       def success?
-        errors.nil? || !errors.any?
+        errors.nil? || !errors.present?
       end
 
       # Trigger validation and store errors (if any)
