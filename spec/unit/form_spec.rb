@@ -231,7 +231,10 @@ describe 'Form' do
       result = form.build(email: 'test@example.com').save
 
       expect(result).not_to be_success
+
+      expect(result.errors[:email]).to eq []
     end
+
 
 
   end
