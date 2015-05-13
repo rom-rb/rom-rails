@@ -209,6 +209,31 @@ describe 'Form' do
         expect(errors[:email]).to eq []
       end
     end
+
+    it "recovers from database errors" do
+      form = Class.new(ROM::Model::Form) do
+        commands users: :create
+        input do
+          set_model_name 'User'
+
+          attribute :email, String
+        end
+
+        def commit!(*args)
+
+          users.try {
+            raise ROM::SQL::ConstraintError
+          }
+
+        end
+      end
+
+      result = form.build(email: 'test@example.com').save
+
+      expect(result).not_to be_success
+    end
+
+
   end
 
   describe "#attributes" do
