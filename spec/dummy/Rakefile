@@ -9,7 +9,8 @@ require 'rom/sql/rake_task'
 
 namespace :db do
   task :setup do
-    ROM.setup(:sql, "sqlite://#{Rails.root}/db/#{Rails.env}.sqlite3")
+    scheme = RUBY_ENGINE == 'jruby' ? 'jdbc:sqlite' : 'sqlite'
+    ROM.setup(:sql, "#{scheme}://#{Rails.root}/db/#{Rails.env}.sqlite3")
     ROM.finalize
   end
 end
