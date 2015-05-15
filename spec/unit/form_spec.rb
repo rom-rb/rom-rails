@@ -222,7 +222,7 @@ describe 'Form' do
         def commit!(*args)
 
           users.try {
-            raise ROM::SQL::ConstraintError
+            raise ROM::SQL::ConstraintError.new(RuntimeError.new("duplicate key"))
           }
 
         end
@@ -233,6 +233,7 @@ describe 'Form' do
       expect(result).not_to be_success
 
       expect(result.errors[:email]).to eq []
+      expect(result.errors[:base]).to eq ["a database error prevented saving this form"]
     end
 
 

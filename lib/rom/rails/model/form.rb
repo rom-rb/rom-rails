@@ -163,7 +163,7 @@ module ROM
           when nil
             # do nothing
           else
-            add(:base, error.message)
+            add(:base, "a database error prevented saving this form")
           end
 
           self
