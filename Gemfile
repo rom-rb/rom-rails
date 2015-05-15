@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gemspec
 
-gem 'rails', '4.2.0'
+gem'rails', '4.2.0'
 
 gem 'sqlite3', platforms: [:mri, :rbx]
 
@@ -12,6 +12,7 @@ platforms :jruby do
 end
 
 group :test do
+  gem 'transproc', github: 'solnic/transproc', branch: 'master'
   gem 'rom', github: 'rom-rb/rom', branch: 'master'
   gem 'rom-sql', github: 'rom-rb/rom-sql', branch: 'master'
   gem 'byebug', platforms: :mri
