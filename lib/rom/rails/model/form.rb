@@ -84,7 +84,7 @@ module ROM
         @params = params
         @model  = self.class.model.new(params.merge(options.slice(*self.class.key)))
         @result = nil
-        @errors =  ActiveModel::Errors.new([])
+        @errors = ErrorProxy.new ActiveModel::Errors.new([])
         options.each { |key, value| instance_variable_set("@#{key}", value) }
       end
 
@@ -103,7 +103,11 @@ module ROM
       #
       # @api public
       def save(*args)
+        @errors.clear
         @result = commit!(*args)
+
+        @errors.set @result.error if result.respond_to? :error
+
         self
       end
 
@@ -113,17 +117,18 @@ module ROM
       #
       # @api public
       def success?
-        errors.nil? || !errors.present?
+        errors.success?
       end
 
       # Trigger validation and store errors (if any)
       #
       # @api public
       def validate!
+        @errors.clear
         validator = self.class::Validator.new(attributes)
         validator.validate
 
-        @errors = validator.errors
+        @errors.set validator.errors
       end
 
       # Sanitize and coerce input params
@@ -143,8 +148,33 @@ module ROM
       #
       # @api public
       def errors
-        (result && result.error) || @errors
+        @errors
       end
+
+
+      class ErrorProxy < SimpleDelegator
+
+        def set(error)
+          case error
+          when ActiveModel::Errors
+            __setobj__ error
+          when ROM::Model::ValidationError
+            __setobj__ error.errors
+          when nil
+            # do nothing
+          else
+            add(:base, error.message)
+          end
+
+          self
+        end
+
+        def success?
+          !present?
+        end
+
+      end
+
     end
   end
 end

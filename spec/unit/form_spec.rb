@@ -202,9 +202,9 @@ describe 'Form' do
       it "exposes an activemodel compatible error"  do
         errors = form.build({}).errors
 
-        expect(errors).to be_instance_of(
-          ActiveModel::Errors
-        )
+        expect(errors).to respond_to(:[])
+        expect(errors).to respond_to(:empty?)
+        expect(errors).to respond_to(:blank?)
 
         expect(errors[:email]).to eq []
       end
