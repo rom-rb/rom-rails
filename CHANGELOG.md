@@ -1,3 +1,11 @@
+## v0.3.2 to-be-released
+
+### Fixed
+
+* Generator uses correct directory for commands (cflipse)
+
+[Compare v0.3.1...HEAD](https://github.com/rom-rb/rom-rails/compare/v0.3.1...HEAD)
+
 ## v0.3.1 2015-04-04
 
 ### Added
