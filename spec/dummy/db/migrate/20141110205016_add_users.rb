@@ -1,9 +1,11 @@
-class AddUsers < ActiveRecord::Migration
-  def change
+ROM::SQL.migration do
+  change do
     create_table(:users) do |t|
-      t.string :name
-      t.string :email
-      t.timestamps
+      primary_key :id
+      String :name
+      String :email
+      DateTime :created_at
+      DateTime :updated_at
     end
   end
 end

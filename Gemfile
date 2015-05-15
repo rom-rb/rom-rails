@@ -2,17 +2,21 @@ source 'https://rubygems.org'
 
 gemspec
 
-gem'rails', '4.2.0'
+RAILS_VERSION = '4.2.1'
+
+%w(railties activemodel actionview actionpack).each do |name|
+  gem name, RAILS_VERSION
+end
 
 gem 'sqlite3', platforms: [:mri, :rbx]
 
 platforms :jruby do
   gem 'jdbc-sqlite3'
-  gem 'activerecord-jdbc-adapter'
 end
 
 group :test do
   gem 'transproc', github: 'solnic/transproc', branch: 'master'
+  gem 'rack-test'
   gem 'rom', github: 'rom-rb/rom', branch: 'master'
   gem 'rom-sql', github: 'rom-rb/rom-sql', branch: 'master'
   gem 'byebug', platforms: :mri

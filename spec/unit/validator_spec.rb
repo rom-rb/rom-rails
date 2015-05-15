@@ -7,6 +7,8 @@ describe 'Validation' do
     Class.new {
       include ROM::Model::Attributes
 
+      set_model_name 'User'
+
       attribute :name, String
       attribute :email, String
     }
@@ -22,13 +24,13 @@ describe 'Validation' do
       validates :email, uniqueness: true
 
       def self.name
-        'UserValidator'
+        'User'
       end
     }
   end
 
   describe '#call' do
-    let(:attributes) { {} }
+    let(:attributes) { user_attrs.new }
 
     it 'raises validation error when attributes are not valid' do
       expect { validator.call }.to raise_error(ROM::Model::ValidationError)
@@ -36,7 +38,7 @@ describe 'Validation' do
   end
 
   describe "#validate" do
-    let(:attributes) { {} }
+    let(:attributes) { user_attrs.new }
 
     it "sets errors when attributes are not valid" do
       validator.validate

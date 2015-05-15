@@ -1,7 +1,8 @@
-class CreateTags < ActiveRecord::Migration
-  def change
-    create_table :tags do |t|
-      t.string :name
+ROM::SQL.migration do
+  change do
+    create_table(:tags) do |t|
+      primary_key :id
+      String :name
     end
   end
 end
