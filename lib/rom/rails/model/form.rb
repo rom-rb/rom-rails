@@ -1,4 +1,5 @@
 require 'rom/rails/model/form/class_interface'
+require 'rom/rails/model/form/error_proxy'
 
 module ROM
   module Model
@@ -72,6 +73,13 @@ module ROM
       # @api public
       attr_reader :result
 
+      # Return any errors with the form
+      #
+      # @return [ErrorProxy]
+      #
+      # @api public
+      attr_reader :errors
+
       delegate :model_name, :persisted?, :to_key, to: :model
       alias_method :to_model, :model
 
@@ -140,39 +148,6 @@ module ROM
       # @api public
       def attributes
         self.class.attributes[params]
-      end
-
-      # Return errors
-      #
-      # @return [ActiveModel::Errors]
-      #
-      # @api public
-      def errors
-        @errors
-      end
-
-
-      class ErrorProxy < SimpleDelegator
-
-        def set(error)
-          case error
-          when ActiveModel::Errors
-            __setobj__ error
-          when ROM::Model::ValidationError
-            __setobj__ error.errors
-          when nil
-            # do nothing
-          else
-            add(:base, "a database error prevented saving this form")
-          end
-
-          self
-        end
-
-        def success?
-          !present?
-        end
-
       end
 
     end
