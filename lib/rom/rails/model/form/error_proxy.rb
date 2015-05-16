@@ -9,6 +9,11 @@ module ROM
       # @api private
       class ErrorProxy < SimpleDelegator
 
+        # @api private
+        def initialize
+          super ActiveModel::Errors.new([])
+        end
+
         # update the current errors
         #
         # @param error [ActiveModel::Errors, ROM::Model::ValidatonError, object]
@@ -18,6 +23,8 @@ module ROM
         # messages
         #
         # @return [self]
+        #
+        # @api private
         def set(error)
           case error
           when ActiveModel::Errors
@@ -36,6 +43,8 @@ module ROM
         # Has the command succeeded?
         #
         # @return [Boolean]
+        #
+        # @api public
         def success?
           !present?
         end

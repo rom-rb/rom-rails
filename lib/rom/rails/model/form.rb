@@ -92,7 +92,7 @@ module ROM
         @params = params
         @model  = self.class.model.new(params.merge(options.slice(*self.class.key)))
         @result = nil
-        @errors = ErrorProxy.new ActiveModel::Errors.new([])
+        @errors = ErrorProxy.new
         options.each { |key, value| instance_variable_set("@#{key}", value) }
       end
 
