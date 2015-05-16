@@ -1,4 +1,5 @@
 require 'rom/rails/model/form/class_interface'
+require 'rom/rails/model/form/error_proxy'
 
 module ROM
   module Model
@@ -72,6 +73,13 @@ module ROM
       # @api public
       attr_reader :result
 
+      # Return any errors with the form
+      #
+      # @return [ErrorProxy]
+      #
+      # @api public
+      attr_reader :errors
+
       delegate :model_name, :persisted?, :to_key, to: :model
       alias_method :to_model, :model
 
@@ -84,7 +92,7 @@ module ROM
         @params = params
         @model  = self.class.model.new(params.merge(options.slice(*self.class.key)))
         @result = nil
-        @errors =  ActiveModel::Errors.new([])
+        @errors = ErrorProxy.new
         options.each { |key, value| instance_variable_set("@#{key}", value) }
       end
 
@@ -103,7 +111,11 @@ module ROM
       #
       # @api public
       def save(*args)
+        @errors.clear
         @result = commit!(*args)
+
+        @errors.set @result.error if result.respond_to? :error
+
         self
       end
 
@@ -113,17 +125,18 @@ module ROM
       #
       # @api public
       def success?
-        errors.nil? || !errors.any?
+        errors.success?
       end
 
       # Trigger validation and store errors (if any)
       #
       # @api public
       def validate!
+        @errors.clear
         validator = self.class::Validator.new(attributes)
         validator.validate
 
-        @errors = validator.errors
+        @errors.set validator.errors
       end
 
       # Sanitize and coerce input params
@@ -137,14 +150,6 @@ module ROM
         self.class.attributes[params]
       end
 
-      # Return errors
-      #
-      # @return [ActiveModel::Errors]
-      #
-      # @api public
-      def errors
-        (result && result.error) || @errors
-      end
     end
   end
 end
