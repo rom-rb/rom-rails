@@ -1,5 +1,13 @@
 class <%= class_name %>Relation < ROM::Relation<%= "[:#{adapter}]" %>
+<% if repository -%>
+  repository :<%= repository %>
+<% else -%>
+  # repository :default
+<% end -%>
+
   dataset :<%= dataset %>
+
+  register_as :<%= register_as %>
 
   # define your methods here ie:
   #

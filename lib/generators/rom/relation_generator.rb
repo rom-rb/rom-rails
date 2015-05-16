@@ -8,6 +8,17 @@ module ROM
         desc: "specify an adapter to use", required: true,
         default: ROM.adapters.keys.first
 
+      class_option :repository,
+        banner: "--repository=repo",
+        desc: "specify a repository to connect to",
+        required: false
+
+      class_option :register,
+        banner: "--register=name",
+        desc: "specify the registration identifier",
+        required: false
+
+
       def create_relation_file
         template(
           'relation.rb.erb',
@@ -24,6 +35,15 @@ module ROM
       def adapter
         options[:adapter]
       end
+
+      def register_as
+        options[:register] || dataset
+      end
+
+      def repository
+        options[:repository]
+      end
+
     end
   end
 end

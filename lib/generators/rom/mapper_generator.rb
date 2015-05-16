@@ -19,6 +19,11 @@ module ROM
       def relation
         class_name.pluralize.underscore
       end
+
+      def register_as
+        model_name.singularize.downcase
+      end
+
     end
   end
 end
