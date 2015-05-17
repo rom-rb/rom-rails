@@ -1,4 +1,4 @@
-## v0.3.2 to-be-released
+## v0.3.2 2015-05-17
 
 ### Fixed
 
@@ -6,7 +6,7 @@
 * Generators can now add `register_as` and `repository` settings (cflipse)
 * Database errors are now wrapped in Form objects so they can be handled gracefully (cflipse)
 
-[Compare v0.3.1...HEAD](https://github.com/rom-rb/rom-rails/compare/v0.3.1...HEAD)
+[Compare v0.3.1...v0.3.2](https://github.com/rom-rb/rom-rails/compare/v0.3.1...v0.3.2)
 
 ## v0.3.1 2015-04-04
 
