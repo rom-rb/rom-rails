@@ -15,7 +15,6 @@ platforms :jruby do
 end
 
 group :test do
-  gem 'transproc', github: 'solnic/transproc', branch: 'master'
   gem 'rack-test'
   gem 'rom', github: 'rom-rb/rom', branch: 'master'
   gem 'rom-sql', github: 'rom-rb/rom-sql', branch: 'master'
