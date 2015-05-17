@@ -3,6 +3,8 @@
 ### Fixed
 
 * Generator uses correct directory for commands (cflipse)
+* Generators can now add `register_as` and `repository` settings (cflipse)
+* Database errors are now wrapped in Form objects so they can be handled gracefully (cflipse)
 
 [Compare v0.3.1...HEAD](https://github.com/rom-rb/rom-rails/compare/v0.3.1...HEAD)
 
