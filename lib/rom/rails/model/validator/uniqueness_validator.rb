@@ -24,13 +24,15 @@ module ROM
           super
           @klass = options.fetch(:class)
           @message = options.fetch(:message) { :taken }
+          @scope_key = options[:scope]
         end
 
         # Hook called by ActiveModel internally
         #
         # @api private
         def validate_each(validator, name, value)
-          validator.errors.add(name, message) unless unique?(name, value)
+          scope = {@scope_key => validator.to_model[@scope_key]} if @scope_key
+          validator.errors.add(name, message) unless unique?(name, value, scope)
         end
 
         private
@@ -66,8 +68,8 @@ module ROM
         # @return [TrueClass,FalseClass]
         #
         # @api private
-        def unique?(name, value)
-          relation.unique?(name => value)
+        def unique?(name, value, scope)
+          relation.where(scope).unique?(name => value)
         end
       end
     end

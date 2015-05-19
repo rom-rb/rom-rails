@@ -58,11 +58,9 @@ describe 'Validation' do
   describe ':uniqueness' do
     let(:attributes) { user_attrs.new(name: 'Jane', email: 'jane@doe.org') }
 
-    before do
-      rom.relations.users.insert(name: 'Jane', email: 'jane@doe.org')
-    end
-
     it 'sets default error messages' do
+      rom.relations.users.insert(name: 'Jane', email: 'jane@doe.org')
+
       expect(validator).to_not be_valid
       expect(validator.errors[:email]).to eql(['has already been taken'])
     end
@@ -72,6 +70,28 @@ describe 'Validation' do
 
       expect(validator).to_not be_valid
       expect(validator.errors[:name]).to eql(['TAKEN!'])
+    end
+
+    context 'with unique attributes within a scope' do
+      let(:attributes) { user_attrs.new(name: 'Jaine', email: 'jane@doe.org') }
+      let(:user_validator) do
+        Class.new {
+          include ROM::Model::Validator
+
+          relation :users
+
+          validates :email, uniqueness: {scope: :name}
+
+          def self.name
+            'User'
+          end
+        }
+      end
+
+      it 'does not add errors' do
+        rom.relations.users.insert(name: 'Jane', email: 'jane@doe.org')
+        expect(validator).to be_valid
+      end
     end
   end
 end
