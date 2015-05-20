@@ -213,6 +213,7 @@ describe 'Form' do
     it "recovers from database errors" do
       form = Class.new(ROM::Model::Form) do
         commands users: :create
+
         input do
           set_model_name 'User'
 
@@ -220,24 +221,16 @@ describe 'Form' do
         end
 
         def commit!(*args)
-
           users.try {
             raise ROM::SQL::ConstraintError.new(RuntimeError.new("duplicate key"))
           }
-
         end
       end
 
-      result = form.build(email: 'test@example.com').save
-
-      expect(result).not_to be_success
-
-      expect(result.errors[:email]).to eq []
-      expect(result.errors[:base]).to eq ["a database error prevented saving this form"]
+      expect {
+        form.build(email: 'test@example.com').save
+      }.to raise_error(ROM::SQL::ConstraintError)
     end
-
-
-
   end
 
   describe "#attributes" do
