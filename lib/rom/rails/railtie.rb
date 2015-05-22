@@ -62,7 +62,7 @@ module ROM
           ::Rails.root.join('app', directory).to_s
         end
 
-        app.config.eager_load_paths -=  paths
+        app.config.eager_load_paths -= paths
       end
 
       rake_tasks do
