@@ -37,7 +37,7 @@ module ROM
       end
 
       rake_tasks do
-        load "rom/rails/tasks/db.rake" unless self.class.active_record?
+        load "rom/rails/tasks/db.rake" unless active_record?
         self.rake_mode = true
       end
 
