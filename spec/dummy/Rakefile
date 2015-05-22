@@ -6,11 +6,3 @@ require File.expand_path('../config/application', __FILE__)
 Dummy::Application.load_tasks
 
 require 'rom/sql/rake_task'
-
-namespace :db do
-  task :setup do
-    scheme = RUBY_ENGINE == 'jruby' ? 'jdbc:sqlite' : 'sqlite'
-    ROM.setup(:sql, "#{scheme}://#{Rails.root}/db/#{Rails.env}.sqlite3")
-    ROM.finalize
-  end
-end

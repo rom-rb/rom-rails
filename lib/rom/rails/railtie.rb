@@ -12,6 +12,47 @@ module ROM
     class Railtie < ::Rails::Railtie
       COMPONENT_DIRS = %w(relations mappers commands).freeze
 
+      MissingRepositoryConfigError = Class.new(StandardError)
+
+      require 'byebug'
+
+      # @api public
+      def self.setup_repositories
+        raise(
+          MissingRepositoryConfigError,
+          "seems like you didn't configure any repositories"
+        ) unless config.rom.repositories.any?
+
+        ROM.setup(config.rom.repositories)
+        self
+      end
+
+      # @api public
+      def self.finalize
+        ROM.finalize
+        self
+      end
+
+      # If there's no default repository configured, try to infer it from
+      # other sources, e.g. ActiveRecord.
+      #
+      # @api private
+      def self.infer_default_repository
+        return unless active_record?
+        spec = ROM::Rails::ActiveRecord::Configuration.call
+        [:sql, spec[:uri], spec[:options]]
+      end
+
+      # @api private
+      def self.active_record?
+        defined?(::ActiveRecord)
+      end
+
+      # @api private
+      def before_initialize
+        config.rom = Configuration.new
+      end
+
       initializer 'rom.configure_action_controller' do
         ActiveSupport.on_load(:action_controller) do
           ActionController::Base.send(:include, ControllerExtension)
@@ -26,10 +67,14 @@ module ROM
         app.config.eager_load_paths -=  paths
       end
 
+      rake_tasks do
+        load "rom/rails/tasks/db.rake" unless self.class.active_record?
+      end
+
       # Make `ROM::Rails::Configuration` instance available to the user via
       # `Rails.application.config` before other initializers run.
       config.before_initialize do |_app|
-        config.rom = Configuration.new
+        before_initialize
       end
 
       # Reload ROM-related application code on each request.
@@ -42,7 +87,7 @@ module ROM
       #
       # @example
       #   ROM::Rails::Railtie.configure do |config|
-      #     config.repositories[:yaml] = {uri: 'yaml:///data'}
+      #     config.repositories[:default] = [:yaml, 'yaml:///data']
       #   end
       #
       # @api public
@@ -67,21 +112,15 @@ module ROM
           ROM.setup(ROM.env.repositories)
         else
           repositories = config.rom.repositories
-          repositories[:default] ||= infer_default_repository
 
-          ROM.setup(repositories.symbolize_keys)
+          if self.class.active_record?
+            repositories[:default] ||= self.class.infer_default_repository
+          end
+
+          self.class.setup_repositories
         end
         load_all
-        ROM.finalize
-      end
-
-      # If there's no default repository configured, try to infer it from
-      # other sources, e.g. ActiveRecord.
-      #
-      # @api private
-      def infer_default_repository
-        spec = Railtie::ActiveRecord::Configuration.call
-        [:sql, spec[:uri], spec[:options]]
+        self.class.finalize
       end
 
       # @api private
@@ -98,6 +137,7 @@ module ROM
         end
       end
 
+      # @api private
       def root
         ::Rails.root
       end
