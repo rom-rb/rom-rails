@@ -10,6 +10,8 @@ Spring.after_fork { ROM::Rails::Railtie.disconnect } if defined?(Spring)
 module ROM
   module Rails
     class Railtie < ::Rails::Railtie
+      COMPONENT_DIRS = %w(relations mappers commands).freeze
+
       initializer 'rom.configure_action_controller' do
         ActiveSupport.on_load(:action_controller) do
           ActionController::Base.send(:include, ControllerExtension)
@@ -17,7 +19,7 @@ module ROM
       end
 
       initializer 'rom.adjust_eager_load_paths' do |app|
-        paths = %w(commands mappers relations).map do |directory|
+        paths = COMPONENT_DIRS.map do |directory|
           ::Rails.root.join('app', directory).to_s
         end
 
@@ -52,19 +54,19 @@ module ROM
         end
       end
 
+      # TODO: Add `ROM.env.disconnect` to core.
+      #
+      # @api private
       def disconnect
-        # TODO: Add `ROM.env.disconnect` to core.
         ROM.env.repositories.each_value(&:disconnect)
       end
 
+      # @api private
       def setup
         if ROM.env
           ROM.setup(ROM.env.repositories)
         else
           repositories = config.rom.repositories
-
-          # If there's no default repository configured, try to infer it from
-          # other sources, e.g. ActiveRecord.
           repositories[:default] ||= infer_default_repository
 
           ROM.setup(repositories.symbolize_keys)
@@ -73,17 +75,23 @@ module ROM
         ROM.finalize
       end
 
+      # If there's no default repository configured, try to infer it from
+      # other sources, e.g. ActiveRecord.
+      #
+      # @api private
       def infer_default_repository
         spec = Railtie::ActiveRecord::Configuration.call
         [:sql, spec[:uri], spec[:options]]
       end
 
+      # @api private
       def load_all
-        %w(relations mappers commands).each do |type|
+        COMPONENT_DIRS.each do |type|
           load_files(type)
         end
       end
 
+      # @api private
       def load_files(type)
         Dir[root.join("app/#{type}/**/*.rb").to_s].each do |path|
           require_dependency(path)
