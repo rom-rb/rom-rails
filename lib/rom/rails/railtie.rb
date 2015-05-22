@@ -16,6 +16,12 @@ module ROM
 
       MissingRepositoryConfigError = Class.new(StandardError)
 
+      # Make `ROM::Rails::Configuration` instance available to the user via
+      # `Rails.application.config` before other initializers run.
+      config.before_initialize do |_app|
+        config.rom = Configuration.new
+      end
+
       initializer 'rom.configure_action_controller' do
         ActiveSupport.on_load(:action_controller) do
           ActionController::Base.send(:include, ControllerExtension)
@@ -33,12 +39,6 @@ module ROM
       rake_tasks do
         load "rom/rails/tasks/db.rake" unless self.class.active_record?
         self.rake_mode = true
-      end
-
-      # Make `ROM::Rails::Configuration` instance available to the user via
-      # `Rails.application.config` before other initializers run.
-      config.before_initialize do |_app|
-        Railtie.set_configuration
       end
 
       # Reload ROM-related application code on each request.
@@ -63,42 +63,47 @@ module ROM
         end
       end
 
-      # @api public
-      def setup
-        repositories = config.rom.repositories
-
+      # @api private
+      def setup(repositories)
         raise(
           MissingRepositoryConfigError,
           "seems like you didn't configure any repositories"
         ) unless repositories.any?
 
         ROM.setup(repositories)
-        self
-      end
-
-      # @api public
-      def finalize
-        if ROM.env
-          prepare_repositories(ROM.env.repositories)
-        else
-          prepare_repositories
-        end
-
-        setup
-        unless rake_mode
-          load_components
-        else
-          puts '<= skipping loading rom components'
-        end
-        ROM.finalize
-
-        self
       end
 
       # @api private
-      def set_configuration
-        config.rom = Configuration.new
-        self
+      def finalize
+        repositories =
+          if env
+            env.repositories
+          else
+            prepare_repositories
+          end
+
+        setup(repositories)
+
+        if rake_mode
+          puts '<= skipping loading rom components'
+        else
+          load_components
+        end
+
+        ROM.finalize
+      end
+
+      # TODO: Add `ROM.env.disconnect` to core.
+      #
+      # @api private
+      def disconnect
+        env.repositories.each_value(&:disconnect)
+      end
+
+      # @api private
+      def prepare_repositories
+        config.rom.repositories[:default] ||= infer_default_repository if active_record?
+        config.rom.repositories
       end
 
       # If there's no default repository configured, try to infer it from
@@ -106,23 +111,8 @@ module ROM
       #
       # @api private
       def infer_default_repository
-        return unless active_record?
         spec = ROM::Rails::ActiveRecord::Configuration.call
         [:sql, spec[:uri], spec[:options]]
-      end
-
-      # TODO: Add `ROM.env.disconnect` to core.
-      #
-      # @api private
-      def disconnect
-        ROM.env.repositories.each_value(&:disconnect)
-      end
-
-      # @api private
-      def prepare_repositories(repositories = nil)
-        repositories ||= config.rom.repositories
-        repositories[:default] ||= infer_default_repository if active_record?
-        repositories
       end
 
       # @api private
@@ -140,6 +130,11 @@ module ROM
       # @api private
       def root
         ::Rails.root
+      end
+
+      # @api private
+      def env
+        ROM.env
       end
 
       # @api private
