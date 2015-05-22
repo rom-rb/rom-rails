@@ -1,3 +1,19 @@
+## v0.3.3 2015-05-22
+
+### Added
+
+* `db:setup` task which works OOTB with rom-sql tasks (solnic)
+
+### Changed
+
+* `MissingRepositoryConfigError` is raised when repositories are not configured (solnic)
+
+### Fixed
+
+* The railitie no longer set `nil` as default repository when ActiveRecord is not present (solnic)
+
+[Compare v0.3.2...HEAD](https://github.com/rom-rb/rom-rails/compare/v0.3.2...HEAD)
+
 ## v0.3.2 2015-05-17
 
 ### Fixed
