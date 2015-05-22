@@ -12,44 +12,9 @@ module ROM
     class Railtie < ::Rails::Railtie
       COMPONENT_DIRS = %w(relations mappers commands).freeze
 
+      attr_accessor :rake_mode
+
       MissingRepositoryConfigError = Class.new(StandardError)
-
-      # @api public
-      def self.setup_repositories(repositories)
-        raise(
-          MissingRepositoryConfigError,
-          "seems like you didn't configure any repositories"
-        ) unless repositories.any?
-
-        ROM.setup(repositories)
-        self
-      end
-
-      # @api public
-      def self.finalize
-        ROM.finalize
-        self
-      end
-
-      # If there's no default repository configured, try to infer it from
-      # other sources, e.g. ActiveRecord.
-      #
-      # @api private
-      def self.infer_default_repository
-        return unless active_record?
-        spec = ROM::Rails::ActiveRecord::Configuration.call
-        [:sql, spec[:uri], spec[:options]]
-      end
-
-      # @api private
-      def self.active_record?
-        defined?(::ActiveRecord)
-      end
-
-      # @api private
-      def before_initialize
-        config.rom = Configuration.new
-      end
 
       initializer 'rom.configure_action_controller' do
         ActiveSupport.on_load(:action_controller) do
@@ -67,17 +32,18 @@ module ROM
 
       rake_tasks do
         load "rom/rails/tasks/db.rake" unless self.class.active_record?
+        self.rake_mode = true
       end
 
       # Make `ROM::Rails::Configuration` instance available to the user via
       # `Rails.application.config` before other initializers run.
       config.before_initialize do |_app|
-        before_initialize
+        Railtie.set_configuration
       end
 
       # Reload ROM-related application code on each request.
       config.to_prepare do |_config|
-        Railtie.setup
+        Railtie.finalize
       end
 
       # Behaves like `Railtie#configure` if the given block does not take any
@@ -97,6 +63,54 @@ module ROM
         end
       end
 
+      # @api public
+      def setup
+        repositories = config.rom.repositories
+
+        raise(
+          MissingRepositoryConfigError,
+          "seems like you didn't configure any repositories"
+        ) unless repositories.any?
+
+        ROM.setup(repositories)
+        self
+      end
+
+      # @api public
+      def finalize
+        if ROM.env
+          prepare_repositories(ROM.env.repositories)
+        else
+          prepare_repositories
+        end
+
+        setup
+        unless rake_mode
+          load_components
+        else
+          puts '<= skipping loading rom components'
+        end
+        ROM.finalize
+
+        self
+      end
+
+      # @api private
+      def set_configuration
+        config.rom = Configuration.new
+        self
+      end
+
+      # If there's no default repository configured, try to infer it from
+      # other sources, e.g. ActiveRecord.
+      #
+      # @api private
+      def infer_default_repository
+        return unless active_record?
+        spec = ROM::Rails::ActiveRecord::Configuration.call
+        [:sql, spec[:uri], spec[:options]]
+      end
+
       # TODO: Add `ROM.env.disconnect` to core.
       #
       # @api private
@@ -105,38 +119,20 @@ module ROM
       end
 
       # @api private
-      def setup
-        repositories =
-          if ROM.env
-            ROM.env.repositories
-          else
-            prepare_repositories
-          end
-
-        self.class.setup_repositories(repositories)
-        load_all
-        self.class.finalize
-      end
-
-      # @api private
-      def prepare_repositories
-        repositories = config.rom.repositories
-
-        if self.class.active_record?
-          repositories[:default] ||= self.class.infer_default_repository
-        end
-
+      def prepare_repositories(repositories = nil)
+        repositories ||= config.rom.repositories
+        repositories[:default] ||= infer_default_repository if active_record?
         repositories
       end
 
       # @api private
-      def load_all
+      def load_components
         COMPONENT_DIRS.each { |type| load_files(type) }
       end
 
       # @api private
       def load_files(type)
-        Dir[root.join("app/#{type}/**/*.rb").to_s].each do |path|
+        Dir[root.join("app/#{type}/**/*.rb")].each do |path|
           require_dependency(path)
         end
       end
@@ -144,6 +140,11 @@ module ROM
       # @api private
       def root
         ::Rails.root
+      end
+
+      # @api private
+      def active_record?
+        defined?(::ActiveRecord)
       end
     end
   end
