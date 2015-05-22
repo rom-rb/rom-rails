@@ -15,13 +15,13 @@ module ROM
       MissingRepositoryConfigError = Class.new(StandardError)
 
       # @api public
-      def self.setup_repositories
+      def self.setup_repositories(repositories)
         raise(
           MissingRepositoryConfigError,
           "seems like you didn't configure any repositories"
-        ) unless config.rom.repositories.any?
+        ) unless repositories.any?
 
-        ROM.setup(config.rom.repositories)
+        ROM.setup(repositories)
         self
       end
 
@@ -106,26 +106,32 @@ module ROM
 
       # @api private
       def setup
-        if ROM.env
-          ROM.setup(ROM.env.repositories)
-        else
-          repositories = config.rom.repositories
-
-          if self.class.active_record?
-            repositories[:default] ||= self.class.infer_default_repository
+        repositories =
+          if ROM.env
+            ROM.env.repositories
+          else
+            prepare_repositories
           end
 
-          self.class.setup_repositories
-        end
+        self.class.setup_repositories(repositories)
         load_all
         self.class.finalize
       end
 
       # @api private
-      def load_all
-        COMPONENT_DIRS.each do |type|
-          load_files(type)
+      def prepare_repositories
+        repositories = config.rom.repositories
+
+        if self.class.active_record?
+          repositories[:default] ||= self.class.infer_default_repository
         end
+
+        repositories
+      end
+
+      # @api private
+      def load_all
+        COMPONENT_DIRS.each { |type| load_files(type) }
       end
 
       # @api private
