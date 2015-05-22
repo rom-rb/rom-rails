@@ -1,5 +1,3 @@
-require 'byebug'
-
 namespace :db do
   desc 'Set up ROM repositories'
   task :setup do

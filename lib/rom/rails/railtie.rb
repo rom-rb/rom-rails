@@ -14,8 +14,6 @@ module ROM
 
       MissingRepositoryConfigError = Class.new(StandardError)
 
-      require 'byebug'
-
       # @api public
       def self.setup_repositories
         raise(
