@@ -12,7 +12,7 @@
 
 * The railitie no longer set `nil` as default repository when ActiveRecord is not present (solnic)
 
-[Compare v0.3.2...HEAD](https://github.com/rom-rb/rom-rails/compare/v0.3.2...HEAD)
+[Compare v0.3.2...v0.3.3](https://github.com/rom-rb/rom-rails/compare/v0.3.2...v0.3.3)
 
 ## v0.3.2 2015-05-17
 
