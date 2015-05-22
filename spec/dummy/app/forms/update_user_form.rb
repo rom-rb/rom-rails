@@ -6,6 +6,6 @@ class UpdateUserForm < UserForm
   end
 
   def commit!
-    users.try { users.update.by_id(id).set(attributes) }
+    users.try { users.update.by_id(id).call(attributes) }
   end
 end
