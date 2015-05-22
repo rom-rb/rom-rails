@@ -59,7 +59,7 @@ module ROM
 
       initializer 'rom.adjust_eager_load_paths' do |app|
         paths = COMPONENT_DIRS.map do |directory|
-          ::Rails.root.join('app', directory).to_s
+          root.join('app', directory).to_s
         end
 
         app.config.eager_load_paths -= paths
