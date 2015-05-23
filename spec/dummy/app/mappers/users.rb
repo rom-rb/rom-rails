@@ -7,4 +7,5 @@ class UserMapper < ROM::Mapper
   attribute :id
   attribute :name
   attribute :email
+  attribute :birthday
 end

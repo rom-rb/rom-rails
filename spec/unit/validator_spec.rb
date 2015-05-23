@@ -11,6 +11,7 @@ describe 'Validation' do
 
       attribute :name, String
       attribute :email, String
+      attribute :birthday, Date
     }
   end
 
@@ -73,7 +74,6 @@ describe 'Validation' do
     end
 
     context 'with unique attributes within a scope' do
-      let(:attributes) { user_attrs.new(name: 'Jaine', email: 'jane@doe.org') }
       let(:user_validator) do
         Class.new {
           include ROM::Model::Validator
@@ -88,8 +88,37 @@ describe 'Validation' do
         }
       end
 
+      let(:doubly_scoped_validator) do
+        Class.new {
+          include ROM::Model::Validator
+
+          relation :users
+
+          validates :email, uniqueness: {scope: [:name, :birthday]}
+
+          def self.name
+            'User'
+          end
+        }
+      end
+
       it 'does not add errors' do
-        rom.relations.users.insert(name: 'Jane', email: 'jane@doe.org')
+        rom.relations.users.insert(name: 'Jane', email: 'jane+doe@doe.org')
+        attributes = user_attrs.new(name: 'Jane', email: 'jane@doe.org', birthday: Date.parse('2014-12-12'))
+        validator = user_validator.new(attributes)
+        expect(validator).to be_valid
+      end
+
+      it 'adds an error when the doubly scoped validation fails' do
+        attributes = user_attrs.new(name: 'Jane', email: 'jane@doe.org', birthday: Date.parse('2014-12-12'))
+        validator = doubly_scoped_validator.new(attributes)
+        expect(validator).to be_valid
+
+        rom.relations.users.insert(attributes.attributes)
+        expect(validator).to_not be_valid
+
+        attributes = user_attrs.new(name: 'Jane', email: 'jane+doe@doe.org', birthday: Date.parse('2014-12-12'))
+        validator = doubly_scoped_validator.new(attributes)
         expect(validator).to be_valid
       end
     end
