@@ -80,7 +80,7 @@ module ROM
       #
       # @api private
       def method_missing(name, *args, &block)
-        attributes.fetch(name) { super }
+        attributes[name]
       end
 
       module ClassMethods
@@ -159,15 +159,21 @@ module ROM
           embedded_validators[name] = validator_class
 
           validate do
-            Array([attributes[name]]).flatten.each do |object|
-              validator = validator_class.new(object)
-              validator.validate
+            value = attributes[name]
 
-              if validator.errors.any?
-                errors.add(name, validator.errors)
-              else
-                errors.add(name, [])
+            if value.present?
+              Array([value]).flatten.each do |object|
+                validator = validator_class.new(object)
+                validator.validate
+
+                if validator.errors.any?
+                  errors.add(name, validator.errors)
+                else
+                  errors.add(name, [])
+                end
               end
+            else
+              errors.add(name, :blank)
             end
           end
         end

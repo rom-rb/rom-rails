@@ -75,4 +75,44 @@ describe 'Embedded validators' do
     expect(task_errors[0][:title]).to include("can't be blank")
     expect(task_errors[1]).to be_empty
   end
+
+  it 'validates presence of the nested structure' do
+    user_validator = Class.new do
+      include ROM::Model::Validator
+
+      set_model_name 'User'
+
+      validates :name, presence: true
+
+      embedded :tasks do
+        set_model_name 'Task'
+
+        validates :title, presence: true
+      end
+    end
+
+    validator = user_validator.new(name: '', tasks: '')
+    validator.validate
+
+    expect(validator.errors[:name]).to include("can't be blank")
+    expect(validator.errors[:tasks]).to include("can't be blank")
+  end
+
+  it 'exposes registered validators in embedded_validators hash' do
+    user_validator = Class.new do
+      include ROM::Model::Validator
+
+      set_model_name 'User'
+
+      validates :name, presence: true
+
+      embedded :tasks do
+        set_model_name 'Task'
+
+        validates :title, presence: true
+      end
+    end
+
+    expect(user_validator.embedded_validators[:tasks]).to be_present
+  end
 end
