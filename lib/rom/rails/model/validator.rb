@@ -129,6 +129,27 @@ module ROM
 
         # Specify an embedded validator for nested structures
         #
+        # @example
+        #   class UserValidator
+        #     include ROM::Model::Validator
+        #
+        #     set_model_name 'User'
+        #
+        #     embedded :address do
+        #       validates :city, :street, :zipcode, presence: true
+        #     end
+        #
+        #     emebdded :tasks do
+        #       validates :title, presence: true
+        #     end
+        #   end
+        #
+        #   validator = UserAttributes.new(address: {}, tasks: {})
+        #
+        #   validator.valid? # false
+        #   validator.errors[:address].first # errors for address
+        #   validator.errors[:tasks] # errors for tasks
+        #
         # @api public
         def embedded(name, &block)
           validator_class = Class.new { include ROM::Model::Validator }
@@ -138,13 +159,15 @@ module ROM
           embedded_validators[name] = validator_class
 
           validate do
-            value = attributes[name]
+            Array([attributes[name]]).flatten.each do |object|
+              validator = validator_class.new(object)
+              validator.validate
 
-            validator = validator_class.new(value)
-            validator.validate
-
-            if validator.errors.any?
-              self.errors.add(name, validator.errors)
+              if validator.errors.any?
+                errors.add(name, validator.errors)
+              else
+                errors.add(name, [])
+              end
             end
           end
         end
