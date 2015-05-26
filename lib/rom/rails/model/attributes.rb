@@ -52,6 +52,15 @@ module ROM
         self.class.model_name
       end
 
+      # @api private
+      def fetch(name)
+        if self.class.attribute_set[name]
+          self[name]
+        else
+          raise KeyError, "#{name.inspect} is an unknown attribute name"
+        end
+      end
+
       # Class extensions for an attributes class
       #
       # @api public

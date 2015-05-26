@@ -1,4 +1,5 @@
 require 'rom/rails/model/validator/uniqueness_validator'
+require 'rom/support/class_macros'
 
 module ROM
   module Model
@@ -30,8 +31,14 @@ module ROM
       def self.included(base)
         base.class_eval do
           extend ClassMethods
+          extend ROM::ClassMacros
+
           include ActiveModel::Validations
           include Equalizer.new(:attributes, :errors)
+
+          base.defines :embedded_validators
+
+          embedded_validators({})
         end
       end
 
@@ -72,8 +79,8 @@ module ROM
       # as it expects the object to provide attribute values. Meh.
       #
       # @api private
-      def method_missing(name)
-        attributes[name]
+      def method_missing(name, *args, &block)
+        attributes.fetch(name) { super }
       end
 
       module ClassMethods
@@ -99,9 +106,13 @@ module ROM
           @relation
         end
 
-        # FIXME: this looks like not needed
-        def model_name
-          attributes.model_name
+        # @api private
+        def set_model_name(name)
+          class_eval <<-RUBY
+            def self.model_name
+              @model_name ||= ActiveModel::Name.new(self, nil, #{name.inspect})
+            end
+          RUBY
         end
 
         # Trigger validation for specific attributes
@@ -114,6 +125,28 @@ module ROM
         def call(attributes)
           validator = new(attributes)
           validator.call
+        end
+
+        # Specify an embedded validator for nested structures
+        #
+        # @api public
+        def embedded(name, &block)
+          validator_class = Class.new { include ROM::Model::Validator }
+          validator_class.class_eval(&block)
+          validator_class.set_model_name(name.to_s.classify)
+
+          embedded_validators[name] = validator_class
+
+          validate do
+            value = attributes[name]
+
+            validator = validator_class.new(value)
+            validator.validate
+
+            if validator.errors.any?
+              self.errors.add(name, validator.errors)
+            end
+          end
         end
       end
     end
