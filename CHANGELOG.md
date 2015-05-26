@@ -1,13 +1,18 @@
-## v0.3.4 to-be-released
+## v0.4.0 to-be-released
 
 ### Added
 
+* `embedded` validators allowing to nest validations for embedded values (solnic)
 * Uniqueness validation supports `:scope` option (vrish88)
 
 ### Changed
 
 * `db:setup` provided by the railtie now loads `:environment` but the railtie will
   skip loading components to speed things up (solnic)
+
+### Fixed
+
+* `method_missing` in validators behaves properly now (solnic)
 
 [Compare v0.3.3...HEAD](https://github.com/rom-rb/rom-rails/compare/v0.3.3...HEAD)
 
