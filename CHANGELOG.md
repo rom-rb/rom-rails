@@ -4,7 +4,6 @@
 
 * Uniqueness validation supports `:scope` option (vrish88)
 
-
 ### Changed
 
 * `db:setup` provided by the railtie now loads `:environment` but the railtie will
