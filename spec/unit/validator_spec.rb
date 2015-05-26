@@ -134,5 +134,9 @@ describe 'Validation' do
     it 'returns nil if attribute is not present' do
       expect(validator.email).to be(nil)
     end
+
+    it 'raises error when name does not match any of the attributes' do
+      expect { validator.foobar }.to raise_error(NoMethodError, /foobar/)
+    end
   end
 end

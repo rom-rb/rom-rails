@@ -47,11 +47,15 @@ module ROM
       # @api private
       attr_reader :attributes
 
+      # @api private
+      attr_reader :attr_names
+
       delegate :model_name, to: :attributes
 
       # @api private
       def initialize(attributes)
         @attributes = attributes
+        @attr_names = self.class.validators.map(&:attributes).flatten.uniq
       end
 
       # @return [Model::Attributes]
@@ -80,7 +84,11 @@ module ROM
       #
       # @api private
       def method_missing(name, *args, &block)
-        attributes[name]
+        if attr_names.include?(name)
+          attributes[name]
+        else
+          super
+        end
       end
 
       module ClassMethods
@@ -158,6 +166,8 @@ module ROM
 
           embedded_validators[name] = validator_class
 
+          validates name, presence: true
+
           validate do
             value = attributes[name]
 
@@ -172,8 +182,6 @@ module ROM
                   errors.add(name, [])
                 end
               end
-            else
-              errors.add(name, :blank)
             end
           end
         end

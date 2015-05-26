@@ -91,7 +91,7 @@ describe 'Embedded validators' do
       end
     end
 
-    validator = user_validator.new(name: '', tasks: '')
+    validator = user_validator.new(name: '')
     validator.validate
 
     expect(validator.errors[:name]).to include("can't be blank")
