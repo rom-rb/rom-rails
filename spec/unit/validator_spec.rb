@@ -123,4 +123,16 @@ describe 'Validation' do
       end
     end
   end
+
+  describe '#method_missing' do
+    let(:attributes) { { name: 'Jane' } }
+
+    it 'returns attribute value if present' do
+      expect(validator.name).to eql('Jane')
+    end
+
+    it 'returns nil if attribute is not present' do
+      expect(validator.email).to be(nil)
+    end
+  end
 end
