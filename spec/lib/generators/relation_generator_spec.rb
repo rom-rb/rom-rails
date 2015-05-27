@@ -19,7 +19,7 @@ describe ROM::Generators::RelationGenerator, type: :generator do
           file 'users_relation.rb' do
             contains <<-CONTENT.strip_heredoc
               class UsersRelation < ROM::Relation[:#{default_adapter}]
-                # repository :default
+                # gateway :default
 
                 dataset :users
 
@@ -45,11 +45,11 @@ describe ROM::Generators::RelationGenerator, type: :generator do
     expect(relation).to include("class UsersRelation < ROM::Relation[:memory]")
   end
 
-  specify "with given repository" do
-    run_generator ['users', '--repository=remote']
+  specify "with given gateway" do
+    run_generator ['users', '--gateway=remote']
 
     relation = File.read(File.join(destination_root, 'app', 'relations', 'users_relation.rb'))
-    expect(relation).to include("repository :remote")
+    expect(relation).to include("gateway :remote")
   end
 
   specify "with given registration" do

@@ -1,4 +1,4 @@
 namespace :db do
-  desc 'Set up ROM repositories'
+  desc 'Set up ROM gateways'
   task setup: :environment
 end

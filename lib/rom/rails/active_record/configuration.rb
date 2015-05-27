@@ -17,7 +17,7 @@ module ROM
           :root
         ].freeze
 
-        # Returns repository configuration for the current environment.
+        # Returns gateway configuration for the current environment.
         #
         # @note This relies on ActiveRecord being initialized already.
         # @param [Rails::Application]

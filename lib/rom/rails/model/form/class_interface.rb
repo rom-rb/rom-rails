@@ -431,8 +431,8 @@ module ROM
           klass.validator @validator
 
           relation = rom.relations[rel_name]
-          repository = rom.repositories[relation.repository]
-          repository.extend_command_class(klass, relation.dataset)
+          gateway = rom.gateways[relation.gateway]
+          gateway.extend_command_class(klass, relation.dataset)
 
           klass.build(relation)
         end

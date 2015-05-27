@@ -5,7 +5,7 @@ module ROM
     class Configuration
       include Virtus.model(strict: true)
 
-      attribute :repositories, Hash, default: {}
+      attribute :gateways, Hash, default: {}
     end
   end
 end

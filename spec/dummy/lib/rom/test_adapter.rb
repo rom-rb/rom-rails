@@ -3,7 +3,7 @@ module ROM
     class Relation < ROM::Relation
     end
 
-    class Repository < ROM::Repository
+    class Gateway < ROM::Gateway
       include Equalizer.new(:args)
 
       attr_reader :args, :datasets

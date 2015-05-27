@@ -14,7 +14,7 @@ module ROM
 
       attr_accessor :rake_mode
 
-      MissingRepositoryConfigError = Class.new(StandardError)
+      MissingGatewayConfigError = Class.new(StandardError)
 
       # Make `ROM::Rails::Configuration` instance available to the user via
       # `Rails.application.config` before other initializers run.
@@ -51,7 +51,7 @@ module ROM
       #
       # @example
       #   ROM::Rails::Railtie.configure do |config|
-      #     config.repositories[:default] = [:yaml, 'yaml:///data']
+      #     config.gateways[:default] = [:yaml, 'yaml:///data']
       #   end
       #
       # @api public
@@ -64,25 +64,25 @@ module ROM
       end
 
       # @api private
-      def setup(repositories)
+      def setup(gateways)
         raise(
-          MissingRepositoryConfigError,
-          "seems like you didn't configure any repositories"
-        ) unless repositories.any?
+          MissingGatewayConfigError,
+          "seems like you didn't configure any gateways"
+        ) unless gateways.any?
 
-        ROM.setup(repositories)
+        ROM.setup(gateways)
       end
 
       # @api private
       def finalize
-        repositories =
+        gateways =
           if env
-            env.repositories
+            env.gateways
           else
-            prepare_repositories
+            prepare_gateways
           end
 
-        setup(repositories)
+        setup(gateways)
 
         if rake_mode
           puts '<= skipping loading rom components'
@@ -97,20 +97,20 @@ module ROM
       #
       # @api private
       def disconnect
-        env.repositories.each_value(&:disconnect)
+        env.gateways.each_value(&:disconnect)
       end
 
       # @api private
-      def prepare_repositories
-        config.rom.repositories[:default] ||= infer_default_repository if active_record?
-        config.rom.repositories
+      def prepare_gateways
+        config.rom.gateways[:default] ||= infer_default_gateway if active_record?
+        config.rom.gateways
       end
 
-      # If there's no default repository configured, try to infer it from
+      # If there's no default gateway configured, try to infer it from
       # other sources, e.g. ActiveRecord.
       #
       # @api private
-      def infer_default_repository
+      def infer_default_gateway
         spec = ROM::Rails::ActiveRecord::Configuration.call
         [:sql, spec[:uri], spec[:options]]
       end

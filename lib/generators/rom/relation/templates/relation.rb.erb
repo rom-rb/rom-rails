@@ -1,8 +1,8 @@
 class <%= class_name %>Relation < ROM::Relation<%= "[:#{adapter}]" %>
-<% if repository -%>
-  repository :<%= repository %>
+<% if gateway -%>
+  gateway :<%= gateway %>
 <% else -%>
-  # repository :default
+  # gateway :default
 <% end -%>
 
   dataset :<%= dataset %>
