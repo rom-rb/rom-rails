@@ -7,8 +7,8 @@
 
 ### Changed
 
-* `db:setup` provided by the railtie now loads `:environment` but the railtie will
-  skip loading components to speed things up (solnic)
+* `db:setup` provided by the railtie now loads `:environment` (solnic)
+* `repositories` in railtie configuration deprecated in favor of `gateways` (solnic)
 
 ### Fixed
 
