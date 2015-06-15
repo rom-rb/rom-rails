@@ -12,8 +12,6 @@ module ROM
     class Railtie < ::Rails::Railtie
       COMPONENT_DIRS = %w(relations mappers commands).freeze
 
-      attr_accessor :rake_mode
-
       MissingGatewayConfigError = Class.new(StandardError)
 
       # Make `ROM::Rails::Configuration` instance available to the user via
@@ -38,7 +36,6 @@ module ROM
 
       rake_tasks do
         load "rom/rails/tasks/db.rake" unless active_record?
-        self.rake_mode = true
       end
 
       # Reload ROM-related application code on each request.
@@ -84,11 +81,7 @@ module ROM
 
         setup(gateways)
 
-        if rake_mode
-          puts '<= skipping loading rom components'
-        else
-          load_components
-        end
+        load_components
 
         ROM.finalize
       end
