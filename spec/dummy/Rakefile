@@ -6,3 +6,12 @@ require File.expand_path('../config/application', __FILE__)
 Dummy::Application.load_tasks
 
 require 'rom/sql/rake_task'
+
+require 'rspec/core/rake_task'
+
+Rake::Task[:spec].clear
+
+namespace :spec do
+  desc "Run all specs excluding isolation specs"
+  task all: [:unit, :lib, :integration, :features]
+end
