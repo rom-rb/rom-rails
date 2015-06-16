@@ -7,6 +7,7 @@
 
 ### Changed
 
+* `ROM.env` is lazy-finalized on first access of any of the components (solnic)
 * `db:setup` provided by the railtie now loads `:environment` (solnic)
 * `repositories` in railtie configuration deprecated in favor of `gateways` (solnic)
 
