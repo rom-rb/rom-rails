@@ -1,7 +1,7 @@
 require 'bundler/setup'
 require 'rubocop/rake_task'
 
-task default: %w(app:spec app:isolation rubocop)
+task default: %w(app:spec:all app:spec:isolation rubocop)
 
 APP_RAKEFILE = File.expand_path("../spec/dummy/Rakefile", __FILE__)
 load 'rails/tasks/engine.rake'
