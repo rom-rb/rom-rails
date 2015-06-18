@@ -53,6 +53,8 @@ module ROM
       #
       # @api public
       def configure(&block)
+        config.rom = Configuration.new unless config.respond_to?(:rom)
+
         if block.arity == 1
           block.call(config.rom)
         else
@@ -71,7 +73,7 @@ module ROM
       end
 
       # @api private
-      def finalize
+      def setup_gateways
         gateways =
           if env
             env.gateways
@@ -80,9 +82,12 @@ module ROM
           end
 
         setup(gateways)
+      end
 
+      # @api private
+      def finalize
+        setup_gateways
         load_components
-
         ROM.finalize
       end
 
@@ -106,6 +111,10 @@ module ROM
       def infer_default_gateway
         spec = ROM::Rails::ActiveRecord::Configuration.call
         [:sql, spec[:uri], spec[:options]]
+      end
+
+      def load_initializer
+        load "#{root}/config/initializers/rom.rb" rescue LoadError
       end
 
       # @api private
