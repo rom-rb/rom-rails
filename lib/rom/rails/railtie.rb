@@ -90,7 +90,7 @@ module ROM
       #
       # @api private
       def disconnect
-        env.gateways.each_value(&:disconnect)
+        ROM.gateways.each_key(&:disconnect)
       end
 
       # @api private
