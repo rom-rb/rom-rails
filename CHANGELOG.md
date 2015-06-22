@@ -1,4 +1,4 @@
-## v0.4.0 to-be-released
+## v0.4.0 2015-06-22
 
 ### Added
 
@@ -15,7 +15,7 @@
 
 * `method_missing` in validators behaves properly now (solnic)
 
-[Compare v0.3.3...HEAD](https://github.com/rom-rb/rom-rails/compare/v0.3.3...HEAD)
+[Compare v0.3.3...v0.4.0](https://github.com/rom-rb/rom-rails/compare/v0.3.3...v0.4.0)
 
 ## v0.3.3 2015-05-22
 
