@@ -122,6 +122,27 @@ describe 'Validation' do
         expect(validator).to be_valid
       end
     end
+
+    describe 'with missing relation' do
+      let(:user_validator) do
+        Class.new {
+          include ROM::Model::Validator
+
+          validates :email, uniqueness: true
+
+          def self.name
+            'User'
+          end
+        }
+      end
+
+      it 'raises a helpful error' do
+        validator = user_validator.new(user_attrs.new)
+        expect {
+          validator.valid?
+        }.to raise_error(/relation must be specified/)
+      end
+    end
   end
 
   describe '#method_missing' do

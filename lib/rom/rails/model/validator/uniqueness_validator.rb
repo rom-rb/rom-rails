@@ -43,7 +43,11 @@ module ROM
         #
         # @api private
         def relation
-          rom.relations[relation_name]
+          if relation_name
+            rom.relations[relation_name]
+          else
+            raise "relation must be specified to use uniqueness validation"
+          end
         end
 
         # Relation name defined on the validator class
