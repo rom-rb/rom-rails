@@ -18,6 +18,8 @@ end
 group :test do
   gem 'rack-test'
   gem 'rom', github: 'rom-rb/rom', branch: 'master'
+  gem 'rom-mapper', github: 'rom-rb/rom-mapper', branch: 'master'
+  gem 'rom-support', github: 'rom-rb/rom-support', branch: 'master'
   gem 'rom-sql', github: 'rom-rb/rom-sql', branch: 'master'
   gem 'rspec-rails', '~> 3.1'
   gem 'codeclimate-test-reporter', require: nil

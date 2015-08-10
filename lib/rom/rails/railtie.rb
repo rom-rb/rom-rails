@@ -17,6 +17,7 @@ module ROM
       # Make `ROM::Rails::Configuration` instance available to the user via
       # `Rails.application.config` before other initializers run.
       config.before_initialize do |_app|
+        ROM.use :auto_registration
         config.rom = Configuration.new
       end
 
