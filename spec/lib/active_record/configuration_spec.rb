@@ -95,4 +95,24 @@ describe ROM::Rails::ActiveRecord::Configuration do
       expect(parse(uri).path).to eql(root.join(database).to_s)
     end
   end
+
+  describe '#build' do
+    context 'with an ActiveRecord mysql2 configuration' do
+      it 'returns the database uri and options' do
+        config = {
+          pool: 5,
+          adapter: 'mysql2',
+          username: 'root',
+          password: 'password',
+          database: 'database',
+          host: 'example.com',
+        }
+
+        expect(read(config)).to eq(
+          uri: 'mysql2://root:password@example.com/database',
+          options: {pool: 5},
+        )
+      end
+    end
+  end
 end
