@@ -1,6 +1,7 @@
 module ROM
   module TestAdapter
     class Relation < ROM::Relation
+      adapter :test_adapter
     end
 
     class Gateway < ROM::Gateway
