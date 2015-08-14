@@ -8,8 +8,6 @@ RAILS_VERSION = '4.2.1'
   gem name, RAILS_VERSION
 end
 
-gem 'rom-model', github: 'rom-rb/rom-model', branch: 'master'
-
 gem 'sqlite3', platforms: [:mri, :rbx]
 gem 'byebug', platforms: :mri
 
