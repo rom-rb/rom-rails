@@ -4,9 +4,11 @@ gemspec
 
 RAILS_VERSION = '4.2.1'
 
-%w(railties activemodel actionview actionpack activerecord).each do |name|
+%w(railties actionview actionpack activerecord).each do |name|
   gem name, RAILS_VERSION
 end
+
+gem 'rom-model', github: 'rom-rb/rom-model', branch: 'master'
 
 gem 'sqlite3', platforms: [:mri, :rbx]
 gem 'byebug', platforms: :mri

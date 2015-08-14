@@ -1,3 +1,5 @@
+require 'rom-model'
+
 require 'rom/rails/model/form/class_interface'
 require 'rom/rails/model/form/error_proxy'
 
