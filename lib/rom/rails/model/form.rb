@@ -113,10 +113,8 @@ module ROM
       #
       # @api public
       def save(*args)
-        @errors.clear
-        @result = commit!(*args)
-
-        @errors.set @result.error if result.respond_to? :error
+        validate!
+        @result = commit!(*args) if @errors.success?
 
         self
       end
@@ -135,6 +133,8 @@ module ROM
       # @api public
       def validate!
         @errors.clear
+        return unless defined? self.class::Validator
+
         validator = self.class::Validator.new(attributes)
         validator.validate
 
