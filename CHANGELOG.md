@@ -1,3 +1,13 @@
+## v0.5.0 2015-08-19
+
+### Changed
+
+- Raise a helpful error when trying to use uniqueness validation without a relation (xaviershay)
+- Switched to extracted rom-model (solnic)
+- Updated to work with ROM 0.9.0 (solnic)
+
+[Compare v0.4.0...v0.5.0](https://github.com/rom-rb/rom-rails/compare/v0.4.0...v0.5.0)
+
 ## v0.4.0 2015-06-22
 
 ### Added
