@@ -14,7 +14,7 @@ module ROM
           :password,
           :username,
           :hostname,
-          :root
+          :host
         ].freeze
 
         # Returns gateway configuration for the current environment.
@@ -51,11 +51,9 @@ module ROM
                 end
 
           # JRuby connection strings require special care.
-          uri = if RUBY_ENGINE == 'jruby' && adapter != 'postgresql'
-                  "jdbc:#{uri}"
-                else
-                  uri
-                end
+          if RUBY_ENGINE == 'jruby' && adapter != 'postgresql'
+            uri = "jdbc:#{uri}"
+          end
 
           { uri: uri, options: other_options }
         end
