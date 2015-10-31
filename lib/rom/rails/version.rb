@@ -1,5 +1,5 @@
 module ROM
   module Rails
-    VERSION = '0.5.0'.freeze
+    VERSION = '0.6.0.beta1'.freeze
   end
 end

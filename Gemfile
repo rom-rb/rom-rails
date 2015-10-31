@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gemspec
 
-RAILS_VERSION = '4.2.1'
+RAILS_VERSION = '4.2.4'
 
 %w(railties actionview actionpack activerecord).each do |name|
   gem name, RAILS_VERSION
@@ -19,6 +19,10 @@ group :test do
   gem 'rack-test'
   gem 'rom', github: 'rom-rb/rom', branch: 'master'
   gem 'rom-sql', github: 'rom-rb/rom-sql', branch: 'master'
+  gem 'rom-support', github: 'rom-rb/rom-support', branch: 'master'
+  gem 'rom-mapper', github: 'rom-rb/rom-mapper', branch: 'master'
+  gem 'rom-model', github: 'rom-rb/rom-model', branch: 'master'
+  gem 'transproc', github: 'solnic/transproc', branch: 'master'
   gem 'rspec-rails', '~> 3.1'
   gem 'codeclimate-test-reporter', require: nil
   gem 'database_cleaner'

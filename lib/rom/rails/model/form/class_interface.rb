@@ -434,9 +434,10 @@ module ROM
           gateway = rom.gateways[relation.gateway]
           gateway.extend_command_class(klass, relation.dataset)
 
+          klass.send(:include, Command.relation_methods_mod(relation.class))
+
           klass.build(relation)
         end
-
 
         # Silently update a constant, replacing any existing definition without
         # warning
