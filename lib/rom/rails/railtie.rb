@@ -5,6 +5,8 @@ require 'rom/rails/configuration'
 require 'rom/rails/controller_extension'
 require 'rom/rails/active_record/configuration'
 
+require 'rom/support/loader'
+
 Spring.after_fork { ROM::Rails::Railtie.disconnect } if defined?(Spring)
 
 module ROM
@@ -17,7 +19,6 @@ module ROM
       # Make `ROM::Rails::Configuration` instance available to the user via
       # `Rails.application.config` before other initializers run.
       config.before_initialize do |_app|
-        ROM.use :auto_registration
         config.rom = Configuration.new
       end
 
@@ -41,7 +42,9 @@ module ROM
 
       # Reload ROM-related application code on each request.
       config.to_prepare do |_config|
-        Railtie.finalize
+        ROM::Support::Loader.load do
+          Railtie.create_container
+        end
       end
 
       # Behaves like `Railtie#configure` if the given block does not take any
@@ -62,46 +65,27 @@ module ROM
           super
         end
       end
+      
+      def create_configuration
+        ROM::Configuration.new(gateways).tap { |c| c.use(:auto_registration) }
+      end
 
       # @api private
-      def setup(gateways)
+      def create_container
+        configuration = create_configuration
+        load_components
+        ROM.create_container(configuration)
+      end
+
+      # @api private
+      def gateways
+        config.rom.gateways[:default] ||= infer_default_gateway if active_record?
+
         raise(
           MissingGatewayConfigError,
           "seems like you didn't configure any gateways"
-        ) unless gateways.any?
-
-        ROM.setup(gateways)
-      end
-
-      # @api private
-      def setup_gateways
-        gateways =
-          if env
-            env.gateways
-          else
-            prepare_gateways
-          end
-
-        setup(gateways)
-      end
-
-      # @api private
-      def finalize
-        setup_gateways
-        load_components
-        ROM.finalize
-      end
-
-      # TODO: Add `ROM.env.disconnect` to core.
-      #
-      # @api private
-      def disconnect
-        ROM.gateways.each_key(&:disconnect)
-      end
-
-      # @api private
-      def prepare_gateways
-        config.rom.gateways[:default] ||= infer_default_gateway if active_record?
+        ) unless config.rom.gateways.any?
+      
         config.rom.gateways
       end
 
@@ -129,17 +113,21 @@ module ROM
           require_dependency(path)
         end
       end
+      
+      # @api private
+      def disconnect
+        container.disconnect unless container.nil?
+      end
 
       # @api private
       def root
         ::Rails.root
       end
 
-      # @api private
-      def env
+      def container
         ROM.env
       end
-
+      
       # @api private
       def active_record?
         defined?(::ActiveRecord)
