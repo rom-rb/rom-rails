@@ -425,7 +425,7 @@ module ROM
         #
         # @api private
         def build_command(name, rel_name)
-          klass = Command.build_class(name, rel_name, adapter: adapter)
+          klass = ConfigurationDSL::Command.build_class(name, rel_name, adapter: adapter)
 
           klass.result :one
           klass.validator @validator

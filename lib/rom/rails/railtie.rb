@@ -17,7 +17,6 @@ module ROM
       # Make `ROM::Rails::Configuration` instance available to the user via
       # `Rails.application.config` before other initializers run.
       config.before_initialize do |_app|
-        ROM.use :auto_registration
         config.rom = Configuration.new
       end
 
@@ -41,7 +40,7 @@ module ROM
 
       # Reload ROM-related application code on each request.
       config.to_prepare do |_config|
-        Railtie.finalize
+        ROM.env = Railtie.create_container
       end
 
       # Behaves like `Railtie#configure` if the given block does not take any
@@ -63,45 +62,26 @@ module ROM
         end
       end
 
+      def create_configuration
+        ROM::Configuration.new(gateways)
+      end
+
       # @api private
-      def setup(gateways)
+      def create_container
+        configuration = create_configuration
+        configuration.auto_registration(root.join("app"))
+        ROM.create_container(configuration)
+      end
+
+      # @api private
+      def gateways
+        config.rom.gateways[:default] ||= infer_default_gateway if active_record?
+
         raise(
           MissingGatewayConfigError,
           "seems like you didn't configure any gateways"
-        ) unless gateways.any?
+        ) unless config.rom.gateways.any?
 
-        ROM.setup(gateways)
-      end
-
-      # @api private
-      def setup_gateways
-        gateways =
-          if env
-            env.gateways
-          else
-            prepare_gateways
-          end
-
-        setup(gateways)
-      end
-
-      # @api private
-      def finalize
-        setup_gateways
-        load_components
-        ROM.finalize
-      end
-
-      # TODO: Add `ROM.env.disconnect` to core.
-      #
-      # @api private
-      def disconnect
-        ROM.gateways.each_key(&:disconnect)
-      end
-
-      # @api private
-      def prepare_gateways
-        config.rom.gateways[:default] ||= infer_default_gateway if active_record?
         config.rom.gateways
       end
 
@@ -119,15 +99,8 @@ module ROM
       end
 
       # @api private
-      def load_components
-        COMPONENT_DIRS.each { |type| load_files(type) }
-      end
-
-      # @api private
-      def load_files(type)
-        Dir[root.join("app/#{type}/**/*.rb")].each do |path|
-          require_dependency(path)
-        end
+      def disconnect
+        container.disconnect unless container.nil?
       end
 
       # @api private
@@ -135,8 +108,7 @@ module ROM
         ::Rails.root
       end
 
-      # @api private
-      def env
+      def container
         ROM.env
       end
 

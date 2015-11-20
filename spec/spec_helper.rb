@@ -24,14 +24,14 @@ RSpec.configure do |config|
   config.order = "random"
 
   config.before(:suite) do
-    conn = ROM.env.gateways[:default].connection
+    conn = rom.gateways[:default].connection
 
     DatabaseCleaner[:sequel, connection: conn].strategy = :transaction
     DatabaseCleaner[:sequel, connection: conn].clean_with(:truncation)
   end
 
   config.around(:each) do |example|
-    conn = ROM.env.gateways[:default].connection
+    conn = rom.gateways[:default].connection
 
     DatabaseCleaner[:sequel, connection: conn].cleaning { example.run }
   end
