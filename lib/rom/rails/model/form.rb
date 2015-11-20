@@ -1,3 +1,4 @@
+require 'dry-equalizer'
 require 'rom-model'
 
 require 'rom/rails/model/form/class_interface'
@@ -46,7 +47,7 @@ module ROM
     #
     # @api public
     class Form
-      include Equalizer.new(:params, :model, :result)
+      include Dry::Equalizer(:params, :model, :result)
 
       extend ROM::ClassMacros
       extend Form::ClassInterface
