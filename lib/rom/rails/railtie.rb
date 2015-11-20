@@ -5,8 +5,6 @@ require 'rom/rails/configuration'
 require 'rom/rails/controller_extension'
 require 'rom/rails/active_record/configuration'
 
-require 'rom/support/loader'
-
 Spring.after_fork { ROM::Rails::Railtie.disconnect } if defined?(Spring)
 
 module ROM
@@ -42,9 +40,7 @@ module ROM
 
       # Reload ROM-related application code on each request.
       config.to_prepare do |_config|
-        ROM::Support::Loader.load do
-          Railtie.create_container
-        end
+        ROM.env = Railtie.create_container
       end
 
       # Behaves like `Railtie#configure` if the given block does not take any
@@ -65,15 +61,15 @@ module ROM
           super
         end
       end
-      
+
       def create_configuration
-        ROM::Configuration.new(gateways).tap { |c| c.use(:auto_registration) }
+        ROM::Configuration.new(gateways)
       end
 
       # @api private
       def create_container
         configuration = create_configuration
-        load_components
+        configuration.auto_registration(root.join("app"))
         ROM.create_container(configuration)
       end
 
@@ -85,7 +81,7 @@ module ROM
           MissingGatewayConfigError,
           "seems like you didn't configure any gateways"
         ) unless config.rom.gateways.any?
-      
+
         config.rom.gateways
       end
 
@@ -103,18 +99,6 @@ module ROM
       end
 
       # @api private
-      def load_components
-        COMPONENT_DIRS.each { |type| load_files(type) }
-      end
-
-      # @api private
-      def load_files(type)
-        Dir[root.join("app/#{type}/**/*.rb")].each do |path|
-          require_dependency(path)
-        end
-      end
-      
-      # @api private
       def disconnect
         container.disconnect unless container.nil?
       end
@@ -127,7 +111,7 @@ module ROM
       def container
         ROM.env
       end
-      
+
       # @api private
       def active_record?
         defined?(::ActiveRecord)
