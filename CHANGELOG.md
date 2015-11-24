@@ -1,3 +1,9 @@
+## v0.6.0 to-be-released
+
+Updated to work with new ROM configuration API.
+
+[Compare v0.6.0...HEAD](https://github.com/rom-rb/rom-rails/compare/v0.6.0...HEAD)
+
 ## v0.5.0 2015-08-19
 
 ### Changed
