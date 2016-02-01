@@ -21,7 +21,7 @@ module ROM
       end
 
       def register_as
-        model_name.singularize.downcase
+        model_name.singularize.underscore.downcase
       end
 
     end

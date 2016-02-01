@@ -8,6 +8,7 @@ describe ROM::Generators::MapperGenerator do
   before(:all) do
     prepare_destination
     run_generator ['users']
+    run_generator ['app_user']
   end
 
   specify do
@@ -24,6 +25,23 @@ describe ROM::Generators::MapperGenerator do
                 # specify model and attributes ie
                 #
                 # model User
+                #
+                # attribute :name
+                # attribute :email
+              end
+            CONTENT
+          end
+
+          file 'app_user_mapper.rb' do
+            contains <<-CONTENT.strip_heredoc
+              class AppUserMapper < ROM::Mapper
+                relation :app_users
+
+                register_as :app_user
+
+                # specify model and attributes ie
+                #
+                # model AppUser
                 #
                 # attribute :name
                 # attribute :email
