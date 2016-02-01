@@ -34,8 +34,8 @@ To run tests:
 
 You can read more about ROM and Rails on the official website:
 
-* [Introduction to ROM](http://rom-rb.org/introduction/)
-* [Rails tutorial](http://rom-rb.org/tutorials/todo-app-with-rails/)
+* [Introduction to ROM](http://rom-rb.org/learn/)
+* [Rails setup](http://rom-rb.org/learn/setup/rails/)
 
 
 ## Community
