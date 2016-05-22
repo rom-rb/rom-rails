@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gemspec
 
-RAILS_VERSION = '4.2.4'
+RAILS_VERSION = '~> 4.2.4'.freeze
 
 %w(railties actionview actionpack activerecord).each do |name|
   gem name, RAILS_VERSION
