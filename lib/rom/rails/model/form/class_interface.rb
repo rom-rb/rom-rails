@@ -76,8 +76,8 @@ module ROM
         def inherited(klass)
           klass.inject_commands_for(*injectible_commands) if injectible_commands
           klass.commands(*self_commands) if self_commands
-          input_blocks.each{|block| klass.input(readers: false, &block) }
-          validation_blocks.each{|block| klass.validations(&block) }
+          input_blocks.each { |block| klass.input(readers: false, &block) }
+          validation_blocks.each { |block| klass.validations(&block) }
           super
         end
 
@@ -359,7 +359,7 @@ module ROM
           @validator = ClassBuilder.new(name: "#{name}::Validator", parent: Object).call { |klass|
             klass.send(:include, ROM::Model::Validator)
           }
-          validation_blocks.each{|validation| @validator.class_eval(&validation) }
+          validation_blocks.each { |validation| @validator.class_eval(&validation) }
           update_const(:Validator, @validator)
         end
 

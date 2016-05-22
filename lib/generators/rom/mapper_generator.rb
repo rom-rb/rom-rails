@@ -23,7 +23,6 @@ module ROM
       def register_as
         model_name.singularize.underscore.downcase
       end
-
     end
   end
 end

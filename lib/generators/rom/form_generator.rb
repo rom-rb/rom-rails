@@ -42,7 +42,6 @@ module ROM
       def relation
         class_name.pluralize.underscore
       end
-
     end
   end
 end

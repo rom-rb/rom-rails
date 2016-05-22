@@ -109,3 +109,8 @@ Style/AccessorMethodName:
 # Allow logical `or`/`and` in conditionals
 Style/AndOr:
   EnforcedStyle: conditionals
+
+# Fails to register points where we otherwise _use_ the block
+Performance/RedundantBlockCall:
+  Enabled: false
+

@@ -105,13 +105,13 @@ describe ROM::Rails::ActiveRecord::Configuration do
           username: 'root',
           password: 'password',
           database: 'database',
-          host: 'example.com',
+          host: 'example.com'
         }
 
         expected_uri = 'mysql2://root:password@example.com/database'
         expected_uri = "jdbc:#{expected_uri}" if RUBY_ENGINE == 'jruby'
 
-        expect(read(config)).to eq uri: expected_uri, options: {pool: 5}
+        expect(read(config)).to eq uri: expected_uri, options: { pool: 5 }
       end
     end
   end

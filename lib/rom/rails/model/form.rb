@@ -84,7 +84,7 @@ module ROM
       attr_reader :errors
 
       delegate :model_name, :persisted?, :to_key, to: :model
-      alias_method :to_model, :model
+      alias to_model model
 
       class << self
         delegate :model_name, to: :attributes
@@ -152,7 +152,6 @@ module ROM
       def attributes
         self.class.attributes[params]
       end
-
     end
   end
 end

@@ -8,7 +8,6 @@ module ROM
       #
       # @api private
       class ErrorProxy < SimpleDelegator
-
         # @api private
         def initialize
           super ActiveModel::Errors.new([])
@@ -48,9 +47,7 @@ module ROM
         def success?
           !present?
         end
-
       end
-
     end
   end
 end

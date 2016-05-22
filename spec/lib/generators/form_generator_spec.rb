@@ -77,7 +77,6 @@ describe ROM::Generators::FormGenerator do
   end
 
   shared_examples_for "generates an edit user form" do
-
     it "populates a edit form file" do
       expect(destination_root).to have_structure {
         directory 'app' do
@@ -138,6 +137,4 @@ describe ROM::Generators::FormGenerator do
     it_should_behave_like "generates a base user form"
     it_should_behave_like "generates an edit user form"
   end
-
-
 end

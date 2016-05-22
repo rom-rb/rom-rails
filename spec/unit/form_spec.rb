@@ -199,7 +199,7 @@ describe 'Form' do
 
   describe "#errors" do
     context "with a new model" do
-      it "exposes an activemodel compatible error"  do
+      it "exposes an activemodel compatible error" do
         errors = form.build({}).errors
 
         expect(errors).to respond_to(:[])
@@ -220,9 +220,9 @@ describe 'Form' do
           attribute :email, String
         end
 
-        def commit!(*args)
+        def commit!(*)
           users.try {
-            raise ROM::SQL::ConstraintError.new(RuntimeError.new("duplicate key"))
+            raise ROM::SQL::ConstraintError, RuntimeError.new("duplicate key")
           }
         end
       end
@@ -362,7 +362,5 @@ describe 'Form' do
 
       expect(child_form.validator).to_not be(form.validator)
     end
-
-
   end
 end

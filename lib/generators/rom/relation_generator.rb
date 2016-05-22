@@ -18,7 +18,6 @@ module ROM
         desc: "specify the registration identifier",
         required: false
 
-
       def create_relation_file
         template(
           'relation.rb.erb',
@@ -43,7 +42,6 @@ module ROM
       def gateway
         options[:gateway]
       end
-
     end
   end
 end

@@ -27,9 +27,7 @@ module ROM
       end
 
       initializer 'rom.adjust_eager_load_paths' do |app|
-        paths = COMPONENT_DIRS.map do |directory|
-          root.join('app', directory).to_s
-        end
+        paths = COMPONENT_DIRS.map { |dir| root.join('app', dir).to_s }
 
         app.config.eager_load_paths -= paths
       end
@@ -95,7 +93,9 @@ module ROM
       end
 
       def load_initializer
-        load "#{root}/config/initializers/rom.rb" rescue LoadError
+        load "#{root}/config/initializers/rom.rb"
+      rescue LoadError
+        # do nothing
       end
 
       # @api private

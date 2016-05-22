@@ -58,5 +58,4 @@ describe ROM::Generators::RelationGenerator, type: :generator do
     relation = File.read(File.join(destination_root, 'app', 'relations', 'users_relation.rb'))
     expect(relation).to include("register_as :profiles")
   end
-
 end
