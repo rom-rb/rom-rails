@@ -47,10 +47,6 @@ Style/BlockDelimiters:
     - watch
     - before
 
-# Allow using braces for value-returning blocks
-Style/Blocks:
-  Enabled: false
-
 Style/BracesAroundHashParameters:
   Enabled: true
   EnforcedStyle: context_dependent
@@ -89,10 +85,6 @@ Style/MultilineOperationIndentation:
 Style/RaiseArgs:
   Exclude:
     - lib/rom/model.rb
-
-# Even a single escaped slash can be confusing
-Style/RegexpLiteral:
-  MaxSlashes: 0
 
 # Don’t introduce semantic fail/raise distinction
 Style/SignalException:
