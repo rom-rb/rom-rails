@@ -22,6 +22,7 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 RSpec.configure do |config|
   config.order = "random"
+  config.example_status_persistence_file_path = "tmp/examples.txt"
 
   config.before(:suite) do
     conn = rom.gateways[:default].connection
