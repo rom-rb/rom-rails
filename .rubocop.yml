@@ -38,6 +38,15 @@ Style/AlignParameters:
 Style/AsciiComments:
   Enabled: false
 
+Style/BlockDelimiters:
+  EnforcedStyle: semantic
+  FunctionalMethods:
+    - let
+    - let!
+    - subject
+    - watch
+    - before
+
 # Allow using braces for value-returning blocks
 Style/Blocks:
   Enabled: false
@@ -45,6 +54,11 @@ Style/Blocks:
 Style/BracesAroundHashParameters:
   Enabled: true
   EnforcedStyle: context_dependent
+
+# Allow compact style for specs
+Style/ClassAndModuleChildren:
+  Exclude:
+    - spec/**/*_spec.rb
 
 # Documentation checked by Inch CI
 Style/Documentation:
@@ -59,9 +73,17 @@ Style/FileName:
 Style/GuardClause:
   Enabled: false
 
+# Need to be skipped for >-> usage
+Style/Lambda:
+  Enabled: false
+
 # Multiline block chains are ok
 Style/MultilineBlockChain:
   Enabled: false
+
+# Multiline operation chains are indented
+Style/MultilineOperationIndentation:
+  EnforcedStyle: indented
 
 # Model::Validator uses Model::ValidationError for this
 Style/RaiseArgs:
@@ -76,10 +98,22 @@ Style/RegexpLiteral:
 Style/SignalException:
   EnforcedStyle: only_raise
 
+# Need to be skipped for >-> usage
+Style/SpaceAroundOperators:
+  Enabled: false
+
 # Accept both single and double quotes
 Style/StringLiterals:
+  Enabled: false
+
+# Allow def self.foo; @foo; end
+Style/TrivialAccessors:
   Enabled: false
 
 Style/AccessorMethodName:
   Exclude:
     - lib/rom/rails/model/params.rb
+
+# Allow logical `or`/`and` in conditionals
+Style/AndOr:
+  EnforcedStyle: conditionals
