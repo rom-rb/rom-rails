@@ -8,4 +8,8 @@ describe 'ROM initializer' do
     expect(rom.gateways[:test]).to eql(gateway)
     expect(rom.relations.dummy).to eql(relation)
   end
+
+  it 'loads commands from additionall auto_registration_paths' do
+    expect(rom.commands.tasks.create_additional).to be_a(CreateAdditionalTask)
+  end
 end
