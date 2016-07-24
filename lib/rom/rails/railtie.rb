@@ -27,7 +27,10 @@ module ROM
       end
 
       initializer 'rom.adjust_eager_load_paths' do |app|
-        paths = COMPONENT_DIRS.map { |dir| root.join('app', dir).to_s }
+        paths =
+          auto_registration_paths.inject([]) do |result, root_path|
+            result.concat(COMPONENT_DIRS.map { |dir| root_path.join('app', dir).to_s })
+          end
 
         app.config.eager_load_paths -= paths
       end
@@ -47,6 +50,7 @@ module ROM
       # @example
       #   ROM::Rails::Railtie.configure do |config|
       #     config.gateways[:default] = [:yaml, 'yaml:///data']
+      #     config.auto_registration_paths += [MyEngine.root]
       #   end
       #
       # @api public
@@ -67,7 +71,11 @@ module ROM
       # @api private
       def create_container
         configuration = create_configuration
-        configuration.auto_registration(root.join("app"), namespace: false)
+
+        auto_registration_paths.each do |root_path|
+          configuration.auto_registration(root_path.join('app'), namespace: false)
+        end
+
         ROM.container(configuration)
       end
 
@@ -110,6 +118,10 @@ module ROM
 
       def container
         ROM.env
+      end
+
+      def auto_registration_paths
+        config.rom.auto_registration_paths + [root]
       end
 
       # @api private
