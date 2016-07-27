@@ -10,6 +10,7 @@ end
 
 gem 'sqlite3', platforms: [:mri, :rbx]
 gem 'byebug', platforms: :mri
+gem 'rom-sql', '~> 0.8'
 
 platforms :jruby do
   gem 'jdbc-sqlite3'
