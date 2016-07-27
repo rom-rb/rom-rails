@@ -403,7 +403,7 @@ module ROM
                   {}
                 end
 
-              commands[rel_name] = CommandRegistry.new(elements, options)
+              commands[rel_name] = CommandRegistry.new(rel_name, elements, options)
             end
           end
 
