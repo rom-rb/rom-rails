@@ -6,10 +6,9 @@ env:
   - CODECLIMATE_REPO_TOKEN=87c9080bda25bce8e63a294f99312345c144c0f6d5eedf400fd753356fbf7dcf
 script: "RAILS_ENV=test bundle exec rake app:db:reset app:spec"
 rvm:
-  - 2.0
   - 2.1
   - 2.2
-  - 2.3.0
+  - 2.3.1
   - rbx-2
   - jruby-9000
   - ruby-head
