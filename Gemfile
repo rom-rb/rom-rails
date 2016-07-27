@@ -2,10 +2,6 @@ source 'https://rubygems.org'
 
 gemspec
 
-gem 'rom', github: 'rom-rb/rom', branch: 'master'
-gem 'rom-sql', github: 'rom-rb/rom-sql', branch: 'master'
-gem 'rom-model', github: 'rom-rb/rom-model', branch: 'master'
-
 RAILS_VERSION = '~> 4.2.4'.freeze
 
 %w(railties actionview actionpack activerecord).each do |name|
