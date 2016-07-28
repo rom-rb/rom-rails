@@ -4,7 +4,6 @@ cache: bundler
 bundler_args: --without yard guard benchmarks
 script: "RAILS_ENV=test bundle exec rake app:db:reset app:spec"
 rvm:
-  - 2.1
   - 2.2
   - 2.3.1
   - rbx-2
@@ -13,6 +12,7 @@ rvm:
 matrix:
   allow_failures:
     - rvm: ruby-head
+    - rvm: rbx-2
 notifications:
   webhooks:
     urls:
