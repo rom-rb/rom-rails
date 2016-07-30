@@ -2,15 +2,16 @@ source 'https://rubygems.org'
 
 gemspec
 
-RAILS_VERSION = '~> 4.2.4'.freeze
+RAILS_VERSION = ENV.fetch("RAILS_VERSION", '5.0.0').freeze
 
 %w(railties actionview actionpack activerecord).each do |name|
-  gem name, RAILS_VERSION
+  gem name, "~> #{RAILS_VERSION}"
 end
 
 gem 'sqlite3', platforms: [:mri, :rbx]
 gem 'byebug', platforms: :mri
 gem 'rom-sql', '~> 0.8'
+gem 'rom-model', github: 'rom-rb/rom-model', branch: 'master'
 
 platforms :jruby do
   gem 'jdbc-sqlite3'
