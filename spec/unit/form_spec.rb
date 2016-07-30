@@ -187,12 +187,12 @@ describe 'Form' do
 
   describe '#save' do
     it 'commits the form without extra args' do
-      result = form.build({}).save.result
+      result = form.build(email: "test@example.com").save.result
       expect(result).to eql('it works []')
     end
 
     it 'commits the form with extra args' do
-      result = form.build({}).save(1, 2, 3).result
+      result = form.build(email: "test@example.com").save(1, 2, 3).result
       expect(result).to eql('it works [1, 2, 3]')
     end
   end
