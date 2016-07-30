@@ -92,8 +92,9 @@ module ROM
 
       # @api private
       def initialize(params = {}, options = {})
-        @params = params
-        @model  = self.class.model.new(params.merge(options.slice(*self.class.key)))
+        @params = params.respond_to?(:to_unsafe_hash) ?
+          params.to_unsafe_hash : params
+        @model  = self.class.model.new(params.to_h.merge(options.slice(*self.class.key)))
         @result = nil
         @errors = ErrorProxy.new
         options.each { |key, value| instance_variable_set("@#{key}", value) }
