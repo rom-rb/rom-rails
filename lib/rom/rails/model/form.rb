@@ -118,6 +118,7 @@ module ROM
         validate!
 
         @result = commit!(*args) unless @errors.present?
+        @errors.set @result.error if result.respond_to? :error
 
         self
       end
