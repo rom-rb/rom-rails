@@ -428,7 +428,6 @@ module ROM
           klass = ConfigurationDSL::Command.build_class(name, rel_name, adapter: adapter)
 
           klass.result :one
-          klass.validator @validator
 
           relation = rom.relations[rel_name]
           gateway = rom.gateways[relation.gateway]
