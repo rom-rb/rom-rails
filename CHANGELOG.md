@@ -1,8 +1,31 @@
-## v0.6.0 to-be-released
+## v0.8.0 2016-08-08
+### Changed
 
-Updated to work with new ROM configuration API.
+- Updated to work with Rails 5 (cflipse)
+- Form validations are now handled entirely within form (cflipse)
+- [Rails5] when applicable, parmeters are converted to unsafe hash (cflipse)
 
-[Compare v0.6.0...HEAD](https://github.com/rom-rb/rom-rails/compare/v0.6.0...HEAD)
+### Deprecated
+- Dropping support for ruby 2.1 and below
+
+## v0.7.0 2016-07-27
+
+### Changed
+- Updated to work with rom 2.0
+- Loosen Gem dependencies for Rails 4.2
+- Allow multiple auto_registration paths (vbyno) 
+
+[Compare v0.6.0...v0.7.0](https://github.com/rom-rb/rom-rails/compare/v0.6.0...v0.7.0)
+
+### Fixed
+- Fixed generated mapper's `register_as` (duduribeiro)
+
+## v0.6.0 2016-01-06
+
+### Changed
+- Updated to work with new ROM configuration API.
+
+[Compare v0.5.0...v0.6.0](https://github.com/rom-rb/rom-rails/compare/v0.5.0...v0.6.0)
 
 ## v0.5.0 2015-08-19
 
