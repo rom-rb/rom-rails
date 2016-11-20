@@ -1,10 +1,8 @@
-module <%= model_name %>Commands
-  class Update < ROM::Commands::Update<%= "[:#{adapter}]" %>
-    relation :<%= relation %>
-    register_as :update
-    result :one
+class Update<%= model_name %> < ROM::Commands::Update<%= "[:#{adapter}]" %>
+  relation :<%= relation %>
+  register_as :update
+  result :one
 
-    # define a validator to use
-    # validator <%= model_name %>Validator
-  end
+  # define a validator to use
+  # validator <%= model_name %>Validator
 end

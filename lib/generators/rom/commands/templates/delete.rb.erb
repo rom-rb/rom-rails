@@ -1,7 +1,5 @@
-module <%= model_name %>Commands
-  class Delete < ROM::Commands::Delete<%= "[:#{adapter}]" %>
-    relation :<%= relation %>
-    register_as :delete
-    result :one
-  end
+class Delete<%= model_name %> < ROM::Commands::Delete<%= "[:#{adapter}]" %>
+  relation :<%= relation %>
+  register_as :delete
+  result :one
 end
