@@ -3,6 +3,9 @@ class Create<%= model_name %> < ROM::Commands::Create<%= "[:#{adapter}]" %>
   register_as :create
   result :one
 
-  # define a validator to use
-  # validator <%= model_name %>Validator
+  # Override to specialize this command
+  def execute(tuples)
+    super tuples
+  end
+
 end

@@ -24,8 +24,11 @@ describe ROM::Generators::CommandsGenerator do
                     register_as :create
                     result :one
 
-                    # define a validator to use
-                    # validator UserValidator
+                    # Override to specialize this command
+                    def execute(tuples)
+                      super tuples
+                    end
+
                   end
             CONTENT
           end
@@ -37,8 +40,11 @@ describe ROM::Generators::CommandsGenerator do
                     register_as :update
                     result :one
 
-                    # define a validator to use
-                    # validator UserValidator
+                    # Override to specialize this command
+                    def execute(tuples)
+                      super tuples
+                    end
+
                   end
             CONTENT
           end
@@ -49,6 +55,12 @@ describe ROM::Generators::CommandsGenerator do
                     relation :users
                     register_as :delete
                     result :one
+
+                    # Override to specialize this command
+                    def execute(tuples)
+                      super tuples
+                    end
+
                   end
             CONTENT
           end

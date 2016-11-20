@@ -3,6 +3,9 @@ class Update<%= model_name %> < ROM::Commands::Update<%= "[:#{adapter}]" %>
   register_as :update
   result :one
 
-  # define a validator to use
-  # validator <%= model_name %>Validator
+  # Override to specialize this command
+  def execute(tuples)
+    super tuples
+  end
+
 end
