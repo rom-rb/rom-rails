@@ -1,15 +1,18 @@
-require 'virtus'
 require 'rom/support/deprecations'
 
 module ROM
   module Rails
     class Configuration
       extend ROM::Deprecations
+      include ActiveSupport::Configurable
 
-      include Virtus.model(strict: true)
+      config_accessor :gateways do
+        {}
+      end
 
-      attribute :gateways, Hash, default: {}
-      attribute :auto_registration_paths, Array, default: []
+      config_accessor :auto_registration_paths do
+        []
+      end
 
       deprecate :repositories, :gateways
     end
