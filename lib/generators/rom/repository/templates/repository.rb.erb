@@ -1,0 +1,3 @@
+class <%= model_name %>Repository < ROM::Repository<%="[:#{relation}]"%>
+  commands :create, update: :by_pk, delete: :by_pk, mapper: :<%= mapper %>
+end
