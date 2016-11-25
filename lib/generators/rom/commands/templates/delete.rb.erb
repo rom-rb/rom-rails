@@ -1,7 +1,11 @@
-module <%= model_name %>Commands
-  class Delete < ROM::Commands::Delete<%= "[:#{adapter}]" %>
-    relation :<%= relation %>
-    register_as :delete
-    result :one
+class Delete<%= model_name %> < ROM::Commands::Delete<%= "[:#{adapter}]" %>
+  relation :<%= relation %>
+  register_as :delete
+  result :one
+
+  # Override to specialize this command
+  def execute(tuples)
+    super tuples
   end
+
 end

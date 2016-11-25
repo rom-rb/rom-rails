@@ -17,48 +17,52 @@ describe ROM::Generators::CommandsGenerator do
     expect(destination_root).to have_structure {
       directory 'app' do
         directory 'commands' do
-          directory 'user_commands' do
-            file 'create.rb' do
-              contains <<-CONTENT.strip_heredoc
-                module UserCommands
-                  class Create < ROM::Commands::Create[:#{default_adapter}]
+          file 'create_user.rb' do
+            contains <<-CONTENT.strip_heredoc
+                  class CreateUser < ROM::Commands::Create[:#{default_adapter}]
                     relation :users
                     register_as :create
                     result :one
 
-                    # define a validator to use
-                    # validator UserValidator
-                  end
-                end
-              CONTENT
-            end
+                    # Override to specialize this command
+                    def execute(tuples)
+                      super tuples
+                    end
 
-            file 'update.rb' do
-              contains <<-CONTENT.strip_heredoc
-                module UserCommands
-                  class Update < ROM::Commands::Update[:#{default_adapter}]
+                  end
+            CONTENT
+          end
+
+          file 'update_user.rb' do
+            contains <<-CONTENT.strip_heredoc
+                  class UpdateUser < ROM::Commands::Update[:#{default_adapter}]
                     relation :users
                     register_as :update
                     result :one
 
-                    # define a validator to use
-                    # validator UserValidator
-                  end
-                end
-              CONTENT
-            end
+                    # Override to specialize this command
+                    def execute(tuples)
+                      super tuples
+                    end
 
-            file 'delete.rb' do
-              contains <<-CONTENT.strip_heredoc
-                module UserCommands
-                  class Delete < ROM::Commands::Delete[:#{default_adapter}]
+                  end
+            CONTENT
+          end
+
+          file 'delete_user.rb' do
+            contains <<-CONTENT.strip_heredoc
+                  class DeleteUser < ROM::Commands::Delete[:#{default_adapter}]
                     relation :users
                     register_as :delete
                     result :one
+
+                    # Override to specialize this command
+                    def execute(tuples)
+                      super tuples
+                    end
+
                   end
-                end
-              CONTENT
-            end
+            CONTENT
           end
         end
       end
@@ -68,13 +72,13 @@ describe ROM::Generators::CommandsGenerator do
   specify "with given adapter" do
     run_generator ['users', '--adapter=memory']
 
-    create = File.read(File.join(destination_root, 'app', 'commands', 'user_commands', 'create.rb'))
-    expect(create).to include("class Create < ROM::Commands::Create[:memory]")
+    create = File.read(File.join(destination_root, 'app', 'commands', 'create_user.rb'))
+    expect(create).to include("class CreateUser < ROM::Commands::Create[:memory]")
 
-    update = File.read(File.join(destination_root, 'app', 'commands', 'user_commands', 'update.rb'))
-    expect(update).to include("class Update < ROM::Commands::Update[:memory]")
+    update = File.read(File.join(destination_root, 'app', 'commands', 'update_user.rb'))
+    expect(update).to include("class UpdateUser < ROM::Commands::Update[:memory]")
 
-    delete = File.read(File.join(destination_root, 'app', 'commands', 'user_commands', 'delete.rb'))
-    expect(delete).to include("class Delete < ROM::Commands::Delete[:memory]")
+    delete = File.read(File.join(destination_root, 'app', 'commands', 'delete_user.rb'))
+    expect(delete).to include("class DeleteUser < ROM::Commands::Delete[:memory]")
   end
 end

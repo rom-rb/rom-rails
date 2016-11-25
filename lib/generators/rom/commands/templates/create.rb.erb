@@ -1,10 +1,11 @@
-module <%= model_name %>Commands
-  class Create < ROM::Commands::Create<%= "[:#{adapter}]" %>
-    relation :<%= relation %>
-    register_as :create
-    result :one
+class Create<%= model_name %> < ROM::Commands::Create<%= "[:#{adapter}]" %>
+  relation :<%= relation %>
+  register_as :create
+  result :one
 
-    # define a validator to use
-    # validator <%= model_name %>Validator
+  # Override to specialize this command
+  def execute(tuples)
+    super tuples
   end
+
 end

@@ -23,11 +23,7 @@ module ROM
       private
 
       def command_file(command)
-        File.join('app', 'commands', command_dir, "#{command}.rb")
-      end
-
-      def command_dir
-        "#{class_name.downcase.singularize}_commands"
+        File.join('app', 'commands', "#{command}_#{model_name.downcase}.rb")
       end
 
       def relation
