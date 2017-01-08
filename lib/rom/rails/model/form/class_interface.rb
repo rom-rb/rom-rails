@@ -1,3 +1,5 @@
+require 'dry/core/class_builder'
+
 module ROM
   module Model
     class Form
@@ -281,7 +283,7 @@ module ROM
         # @api private
         def define_attributes!(block)
           input_blocks << block
-          @attributes = ClassBuilder.new(name: "#{name}::Attributes", parent: Object).call { |klass|
+          @attributes = Dry::Core::ClassBuilder.new(name: "#{name}::Attributes", parent: Object).call { |klass|
             klass.send(:include, ROM::Model::Attributes)
           }
           input_blocks.each do |input_block|
@@ -333,7 +335,7 @@ module ROM
         #
         # @api private
         def define_model!
-          @model = ClassBuilder.new(name: "#{name}::Model", parent: @attributes).call { |klass|
+          @model = Dry::Core::ClassBuilder.new(name: "#{name}::Model", parent: @attributes).call { |klass|
             klass.class_eval <<-RUBY, __FILE__, __LINE__ + 1
               def persisted?
                 to_key.any?
@@ -356,7 +358,7 @@ module ROM
         # @api private
         def define_validator!(block)
           validation_blocks << block
-          @validator = ClassBuilder.new(name: "#{name}::Validator", parent: Object).call { |klass|
+          @validator = Dry::Core::ClassBuilder.new(name: "#{name}::Validator", parent: Object).call { |klass|
             klass.send(:include, ROM::Model::Validator)
           }
           validation_blocks.each { |validation| @validator.class_eval(&validation) }
