@@ -10,9 +10,10 @@ end
 
 gem 'sqlite3', platforms: [:mri, :rbx]
 gem 'byebug', platforms: :mri
-gem 'rom', github: 'rom-rb/rom'
-gem 'rom-sql', github: 'rom-rb/rom-sql'
-gem 'rom-model', github: 'rom-rb/rom-model'
+gem 'rom',    github: 'rom-rb/rom', branch: 'master'
+gem 'rom-sql', github: 'rom-rb/rom-sql', branch: 'master'
+gem 'rom-model', github: 'rom-rb/rom-model', branch: 'master'
+gem 'rom-repository', github: 'rom-rb/rom-repository', branch: 'master'
 
 platforms :jruby do
   gem 'jdbc-sqlite3'
