@@ -2,6 +2,7 @@ module ROM
   module TestAdapter
     class Relation < ROM::Relation
       adapter :test_adapter
+      schema_class Schema
     end
 
     class Gateway < ROM::Gateway
