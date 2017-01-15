@@ -17,11 +17,17 @@
 Rails integration for [Ruby Object Mapper](https://github.com/rom-rb/rom) which
 ships with:
 
-* Params sanitizer/coercer extension
-* Validation extension based on `ActiveModel`
 * Relation generators
 * Mapper generators
 * Command generators
+* Repository generators
+
+You may also want to look at [ROM Model](https://github.com/rom-rb/rom-model)
+which includes:
+
+* Params sanitizer/coercer extension
+* Validation extension based on `ActiveModel`
+
 
 ## Tests
 
