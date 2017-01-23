@@ -3,9 +3,11 @@ class Update<%= model_name %> < ROM::Commands::Update<%= "[:#{adapter}]" %>
   register_as :update
   result :one
 
-  # Override to specialize this command
-  def execute(tuples)
-    super tuples
-  end
+  # Modify input data before committing it.
+  # before :timestamp
 
+  # def timestamp(tuple)
+  #   time = Time.current
+  #   tuple.merge(created_at: time)
+  # end
 end

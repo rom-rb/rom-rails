@@ -24,11 +24,13 @@ describe ROM::Generators::CommandsGenerator do
                     register_as :create
                     result :one
 
-                    # Override to specialize this command
-                    def execute(tuples)
-                      super tuples
-                    end
+                    # Modify input data before committing it.
+                    # before :timestamp
 
+                    # def timestamp(tuple)
+                    #   time = Time.current
+                    #   tuple.merge(created_at: time, updated_at: time)
+                    # end
                   end
             CONTENT
           end
@@ -40,11 +42,13 @@ describe ROM::Generators::CommandsGenerator do
                     register_as :update
                     result :one
 
-                    # Override to specialize this command
-                    def execute(tuples)
-                      super tuples
-                    end
+                    # Modify input data before committing it.
+                    # before :timestamp
 
+                    # def timestamp(tuple)
+                    #   time = Time.current
+                    #   tuple.merge(created_at: time)
+                    # end
                   end
             CONTENT
           end
@@ -55,11 +59,6 @@ describe ROM::Generators::CommandsGenerator do
                     relation :users
                     register_as :delete
                     result :one
-
-                    # Override to specialize this command
-                    def execute(tuples)
-                      super tuples
-                    end
 
                   end
             CONTENT
