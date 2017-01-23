@@ -1,12 +1,16 @@
 ## HEAD
 
-### Changed
-* Updated to work with ROM 3.0.beta (maximderbin, cflipse)
+### Added
+
 * Add `rom-repository` generator (fmartin91)
+
+### Changed
+
+* Updated to work with ROM 3.0.beta (maximderbin, cflipse)
 * Command generators now produce a flat directory structure (cflipse)
 * Dropped runtime dependency on `virtus` (bilby91)
-* Update generators to remove validatior hints (cflipse)
-
+* Updated generators to remove validatior hints (cflipse)
+* Updated generators to provide before hook hints, rather than override `execute` (cflipse)
 
 ## v0.8.0 2016-08-08
 ### Changed
