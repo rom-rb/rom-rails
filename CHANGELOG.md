@@ -1,39 +1,39 @@
 ## HEAD
 
 ### Changed
-- Updated to work with ROM 3.0.beta (maximderbin, cflipse)
-- Add `rom-repository` generator (fmartin91)
-- Command generators now produce a flat directory structure (cflipse)
-- Dropped runtime dependency on `virtus` (bilby91)
-- Update generators to remove validatior hints (cflipse)
+* Updated to work with ROM 3.0.beta (maximderbin, cflipse)
+* Add `rom-repository` generator (fmartin91)
+* Command generators now produce a flat directory structure (cflipse)
+* Dropped runtime dependency on `virtus` (bilby91)
+* Update generators to remove validatior hints (cflipse)
 
 
 ## v0.8.0 2016-08-08
 ### Changed
 
-- Updated to work with Rails 5 (cflipse)
-- Form validations are now handled entirely within form (cflipse)
-- [Rails5] when applicable, parmeters are converted to unsafe hash (cflipse)
+* Updated to work with Rails 5 (cflipse)
+* Form validations are now handled entirely within form (cflipse)
+* [Rails5] when applicable, parmeters are converted to unsafe hash (cflipse)
 
 ### Deprecated
-- Dropping support for ruby 2.1 and below
+* Dropping support for ruby 2.1 and below
 
 ## v0.7.0 2016-07-27
 
 ### Changed
-- Updated to work with rom 2.0
-- Loosen Gem dependencies for Rails 4.2
-- Allow multiple auto_registration paths (vbyno) 
+* Updated to work with rom 2.0
+* Loosen Gem dependencies for Rails 4.2
+* Allow multiple auto_registration paths (vbyno) 
 
 [Compare v0.6.0...v0.7.0](https://github.com/rom-rb/rom-rails/compare/v0.6.0...v0.7.0)
 
 ### Fixed
-- Fixed generated mapper's `register_as` (duduribeiro)
+* Fixed generated mapper's `register_as` (duduribeiro)
 
 ## v0.6.0 2016-01-06
 
 ### Changed
-- Updated to work with new ROM configuration API.
+* Updated to work with new ROM configuration API.
 
 [Compare v0.5.0...v0.6.0](https://github.com/rom-rb/rom-rails/compare/v0.5.0...v0.6.0)
 
@@ -41,13 +41,13 @@
 
 ### Changed
 
-- Raise a helpful error when trying to use uniqueness validation without a relation (xaviershay)
-- Switched to extracted rom-model (solnic)
-- Updated to work with ROM 0.9.0 (solnic)
+* Raise a helpful error when trying to use uniqueness validation without a relation (xaviershay)
+* Switched to extracted rom-model (solnic)
+* Updated to work with ROM 0.9.0 (solnic)
 
 ### Fixed
 
-- Setting connectin URI for jruby that needs jdbc adapter (austinthecoder)
+* Setting connectin URI for jruby that needs jdbc adapter (austinthecoder)
 
 [Compare v0.4.0...v0.5.0](https://github.com/rom-rb/rom-rails/compare/v0.4.0...v0.5.0)
 
