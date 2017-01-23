@@ -90,6 +90,18 @@ module ROM
         delegate :model_name, to: :attributes
       end
 
+      # Raise deprecation warning when class is used:
+      #
+      # @api private
+      def self.inherited(klass)
+        ROM::Deprecations.announce "ROM::Model::Form", <<-MSG
+          We now recommend using Reform or another dedicated form library,
+          in conjunction with ROM::Repository or explicit command invocations.
+        MSG
+
+        super
+      end
+
       # @api private
       def initialize(params = {}, options = {})
         @params = params.respond_to?(:to_unsafe_hash) ?
