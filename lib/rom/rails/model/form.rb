@@ -1,5 +1,7 @@
 require 'dry-equalizer'
 require 'rom-model'
+require 'dry/core/deprecations'
+require 'dry/core/class_attributes'
 
 require 'rom/rails/model/form/class_interface'
 require 'rom/rails/model/form/error_proxy'
@@ -49,7 +51,7 @@ module ROM
     class Form
       include Dry::Equalizer(:params, :model, :result)
 
-      extend ROM::ClassMacros
+      extend Dry::Core::ClassAttributes
       extend Form::ClassInterface
 
       defines :relation, :mappings
@@ -94,7 +96,7 @@ module ROM
       #
       # @api private
       def self.inherited(klass)
-        ROM::Deprecations.announce "ROM::Model::Form", <<-MSG
+        Dry::Core::Deprecations.announce "ROM::Model::Form", <<-MSG, tag: :rom
           We now recommend using Reform or another dedicated form library,
           in conjunction with ROM::Repository or explicit command invocations.
         MSG

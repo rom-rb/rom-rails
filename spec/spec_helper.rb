@@ -6,7 +6,9 @@ if RUBY_ENGINE == 'rbx'
   CodeClimate::TestReporter.start
 end
 
-require Pathname(__FILE__).dirname.join("dummy/config/environment")
+SPEC_ROOT = Pathname(__FILE__).dirname
+
+require SPEC_ROOT.join("dummy/config/environment")
 
 require 'rspec/rails'
 require 'database_cleaner'
@@ -17,6 +19,9 @@ begin
   require 'byebug'
 rescue LoadError
 end
+
+require 'dry/core/deprecations'
+Dry::Core::Deprecations.set_logger!(SPEC_ROOT.join('../log/deprecations.log'))
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
