@@ -12,6 +12,10 @@
 * Updated generators to remove validatior hints (cflipse)
 * Updated generators to provide before hook hints, rather than override `execute` (cflipse)
 
+### Internal
+
+* [`rom-support`](https://github.com/rom-rb/rom-support) dependency was replaced with [`dry-core`](https://github.com/dry-rb/dry-core) (flash-gordon)
+
 ## v0.8.0 2016-08-08
 ### Changed
 
