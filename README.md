@@ -22,13 +22,6 @@ ships with:
 * Command generators
 * Repository generators
 
-You may also want to look at [ROM Model](https://github.com/rom-rb/rom-model)
-which includes:
-
-* Params sanitizer/coercer extension
-* Validation extension based on `ActiveModel`
-
-
 ## Tests
 
 To run tests:
@@ -47,7 +40,7 @@ You can read more about ROM and Rails on the official website:
 ## Community
 
 * [![Gitter chat](https://badges.gitter.im/rom-rb/chat.png)](https://gitter.im/rom-rb/chat)
-* [Ruby Object Mapper](https://groups.google.com/forum/#!forum/rom-rb) mailing list
+* [Discussion Forum](https://discuss.rom-rb.org)
 
 ## License
 
