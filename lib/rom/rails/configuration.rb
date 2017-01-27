@@ -14,7 +14,7 @@ module ROM
         []
       end
 
-      deprecate_class_method :repositories, :gateways
+      deprecate :repositories, :gateways
     end
   end
 end

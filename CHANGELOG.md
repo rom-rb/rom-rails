@@ -12,6 +12,10 @@
 * Updated generators to remove validatior hints (cflipse)
 * Updated generators to provide before hook hints, rather than override `execute` (cflipse)
 
+### Internal
+
+* [`rom-support`](https://github.com/rom-rb/rom-support) dependency was replaced with [`dry-core`](https://github.com/dry-rb/dry-core) (solnic + flash-gordon)
+
 ## v0.8.0 2016-08-08
 ### Changed
 
@@ -27,7 +31,7 @@
 ### Changed
 * Updated to work with rom 2.0
 * Loosen Gem dependencies for Rails 4.2
-* Allow multiple auto_registration paths (vbyno) 
+* Allow multiple auto_registration paths (vbyno)
 
 [Compare v0.6.0...v0.7.0](https://github.com/rom-rb/rom-rails/compare/v0.6.0...v0.7.0)
 
