@@ -1,4 +1,6 @@
-require 'dry-equalizer'
+require 'dry/equalizer'
+require 'dry/core/class_attributes'
+
 require 'rom-model'
 
 require 'rom/rails/model/form/class_interface'
@@ -49,7 +51,7 @@ module ROM
     class Form
       include Dry::Equalizer(:params, :model, :result)
 
-      extend ROM::ClassMacros
+      extend Dry::Core::ClassAttributes
       extend Form::ClassInterface
 
       defines :relation, :mappings
