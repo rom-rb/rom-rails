@@ -1,9 +1,9 @@
-require 'rom/support/deprecations'
+require 'dry/core/deprecations'
 
 module ROM
   module Rails
     class Configuration
-      extend ROM::Deprecations
+      extend Dry::Core::Deprecations[:configuration]
       include ActiveSupport::Configurable
 
       config_accessor :gateways do
@@ -14,7 +14,7 @@ module ROM
         []
       end
 
-      deprecate :repositories, :gateways
+      deprecate_class_method :repositories, :gateways
     end
   end
 end

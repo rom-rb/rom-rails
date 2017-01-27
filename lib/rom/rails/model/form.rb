@@ -96,7 +96,7 @@ module ROM
       #
       # @api private
       def self.inherited(klass)
-        ROM::Deprecations.announce "ROM::Model::Form", <<-MSG
+        Dry::Core::Deprecations.announce "ROM::Model::Form", <<-MSG
           We now recommend using Reform or another dedicated form library,
           in conjunction with ROM::Repository or explicit command invocations.
         MSG
