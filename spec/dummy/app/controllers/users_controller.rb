@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    user_form = NewUserForm.build(params[:user]).save
+    user_form = NewUserForm.build(params[:user].permit!).save
 
     if user_form.success?
       redirect_to :users
@@ -34,7 +34,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    user_form = UpdateUserForm.build(params[:user], id: params[:id]).save
+    user_form = UpdateUserForm.build(params[:user].permit!, id: params[:id]).save
 
     if user_form.success?
       redirect_to :users
