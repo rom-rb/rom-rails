@@ -1,6 +1,4 @@
-require 'spec_helper'
-
-feature 'Users' do
+RSpec.feature 'Users' do
   background do
     rom.relations.users.insert(name: 'Jane')
     rom.relations.users.insert(name: 'Joe')

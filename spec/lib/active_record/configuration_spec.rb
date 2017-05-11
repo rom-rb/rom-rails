@@ -1,6 +1,6 @@
 require 'rom/rails/active_record/configuration'
 
-describe ROM::Rails::ActiveRecord::Configuration do
+RSpec.describe ROM::Rails::ActiveRecord::Configuration do
   let(:root) { Pathname.new('/path/to/app') }
 
   def uri_for(config)

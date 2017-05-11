@@ -1,6 +1,6 @@
 require 'generators/rom/mapper_generator'
 
-describe ROM::Generators::MapperGenerator do
+RSpec.describe ROM::Generators::MapperGenerator do
   destination File.expand_path('../../../../tmp', __FILE__)
 
   before(:all) do

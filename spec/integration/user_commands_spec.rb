@@ -1,4 +1,4 @@
-describe 'User commands' do
+RSpec.describe 'User commands' do
   subject(:users) { rom.commands[:users] }
 
   describe 'delete' do
