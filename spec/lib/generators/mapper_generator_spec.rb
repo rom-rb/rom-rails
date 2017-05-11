@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 require 'generators/rom/mapper_generator'
 
 describe ROM::Generators::MapperGenerator do

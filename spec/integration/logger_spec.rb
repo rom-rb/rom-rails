@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'ROM logger' do
   let(:rom) { ROM.env }
 

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'User commands' do
   subject(:users) { rom.commands[:users] }
 

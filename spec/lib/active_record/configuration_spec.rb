@@ -1,4 +1,3 @@
-require 'spec_helper'
 require 'rom/rails/active_record/configuration'
 
 describe ROM::Rails::ActiveRecord::Configuration do

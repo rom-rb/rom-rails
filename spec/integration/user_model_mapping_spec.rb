@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'User model mapping' do
   let(:rom) { ROM.env }
 

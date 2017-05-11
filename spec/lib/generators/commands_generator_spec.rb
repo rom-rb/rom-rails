@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 require 'generators/rom/commands_generator'
 
 describe ROM::Generators::CommandsGenerator do

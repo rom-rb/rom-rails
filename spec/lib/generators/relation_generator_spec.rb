@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 require 'generators/rom/relation_generator'
 
 describe ROM::Generators::RelationGenerator, type: :generator do

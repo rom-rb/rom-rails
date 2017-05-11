@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 require 'rom-repository'
 require 'generators/rom/repository_generator'
 
