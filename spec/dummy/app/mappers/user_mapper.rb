@@ -1,6 +1,6 @@
 class UserMapper < ROM::Mapper
   relation :users
-  register_as :entity
+  register_as :user
 
   model User
 

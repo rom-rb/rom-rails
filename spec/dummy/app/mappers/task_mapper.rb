@@ -1,6 +1,6 @@
 class TaskMapper < ROM::Mapper
   relation :tasks
-  register_as :entity
+  register_as :task
 
   model name: 'Task'
 

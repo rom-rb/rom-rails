@@ -4,12 +4,12 @@ class UsersController < ApplicationController
   end
 
   def index
-    render :index, locals: { users: rom.relation(:users).as(:entity) }
+    render :index, locals: { users: rom.relation(:users).as(:user) }
   end
 
   def search
     render :index, locals: {
-      users: rom.relation(:users).as(:entity).by_name(params[:name])
+      users: rom.relation(:users).as(:user).by_name(params[:name])
     }
   end
 
