@@ -1,3 +1,10 @@
+## HEAD
+
+### Changed
+
+* remove ROM::Model::Form (cflipse)
+* remove form generator (cflipse)
+
 ## v0.9.0  2017-01-30
 
 ### Added

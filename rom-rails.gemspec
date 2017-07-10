@@ -18,7 +18,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_runtime_dependency 'rom', '~> 3.0'
-  spec.add_runtime_dependency 'rom-model', '~> 0.5'
   spec.add_runtime_dependency 'dry-equalizer', '~> 0.2'
   spec.add_runtime_dependency 'dry-core', '~> 0.2', '>= 0.2.4'
   spec.add_runtime_dependency 'addressable', '~> 2.3'
