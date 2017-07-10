@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'User commands' do
-  subject(:users) { rom.command(:users) }
+  subject(:users) { rom.commands[:users] }
 
   describe 'delete' do
     it 'deletes record' do
