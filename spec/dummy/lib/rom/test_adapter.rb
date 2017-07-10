@@ -5,7 +5,7 @@ module ROM
     end
 
     class Gateway < ROM::Gateway
-      include Equalizer.new(:args)
+      include Dry::Equalizer(:args)
 
       attr_reader :args, :datasets
 
