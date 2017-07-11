@@ -13,8 +13,6 @@ module ROM
       config_accessor :auto_registration_paths do
         []
       end
-
-      deprecate :repositories, :gateways
     end
   end
 end
