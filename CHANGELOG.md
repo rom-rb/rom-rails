@@ -2,6 +2,10 @@
 
 ### Changed
 
+* Updated to work with ROM 4.0.beta (cflipse)
+
+### Removed
+
 * remove ROM::Model::Form (cflipse)
 * remove form generator (cflipse)
 

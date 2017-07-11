@@ -1,14 +1,16 @@
 require 'spec_helper'
 
 describe 'User commands' do
-  subject(:users) { rom.command(:users) }
+  subject(:users) { rom.commands[:users] }
 
   describe 'delete' do
     it 'deletes record' do
-      rom.relations.users.insert(name: 'Piotr', email: 'piotr@test.com')
-      result = users.try { users.delete.by_name('Piotr') }
+      relation = rom.relations[:users]
+      relation.insert(name: 'Piotr', email: 'piotr@test.com')
 
-      expect(result.error).to be(nil)
+      expect{ 
+        users.delete.by_name('Piotr').call
+      }.to change(relation, :count).by(-1)
     end
   end
 end

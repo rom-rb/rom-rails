@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'User model mapping' do
   let(:rom) { ROM.env }
 
-  let(:users) { rom.relation(:users).as(:entity) }
+  let(:users) { rom.relations[:users].map_with(:user) }
 
   before do
     rom.relations.users.insert(name: 'Piotr', email: 'piotr@test.com')
