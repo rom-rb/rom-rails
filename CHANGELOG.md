@@ -9,6 +9,7 @@
 * remove ROM::Model::Form (cflipse)
 * remove form generator (cflipse)
 * remove deprecated `config.repositories` method (cflipse)
+* No longer depends on `rom-model` gem (cflipse)
 
 ## v0.9.0  2017-01-30
 
