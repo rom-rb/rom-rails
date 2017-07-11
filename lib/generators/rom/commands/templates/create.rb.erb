@@ -3,7 +3,9 @@ class Create<%= model_name %> < ROM::Commands::Create<%= "[:#{adapter}]" %>
   register_as :create
   result :one
 
+<% if adapter.to_sym == :sql -%>
   # set Timestamp plugin
   # use :timestamps
   # timestamp :created_at, :updated_at
+<% end -%>
 end
