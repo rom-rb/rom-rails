@@ -1,6 +1,4 @@
-require 'spec_helper'
-
-describe 'User model mapping' do
+RSpec.describe 'User model mapping' do
   let(:rom) { ROM.env }
 
   let(:users) { rom.relations[:users].map_with(:user) }

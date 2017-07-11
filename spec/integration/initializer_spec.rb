@@ -1,6 +1,4 @@
-require 'spec_helper'
-
-describe 'ROM initializer' do
+RSpec.describe 'ROM initializer' do
   it 'allows setting up a custom gateway' do
     gateway = ROM::TestAdapter::Gateway.new(foo: :bar)
     relation = DummyRelation.new([])

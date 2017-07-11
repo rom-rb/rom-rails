@@ -1,8 +1,6 @@
-require 'spec_helper'
-
 require 'generators/rom/commands_generator'
 
-describe ROM::Generators::CommandsGenerator do
+RSpec.describe ROM::Generators::CommandsGenerator do
   destination File.expand_path('../../../../tmp', __FILE__)
 
   before(:each) do

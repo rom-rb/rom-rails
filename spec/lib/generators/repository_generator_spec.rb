@@ -1,9 +1,7 @@
-require 'spec_helper'
-
 require 'rom-repository'
 require 'generators/rom/repository_generator'
 
-describe ROM::Generators::RepositoryGenerator, type: :generator do
+RSpec.describe ROM::Generators::RepositoryGenerator, type: :generator do
   destination File.expand_path('../../../../tmp', __FILE__)
 
   before(:each) do

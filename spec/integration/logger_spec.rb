@@ -1,6 +1,4 @@
-require 'spec_helper'
-
-describe 'ROM logger' do
+RSpec.describe 'ROM logger' do
   let(:rom) { ROM.env }
 
   it 'sets up rails logger for all gateways' do
