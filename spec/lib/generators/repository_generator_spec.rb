@@ -16,7 +16,9 @@ RSpec.describe ROM::Generators::RepositoryGenerator, type: :generator do
         directory 'repositories' do
           file 'user_repository.rb' do
             contains <<-CONTENT.strip_heredoc
-              class UserRepository < ROM::Repository[:users]
+              class UserRepository < ROM::Repository::Root
+                root :users
+
                 commands :create, update: :by_pk, delete: :by_pk, mapper: :user
               end
             CONTENT
@@ -34,7 +36,9 @@ RSpec.describe ROM::Generators::RepositoryGenerator, type: :generator do
         directory 'repositories' do
           file 'user_profile_repository.rb' do
             contains <<-CONTENT.strip_heredoc
-              class UserProfileRepository < ROM::Repository[:user_profiles]
+              class UserProfileRepository < ROM::Repository::Root
+                root :user_profiles
+
                 commands :create, update: :by_pk, delete: :by_pk, mapper: :user_profile
               end
             CONTENT
