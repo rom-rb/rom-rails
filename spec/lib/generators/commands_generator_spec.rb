@@ -22,13 +22,9 @@ RSpec.describe ROM::Generators::CommandsGenerator do
                     register_as :create
                     result :one
 
-                    # Modify input data before committing it.
-                    # before :timestamp
-
-                    # def timestamp(tuple)
-                    #   time = Time.current
-                    #   tuple.merge(created_at: time, updated_at: time)
-                    # end
+                    # set Timestamp plugin
+                    # use :timestamps
+                    # timestamp :created_at, :updated_at
                   end
             CONTENT
           end
@@ -40,13 +36,9 @@ RSpec.describe ROM::Generators::CommandsGenerator do
                     register_as :update
                     result :one
 
-                    # Modify input data before committing it.
-                    # before :timestamp
-
-                    # def timestamp(tuple)
-                    #   time = Time.current
-                    #   tuple.merge(created_at: time)
-                    # end
+                    # set Timestamp plugin
+                    # use :timestamps
+                    # timestamp :updated_at
                   end
             CONTENT
           end

@@ -17,11 +17,9 @@ RSpec.describe ROM::Generators::RelationGenerator, type: :generator do
           file 'users_relation.rb' do
             contains <<-CONTENT.strip_heredoc
               class UsersRelation < ROM::Relation[:#{default_adapter}]
-                # gateway :default
+                gateway :default
 
-                dataset :users
-
-                register_as :users
+                schema(:users, infer: true)
 
                 # define your methods here ie:
                 #
@@ -54,6 +52,6 @@ RSpec.describe ROM::Generators::RelationGenerator, type: :generator do
     run_generator ['users', '--register=profiles']
 
     relation = File.read(File.join(destination_root, 'app', 'relations', 'users_relation.rb'))
-    expect(relation).to include("register_as :profiles")
+    expect(relation).to match(/schema.*as: :profiles/)
   end
 end

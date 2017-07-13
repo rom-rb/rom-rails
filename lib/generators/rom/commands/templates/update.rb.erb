@@ -3,11 +3,9 @@ class Update<%= model_name %> < ROM::Commands::Update<%= "[:#{adapter}]" %>
   register_as :update
   result :one
 
-  # Modify input data before committing it.
-  # before :timestamp
-
-  # def timestamp(tuple)
-  #   time = Time.current
-  #   tuple.merge(created_at: time)
-  # end
+<% if adapter.to_sym == :sql -%>
+  # set Timestamp plugin
+  # use :timestamps
+  # timestamp :updated_at
+<% end -%>
 end

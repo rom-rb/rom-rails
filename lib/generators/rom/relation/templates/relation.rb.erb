@@ -2,12 +2,14 @@ class <%= class_name %>Relation < ROM::Relation<%= "[:#{adapter}]" %>
 <% if gateway -%>
   gateway :<%= gateway %>
 <% else -%>
-  # gateway :default
+  gateway :default
 <% end -%>
 
-  dataset :<%= dataset %>
-
-  register_as :<%= register_as %>
+<% if register_as != dataset -%>
+  schema(:<%= dataset %>, as: :<%= register_as %>, infer: true)
+<% else -%>
+  schema(:<%= dataset %>, infer: true)
+<% end -%>
 
   # define your methods here ie:
   #
