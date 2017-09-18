@@ -1,8 +1,9 @@
-## HEAD
+## v1.0.0  to-be-released
 
 ### Changed
 
 * Updated to work with ROM 4.0.beta (cflipse)
+* Generated repositories now inherit from `ROM::Repository::Root` (cflipse)
 
 ### Removed
 
