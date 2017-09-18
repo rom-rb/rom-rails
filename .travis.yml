@@ -4,8 +4,8 @@ cache: bundler
 bundler_args: --without yard guard benchmarks
 script: "RAILS_ENV=test bundle exec rake app:db:reset app:spec"
 rvm:
-  - 2.2.2
   - 2.3.1
+  - 2.4.1
   - rbx-2
   - jruby-9.0.5.0
   - ruby-head
