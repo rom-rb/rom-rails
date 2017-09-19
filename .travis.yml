@@ -6,20 +6,11 @@ script: "RAILS_ENV=test bundle exec rake app:db:reset app:spec"
 rvm:
   - 2.3.1
   - 2.4.1
-  - rbx-2
-  - jruby-9.1.0.0
-  - ruby-head
+  - jruby-9.1.13.0
 env:
   - RAILS_VERSION=5.1.0
   - RAILS_VERSION=5.0.0
   - RAILS_VERSION=4.2.0
-matrix:
-  allow_failures:
-    - rvm: ruby-head
-    - rvm: rbx-2
-  exclude:
-    - rvm: rbx-2
-      env: RAILS_VERSION=5.0.0
 notifications:
   webhooks:
     urls:
