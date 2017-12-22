@@ -1,3 +1,9 @@
+## v1.0.1  2017-12-22
+
+### Changed
+
+* Loosen ROM dependency
+
 ## v1.0.0  2017-10-18
 
 ### Changed
