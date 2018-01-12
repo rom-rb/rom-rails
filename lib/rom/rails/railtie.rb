@@ -43,7 +43,14 @@ module ROM
       config.to_prepare do |_config|
         ROM.env = Railtie.create_container
       end
-
+      
+      console do |app|
+        unless ActiveSupport::Logger.logger_outputs_to?(Rails.logger, STDERR, STDOUT)
+          console = ActiveSupport::Logger.new(STDERR)
+          Rails.logger.extend ActiveSupport::Logger.broadcast console
+        end
+      end
+      
       # Behaves like `Railtie#configure` if the given block does not take any
       # arguments. Otherwise yields the ROM configuration to the block.
       #
