@@ -30,7 +30,27 @@ RSpec.describe ROM::Generators::InstallGenerator, type: :generator do
     initializer = File.read(File.join(destination_root, "config", "initializers", "rom.rb"))
 
     expect(initializer).to include("config.gateways[:default] = [:yaml, ENV.fetch('DATABASE_URL')]")
+  end
 
+  it "sets up lib/types" do
+    run_generator ["install"]
+
+    expect(destination_root).to have_structure {
+      directory "lib" do
+        file "types.rb" do
+          contains <<-CONTENT.strip_heredoc
+            require 'dry/types'
+
+            module Types
+              include Dry::Types.module
+
+              # Include your own type definitions and coersions here.
+              # See http://dry-rb.org/gems/dry-types
+            end
+          CONTENT
+        end
+      end
+    }
   end
 
 

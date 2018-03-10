@@ -7,6 +7,10 @@ module ROM
         "rom:#{generator_name}"
       end
 
+      def self.source_root
+        File.expand_path("../install/templates", __FILE__)
+      end
+
       class_option :adapter,
         banner: '--adapter=adapter',
         desc: "specify an adapter to use", required: true,
@@ -17,9 +21,10 @@ module ROM
           File.join('config', 'initializers', 'rom.rb')
       end
 
-      def self.source_root
-        File.expand_path("../install/templates", __FILE__)
+      def add_types_module
+        copy_file "types.rb", "lib/types.rb"
       end
+
 
 
     private
