@@ -25,6 +25,10 @@ module ROM
         copy_file "types.rb", "lib/types.rb"
       end
 
+      def add_application_model
+        copy_file "application_model.rb", "app/models/application_model.rb"
+      end
+
 
 
     private

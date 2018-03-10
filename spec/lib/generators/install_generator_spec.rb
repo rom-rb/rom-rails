@@ -44,10 +44,48 @@ RSpec.describe ROM::Generators::InstallGenerator, type: :generator do
             module Types
               include Dry::Types.module
 
+              ID = Coercible::Int.optional.meta(primary_key: true)
+
               # Include your own type definitions and coersions here.
               # See http://dry-rb.org/gems/dry-types
             end
           CONTENT
+        end
+      end
+    }
+  end
+
+  it "sets up ApplicationModel" do
+    run_generator ["install"]
+
+    expect(destination_root).to have_structure {
+      directory "app" do
+        directory "models" do
+          file "application_model.rb" do
+            contains <<-CONTENT.strip_heredoc
+              require 'types'
+
+              class ApplicationModel < ROM::Struct
+                def self.inherited(base)
+                  super
+
+                  base.constructor_type :schema
+
+                  base.extend ActiveModel::Naming
+                  base.include ActiveModel::Conversion
+
+                  base.include Dry::Equalizer(:id)
+
+                  base.attribute :id, Types::ID
+                end
+
+                def persisted?
+                  id.present?
+                end
+              end
+            CONTENT
+          end
+
         end
       end
     }
