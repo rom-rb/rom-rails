@@ -1,0 +1,3 @@
+ROM::Rails::Railtie.configure do |config|
+  config.gateways[:default] = [:<%= adapter %>, ENV.fetch('DATABASE_URL')]
+end
