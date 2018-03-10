@@ -1,3 +1,13 @@
+## HEADD
+
+### Added
+
+* Add a new `rom:install` generator (cflipse)
+
+### Changed
+
+* Stop breaking rails loading when not yet configured. (cflipse)
+
 ## v1.0.1  2017-12-22
 
 ### Changed
