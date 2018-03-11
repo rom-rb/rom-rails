@@ -19,7 +19,9 @@ RSpec.describe ROM::Generators::RepositoryGenerator, type: :generator do
               class UserRepository < ROM::Repository::Root
                 root :users
 
-                commands :create, update: :by_pk, delete: :by_pk, mapper: :user
+                commands :create, update: :by_pk, delete: :by_pk
+
+                struct_namespace Dummy
               end
             CONTENT
           end
@@ -39,7 +41,9 @@ RSpec.describe ROM::Generators::RepositoryGenerator, type: :generator do
               class UserProfileRepository < ROM::Repository::Root
                 root :user_profiles
 
-                commands :create, update: :by_pk, delete: :by_pk, mapper: :user_profile
+                commands :create, update: :by_pk, delete: :by_pk
+
+                struct_namespace Dummy
               end
             CONTENT
           end
