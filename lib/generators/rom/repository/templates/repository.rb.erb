@@ -1,5 +1,7 @@
 class <%= model_name %>Repository < ROM::Repository::Root
   root <%= ":#{relation}" %>
 
-  commands :create, update: :by_pk, delete: :by_pk, mapper: :<%= mapper %>
+  commands :create, update: :by_pk, delete: :by_pk
+
+  struct_namespace <%= struct_namespace %>
 end
