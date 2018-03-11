@@ -7,6 +7,7 @@
 ### Changed
 
 * Stop breaking rails loading when not yet configured. (cflipse)
+* Repository generator prefers `struct_namespace` over mapper (radar, cflipse)
 
 ## v1.0.1  2017-12-22
 
