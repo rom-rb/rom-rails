@@ -3,5 +3,5 @@ class <%= model_name %>Repository < ROM::Repository::Root
 
   commands :create, update: :by_pk, delete: :by_pk
 
-  struct_namespace <%= Rails.application.class.name.split("::").first %>
+  struct_namespace <%= struct_namespace %>
 end

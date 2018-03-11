@@ -4,6 +4,12 @@ if defined? ROM::Repository
   module ROM
     module Generators
       class RepositoryGenerator < Base
+
+        class_option :namespace,
+          banner: '--namespace=namespace',
+          desc: "specify a struct namespace for the relation", required: true,
+          default: ::Rails.application.class.name.split("::").first 
+
         def create_repository_file
           template(
             'repository.rb.erb',
@@ -11,7 +17,11 @@ if defined? ROM::Repository
           )
         end
 
-        private
+      private
+
+        def struct_namespace
+          options[:namespace]
+        end
 
         def relation
           class_name.pluralize.underscore
