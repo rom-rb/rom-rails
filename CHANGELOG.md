@@ -1,4 +1,4 @@
-## HEADD
+## v1.1.0 2018-03-18
 
 ### Added
 
@@ -9,11 +9,15 @@
 * Stop breaking rails loading when not yet configured. (cflipse)
 * Repository generator prefers `struct_namespace` over mapper (radar, cflipse)
 
+[Compare v1.0.1...v1.1.0](https://github.com/rom-rb/rom-rails/compare/v1.0.1...v1.1.0)
+
 ## v1.0.1  2017-12-22
 
 ### Changed
 
 * Loosen ROM dependency
+
+[Compare v1.0.0...v1.0.1](https://github.com/rom-rb/rom-rails/compare/v1.0.0...v1.0.1)
 
 ## v1.0.0  2017-10-18
 
@@ -29,6 +33,8 @@
 * remove deprecated `config.repositories` method (cflipse)
 * No longer depends on `rom-model` gem (cflipse)
 * No longer depends on `charlatan` gem (artofhuman)
+
+[Compare v0.9.0...v1.0.0](https://github.com/rom-rb/rom-rails/compare/v0.9.0...v1.0.0)
 
 ## v0.9.0  2017-01-30
 
@@ -48,6 +54,9 @@
 
 * [`rom-support`](https://github.com/rom-rb/rom-support) dependency was replaced with [`dry-core`](https://github.com/dry-rb/dry-core) (solnic + flash-gordon)
 
+
+[Compare v0.8.0...v0.9.0](https://github.com/rom-rb/rom-rails/compare/v0.8.0...v0.9.0)
+
 ## v0.8.0 2016-08-08
 ### Changed
 
@@ -57,6 +66,8 @@
 
 ### Deprecated
 * Dropping support for ruby 2.1 and below
+
+[Compare v0.7.0...v0.8.0](https://github.com/rom-rb/rom-rails/compare/v0.7.0...v0.8.0)
 
 ## v0.7.0 2016-07-27
 
