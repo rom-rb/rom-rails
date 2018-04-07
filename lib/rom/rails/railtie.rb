@@ -84,7 +84,7 @@ module ROM
         config.rom.gateways[:default] ||= infer_default_gateway if active_record?
 
         if config.rom.gateways.empty?
-          Rails.logger.warn "It seems that you have not configured any gateways"
+          ::Rails.logger.warn "It seems that you have not configured any gateways"
 
           config.rom.gateways[:default] = [ :memory, "memory://test" ]
         end
