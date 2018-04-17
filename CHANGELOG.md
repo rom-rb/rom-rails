@@ -1,3 +1,11 @@
+## v1.1.1 2018-04-17
+
+### Changed
+
+* Fix Rails.logger lookup bug (cflipse)
+
+[Compare v1.1.0...v1.1.1](https://github.com/rom-rb/rom-rails/compare/v1.1.0...v1.1.1)
+
 ## v1.1.0 2018-03-18
 
 ### Added
