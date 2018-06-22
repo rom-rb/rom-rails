@@ -16,7 +16,7 @@ module ROM
 
       # Make `ROM::Rails::Configuration` instance available to the user via
       # `Rails.application.config` before other initializers run.
-      config.before_initialize do |_app|
+      config.before_configuration do |_app|
         config.rom = Configuration.new
       end
 
@@ -27,6 +27,7 @@ module ROM
       end
 
       initializer 'rom.adjust_eager_load_paths' do |app|
+        puts app.config.rom.base_path
         paths =
           auto_registration_paths.inject([]) do |result, root_path|
             result.concat(COMPONENT_DIRS.map { |dir| root_path.join('app', dir).to_s })
