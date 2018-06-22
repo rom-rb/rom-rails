@@ -25,11 +25,10 @@ class UserForm
   end
 
   def persisted?
-    !!id
+    id.present?
   end
 
   def self.model_name
     ActiveModel::Name.new(User)
   end
-
 end

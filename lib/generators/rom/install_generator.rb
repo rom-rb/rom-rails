@@ -8,7 +8,7 @@ module ROM
       end
 
       def self.source_root
-        File.expand_path("../install/templates", __FILE__)
+        File.expand_path('install/templates', __dir__)
       end
 
       class_option :adapter,
@@ -29,14 +29,11 @@ module ROM
         copy_file "application_model.rb", "app/models/application_model.rb"
       end
 
-
-
     private
 
       def adapter
         options[:adapter].to_sym
       end
-
     end
   end
 end

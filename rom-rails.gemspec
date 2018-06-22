@@ -1,5 +1,4 @@
-# coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'rom/rails/version'
 
@@ -17,14 +16,14 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency 'rom', '~> 4.0'
-  spec.add_runtime_dependency 'dry-equalizer', '~> 0.2'
-  spec.add_runtime_dependency 'dry-core', '~> 0.3'
   spec.add_runtime_dependency 'addressable', '~> 2.3'
+  spec.add_runtime_dependency 'dry-core', '~> 0.3'
+  spec.add_runtime_dependency 'dry-equalizer', '~> 0.2'
   spec.add_runtime_dependency 'railties', '>= 3.0', '< 6.0'
+  spec.add_runtime_dependency 'rom', '~> 4.0'
 
-  spec.add_development_dependency "rom-repository"
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake"
+  spec.add_development_dependency "rom-repository"
   spec.add_development_dependency "rubocop", "~> 0.50"
 end

@@ -1,7 +1,7 @@
 require 'generators/rom/install_generator'
 
 RSpec.describe ROM::Generators::InstallGenerator, type: :generator do
-  destination File.expand_path('../../../../tmp', __FILE__)
+  destination File.expand_path('../../../tmp', __dir__)
 
   before(:each) do
     prepare_destination
@@ -85,11 +85,8 @@ RSpec.describe ROM::Generators::InstallGenerator, type: :generator do
               end
             CONTENT
           end
-
         end
       end
     }
   end
-
-
 end

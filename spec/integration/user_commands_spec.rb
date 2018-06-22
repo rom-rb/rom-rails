@@ -6,7 +6,7 @@ RSpec.describe 'User commands' do
       relation = rom.relations[:users]
       relation.insert(name: 'Piotr', email: 'piotr@test.com')
 
-      expect{ 
+      expect {
         users.delete.by_name('Piotr').call
       }.to change(relation, :count).by(-1)
     end

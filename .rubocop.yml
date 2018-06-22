@@ -22,6 +22,7 @@ Metrics/PerceivedComplexity:
 
 # Don’t check temp and Rails-generated files
 AllCops:
+  TargetRubyVersion: 2.3.1
   Exclude:
     - spec/dummy/Rakefile
     - spec/dummy/config/**/*
@@ -31,7 +32,7 @@ AllCops:
     - vendor/**/*
 
 # The enforced style doesn’t match Vim’s defaults
-Style/AlignParameters:
+Layout/AlignParameters:
   Enabled: false
 
 # UTF-8 is perfectly fine in comments
@@ -60,8 +61,8 @@ Style/ClassAndModuleChildren:
 Style/Documentation:
   Enabled: false
 
-# This is a shim file for those who require 'rom-mongo'
-Style/FileName:
+# This is a shim file for those who require 'rom-rails'
+Naming/FileName:
   Exclude:
     - lib/rom-rails.rb
 
@@ -78,7 +79,7 @@ Style/MultilineBlockChain:
   Enabled: false
 
 # Multiline operation chains are indented
-Style/MultilineOperationIndentation:
+Layout/MultilineOperationIndentation:
   EnforcedStyle: indented
 
 # Model::Validator uses Model::ValidationError for this
@@ -91,7 +92,7 @@ Style/SignalException:
   EnforcedStyle: only_raise
 
 # Need to be skipped for >-> usage
-Style/SpaceAroundOperators:
+Layout/SpaceAroundOperators:
   Enabled: false
 
 # Accept both single and double quotes
@@ -102,10 +103,6 @@ Style/StringLiterals:
 Style/TrivialAccessors:
   Enabled: false
 
-Style/AccessorMethodName:
-  Exclude:
-    - lib/rom/rails/model/params.rb
-
 # Allow logical `or`/`and` in conditionals
 Style/AndOr:
   EnforcedStyle: conditionals
@@ -114,3 +111,39 @@ Style/AndOr:
 Performance/RedundantBlockCall:
   Enabled: false
 
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/PercentLiteralDelimiters:
+  Enabled: false
+
+Lint/AmbiguousBlockAssociation:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Layout/SpaceInsideHashLiteralBraces:
+  Enabled: false
+
+Style/BlockDelimiters:
+  Enabled: false
+
+
+Layout/SpaceInsideArrayLiteralBrackets:
+  Enabled: false
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Layout/AccessModifierIndentation:
+  Enabled: false
+
+Style/SymbolArray:
+  Enabled: false
+
+Style/SafeNavigation:
+  Enabled: false
+
+Lint/HandleExceptions:
+  Enabled: false

@@ -1,7 +1,7 @@
 require 'generators/rom/commands_generator'
 
 RSpec.describe ROM::Generators::CommandsGenerator do
-  destination File.expand_path('../../../../tmp', __FILE__)
+  destination File.expand_path('../../../tmp', __dir__)
 
   before(:each) do
     prepare_destination

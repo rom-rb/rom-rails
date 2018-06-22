@@ -3,7 +3,7 @@ require 'rubocop/rake_task'
 
 task default: %w(app:spec rubocop)
 
-APP_RAKEFILE = File.expand_path("../spec/dummy/Rakefile", __FILE__)
+APP_RAKEFILE = File.expand_path('spec/dummy/Rakefile', __dir__)
 load 'rails/tasks/engine.rake'
 
 RuboCop::RakeTask.new do |task|

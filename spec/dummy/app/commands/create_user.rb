@@ -6,5 +6,4 @@ class CreateUser < ROM::Commands::Create[:sql]
   use :timestamps
 
   timestamp :created_at
-
 end

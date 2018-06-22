@@ -8,8 +8,8 @@ RAILS_VERSION = ENV.fetch("RAILS_VERSION", '5.1.0').freeze
   gem name, "~> #{RAILS_VERSION}"
 end
 
-gem 'sqlite3', platforms: [:mri, :rbx]
 gem 'byebug', platforms: :mri
+gem 'sqlite3', platforms: [:mri, :rbx]
 
 gem 'rom', git: 'https://github.com/rom-rb/rom', branch: 'master' do
   gem 'rom-core'
@@ -24,10 +24,10 @@ platforms :jruby do
 end
 
 group :test do
-  gem 'rack-test'
-  gem 'rspec-rails', '~> 3.1'
+  gem 'capybara'
   gem 'codeclimate-test-reporter', require: nil
   gem 'database_cleaner'
-  gem 'capybara'
   gem 'generator_spec'
+  gem 'rack-test'
+  gem 'rspec-rails', '~> 3.1'
 end
