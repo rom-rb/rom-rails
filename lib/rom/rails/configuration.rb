@@ -11,7 +11,7 @@ module ROM
       end
 
       config_accessor :auto_registration_paths do
-        []
+        ['app']
       end
     end
   end
