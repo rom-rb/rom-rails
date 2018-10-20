@@ -3,7 +3,7 @@ RSpec.describe 'ROM initializer' do
     gateway = ROM::TestAdapter::Gateway.new(foo: :bar)
     relation = DummyRelation.new([])
 
-    expect(rom.gateways[:test]).to eql(gateway)
+    expect(rom.gateways[:default]).to eql(gateway)
     expect(rom.relations.dummy).to eql(relation)
   end
 
