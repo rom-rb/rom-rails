@@ -1,5 +1,5 @@
 class DummyRelation < ROM::Relation[:test_adapter]
-  gateway :test
+  gateway :default
 
   schema(:dummy, infer: true)
 end

@@ -1,4 +1,5 @@
 class Tasks < ROM::Relation[:sql]
+  gateway :sql
   schema(:tasks, infer: true)
 
   def by_id(id)

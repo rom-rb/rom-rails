@@ -1,4 +1,5 @@
 class Users < ROM::Relation[:sql]
+  gateway :sql
   schema(:users, infer: true)
 
   def by_id(id)
