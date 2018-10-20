@@ -1,3 +1,14 @@
+## v1.2.0 2018-10-20
+
+## Changed
+
+* ROM output is broadcast to STDOUT during rails console (radar)
+* Generators default to same adapter as the default gateway (cflipse)
+* Default auto-registration path set to app (cflipse)
+* Include controller extensions in API controllers (cflipse)
+
+[Compare v1.1.1...v1.2.0](https://github.com/rom-rb/rom-rails/compare/v1.1.1...v1.2.0)
+
 ## v1.1.1 2018-04-17
 
 ### Changed
