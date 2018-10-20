@@ -18,6 +18,14 @@ module ROM
           __FILE__
         )
       end
+
+      def self.default_gateway
+        ROM.env.gateways[:default]
+      end
+
+      def self.default_adapter
+        (default_gateway && default_gateway.adapter)
+      end
     end
   end
 end

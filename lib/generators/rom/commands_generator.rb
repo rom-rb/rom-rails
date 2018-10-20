@@ -6,7 +6,7 @@ module ROM
       class_option :adapter,
         banner: "--adapter=adapter",
         desc: "specify an adapter to use", required: true,
-        default: ROM.adapters.keys.first
+        default: default_adapter
 
       def create_create_command
         template 'create.rb.erb', command_file(:create)
