@@ -2,5 +2,4 @@ class Delete<%= model_name %> < ROM::Commands::Delete<%= "[:#{adapter}]" %>
   relation :<%= relation %>
   register_as :delete
   result :one
-
 end

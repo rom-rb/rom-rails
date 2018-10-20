@@ -3,9 +3,7 @@ class Update<%= model_name %> < ROM::Commands::Update<%= "[:#{adapter}]" %>
   register_as :update
   result :one
 
-<% if adapter.to_sym == :sql -%>
   # set Timestamp plugin
   # use :timestamps
   # timestamp :updated_at
-<% end -%>
 end
