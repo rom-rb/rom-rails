@@ -23,6 +23,7 @@ module ROM
       initializer 'rom.configure_action_controller' do
         ActiveSupport.on_load(:action_controller) do
           ActionController::Base.send(:include, ControllerExtension)
+          ActionController::API.send(:include, ControllerExtension) if defined?(ActionController::API)
         end
       end
 
