@@ -9,7 +9,7 @@ RSpec.describe ROM::Generators::RelationGenerator, type: :generator do
 
   specify do
     run_generator ['users']
-    default_adapter = ROM.adapters.keys.first
+    default_adapter = ROM.env.gateways[:default].adapter
 
     expect(destination_root).to have_structure {
       directory 'app' do
@@ -53,5 +53,8 @@ RSpec.describe ROM::Generators::RelationGenerator, type: :generator do
 
     relation = File.read(File.join(destination_root, 'app', 'relations', 'users_relation.rb'))
     expect(relation).to match(/schema.*as: :profiles/)
+  end
+
+  specify "with multiple generators" do
   end
 end

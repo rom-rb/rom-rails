@@ -3,10 +3,12 @@ require 'generators/rom'
 module ROM
   module Generators
     class RelationGenerator < Base
+      default_gateway = ROM.env.gateways[:default]
+
       class_option :adapter,
         banner: "--adapter=adapter",
         desc: "specify an adapter to use", required: true,
-        default: ROM.adapters.keys.first
+        default: ((default_gateway && default_gateway.adapter) || ROM.adapters.keys.first)
 
       class_option :gateway,
         banner: "--gateway=repo",
