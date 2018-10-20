@@ -49,7 +49,6 @@ RSpec.describe ROM::Generators::CommandsGenerator do
                     relation :users
                     register_as :delete
                     result :one
-
                   end
             CONTENT
           end
