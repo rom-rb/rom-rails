@@ -86,8 +86,8 @@ module ROM
         def self.generic_uri(config)
           build_uri(
             scheme: config.fetch(:scheme),
-            user: config[:username],
-            password: config[:password],
+            user: escape_option(config[:username]),
+            password: escape_option(config[:password]),
             host: config[:host],
             port: config[:port],
             path: config[:database]
@@ -96,6 +96,10 @@ module ROM
 
         def self.build_uri(attrs)
           Addressable::URI.new(attrs).to_s
+        end
+
+        def self.escape_option(option)
+          option.nil? ? option : CGI.escape(option)
         end
       end
     end
