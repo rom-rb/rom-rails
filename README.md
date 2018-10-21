@@ -1,6 +1,5 @@
 [gem]: https://rubygems.org/gems/rom-rails
 [travis]: https://travis-ci.org/rom-rb/rom-rails
-[gemnasium]: https://gemnasium.com/rom-rb/rom-rails
 [codeclimate]: https://codeclimate.com/github/rom-rb/rom-rails
 [coveralls]: https://coveralls.io/r/rom-rb/rom-rails
 [inchpages]: http://inch-ci.org/github/rom-rb/rom-rails
@@ -9,7 +8,6 @@
 
 [![Gem Version](https://badge.fury.io/rb/rom-rails.svg)][gem]
 [![Build Status](https://travis-ci.org/rom-rb/rom-rails.svg?branch=master)][travis]
-[![Dependency Status](https://gemnasium.com/rom-rb/rom-rails.svg)][gemnasium]
 [![Code Climate](https://codeclimate.com/github/rom-rb/rom-rails/badges/gpa.svg)][codeclimate]
 [![Test Coverage](https://codeclimate.com/github/rom-rb/rom-rails/badges/coverage.svg)][codeclimate]
 [![Inline docs](http://inch-ci.org/github/rom-rb/rom-rails.svg?branch=master)][inchpages]
