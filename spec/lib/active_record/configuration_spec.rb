@@ -112,6 +112,22 @@ RSpec.describe ROM::Rails::ActiveRecord::Configuration do
 
         expect(read(config)).to eq uri: expected_uri, options: { pool: 5 }
       end
+
+      it 'handles special characters in username and password' do
+        config = {
+          pool: 5,
+          adapter: 'mysql2',
+          username: 'r@o%ot',
+          password: 'p@ssw0rd#',
+          database: 'database',
+          host: 'example.com'
+        }
+
+        expected_uri = 'mysql2://r%40o%25ot:p%40ssw0rd%23@example.com/database'
+        expected_uri = "jdbc:#{expected_uri}" if RUBY_ENGINE == 'jruby'
+
+        expect(read(config)).to eq uri: expected_uri, options: { pool: 5 }
+      end
     end
   end
 end
