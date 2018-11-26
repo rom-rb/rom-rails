@@ -1,6 +1,20 @@
+## v1.3.0 2018-11-26
+
+### Changed
+
+* Rake task automatically attempts to include `rom-sql`'s tasks (cflipse)
+* Escape special characters in username & password from parsed database.yml (Cervajz)
+
+### Fixed
+
+* do not double log when ActiveRecord is present (Cervajz)
+* running the install generator no longer results in a broken app if `DATABASE_URL` is not set (cflipse)
+
+[Compare v1.2.0...v1.3.0](https://github.com/rom-rb/rom-rails/compare/v1.2.0...v1.3.0)
+
 ## v1.2.0 2018-10-20
 
-## Changed
+### Changed
 
 * ROM output is broadcast to STDOUT during rails console (radar)
 * Generators default to same adapter as the default gateway (cflipse)
@@ -11,7 +25,7 @@
 
 ## v1.1.1 2018-04-17
 
-### Changed
+### Fixedd
 
 * Fix Rails.logger lookup bug (cflipse)
 
