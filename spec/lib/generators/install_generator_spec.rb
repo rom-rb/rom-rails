@@ -39,7 +39,7 @@ RSpec.describe ROM::Generators::InstallGenerator, type: :generator do
       directory "lib" do
         file "types.rb" do
           contains <<-CONTENT.strip_heredoc
-            require 'dry/types'
+            require "dry/types"
 
             module Types
               include Dry::Types.module
@@ -63,7 +63,7 @@ RSpec.describe ROM::Generators::InstallGenerator, type: :generator do
         directory "models" do
           file "application_model.rb" do
             contains <<-CONTENT.strip_heredoc
-              require 'types'
+              require "types"
 
               class ApplicationModel < ROM::Struct
                 def self.inherited(base)

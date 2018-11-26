@@ -1,4 +1,4 @@
-require 'types'
+require "types"
 
 class ApplicationModel < ROM::Struct
   def self.inherited(base)
