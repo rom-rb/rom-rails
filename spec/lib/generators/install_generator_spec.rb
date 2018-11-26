@@ -16,7 +16,7 @@ RSpec.describe ROM::Generators::InstallGenerator, type: :generator do
           file 'rom.rb' do
             contains <<-CONTENT.strip_heredoc
               ROM::Rails::Railtie.configure do |config|
-                config.gateways[:default] = [:sql, ENV.fetch('DATABASE_URL')]
+                # config.gateways[:default] = [:sql, ENV.fetch('DATABASE_URL')]
               end
             CONTENT
           end
