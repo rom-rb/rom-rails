@@ -46,10 +46,7 @@ module ROM
       end
 
       console do |_app|
-        unless ActiveSupport::Logger.logger_outputs_to?(::Rails.logger, STDERR, STDOUT)
-          console = ActiveSupport::Logger.new(STDERR)
-          ::Rails.logger.extend ActiveSupport::Logger.broadcast console
-        end
+        Railtie.configure_console_logger
       end
 
       # Behaves like `Railtie#configure` if the given block does not take any
@@ -136,6 +133,19 @@ module ROM
       # @api private
       def active_record?
         defined?(::ActiveRecord)
+      end
+
+      # @api private
+      def std_err_out_logger?
+        ActiveSupport::Logger.logger_outputs_to?(::Rails.logger, STDERR, STDOUT)
+      end
+
+      # @api private
+      def configure_console_logger
+        return if active_record? || std_err_out_logger?
+
+        console = ActiveSupport::Logger.new(STDERR)
+        ::Rails.logger.extend ActiveSupport::Logger.broadcast console
       end
     end
   end
