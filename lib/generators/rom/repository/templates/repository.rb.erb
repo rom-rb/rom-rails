@@ -4,4 +4,8 @@ class <%= model_name %>Repository < ROM::Repository::Root
   commands :create, update: :by_pk, delete: :by_pk
 
   struct_namespace <%= struct_namespace %>
+
+  def by_id(id)
+    root.by_pk(id)
+  end
 end

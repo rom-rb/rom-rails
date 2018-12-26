@@ -22,6 +22,10 @@ RSpec.describe ROM::Generators::RepositoryGenerator, type: :generator do
                 commands :create, update: :by_pk, delete: :by_pk
 
                 struct_namespace Dummy
+
+                def by_id(id)
+                  root.by_pk(id)
+                end
               end
             CONTENT
           end
@@ -44,6 +48,10 @@ RSpec.describe ROM::Generators::RepositoryGenerator, type: :generator do
                 commands :create, update: :by_pk, delete: :by_pk
 
                 struct_namespace Dummy
+
+                def by_id(id)
+                  root.by_pk(id)
+                end
               end
             CONTENT
           end
