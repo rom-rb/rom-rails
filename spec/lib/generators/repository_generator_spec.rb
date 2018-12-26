@@ -24,7 +24,7 @@ RSpec.describe ROM::Generators::RepositoryGenerator, type: :generator do
                 struct_namespace Dummy
 
                 def by_id(id)
-                  root.by_pk(id)
+                  root.by_pk(id).one
                 end
 
                 def all
@@ -54,7 +54,7 @@ RSpec.describe ROM::Generators::RepositoryGenerator, type: :generator do
                 struct_namespace Dummy
 
                 def by_id(id)
-                  root.by_pk(id)
+                  root.by_pk(id).one
                 end
 
                 def all

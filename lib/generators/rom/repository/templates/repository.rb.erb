@@ -6,7 +6,7 @@ class <%= model_name %>Repository < ROM::Repository::Root
   struct_namespace <%= struct_namespace %>
 
   def by_id(id)
-    root.by_pk(id)
+    root.by_pk(id).one
   end
 
   def all
