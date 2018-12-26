@@ -26,6 +26,10 @@ RSpec.describe ROM::Generators::RepositoryGenerator, type: :generator do
                 def by_id(id)
                   root.by_pk(id)
                 end
+
+                def all
+                  root.to_a
+                end
               end
             CONTENT
           end
@@ -51,6 +55,10 @@ RSpec.describe ROM::Generators::RepositoryGenerator, type: :generator do
 
                 def by_id(id)
                   root.by_pk(id)
+                end
+
+                def all
+                  root.to_a
                 end
               end
             CONTENT

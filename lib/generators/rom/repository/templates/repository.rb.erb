@@ -8,4 +8,8 @@ class <%= model_name %>Repository < ROM::Repository::Root
   def by_id(id)
     root.by_pk(id)
   end
+
+  def all
+    root.to_a
+  end
 end
