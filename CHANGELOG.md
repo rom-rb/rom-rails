@@ -1,3 +1,11 @@
+## v2.0.0 2019-04-26
+
+### Changed
+
+* Updated to depend on rom-* 5.0
+
+[Compare v1.3.0...v2.0.0](https://github.com/rom-rb/rom-rails/compare/v1.3.0...v2.0.0)
+
 ## v1.3.0 2018-11-26
 
 ### Changed
