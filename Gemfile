@@ -17,7 +17,6 @@ gem 'rom', git: 'https://github.com/rom-rb/rom', branch: 'master' do
   gem 'rom-repository', group: :tools
 end
 
-gem 'rom-http'
 gem 'rom-sql', github: 'rom-rb/rom-sql', branch: 'master'
 
 platforms :jruby do
