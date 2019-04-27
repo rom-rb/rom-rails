@@ -1,4 +1,4 @@
-## v2.0.0 to-be-released
+## v2.0.0 2019-04-27
 
 ### Changed
 
