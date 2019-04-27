@@ -3,6 +3,7 @@
 ### Changed
 
 * Updated to depend on rom-* 5.0
+* Repository generator creates a `by_id` method (cflipse)
 
 [Compare v1.3.0...v2.0.0](https://github.com/rom-rb/rom-rails/compare/v1.3.0...v2.0.0)
 
