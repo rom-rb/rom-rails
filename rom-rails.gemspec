@@ -5,8 +5,8 @@ require 'rom/rails/version'
 Gem::Specification.new do |spec|
   spec.name          = "rom-rails"
   spec.version       = ROM::Rails::VERSION.dup
-  spec.authors       = ["Piotr Solnica"]
-  spec.email         = ["piotr.solnica@gmail.com"]
+  spec.authors       = ["Chris Flipse", "Piotr Solnica"]
+  spec.email         = ["cflipse@gmail.com", "piotr.solnica@gmail.com"]
   spec.summary       = 'Integrate Ruby Object Mapper with Rails'
   spec.homepage      = "http://rom-rb.org"
   spec.license       = "MIT"
