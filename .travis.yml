@@ -23,5 +23,5 @@ notifications:
     on_start: false
 matrix:
   exclude:
-    - rom: 2.4.6
+    - rvm: 2.4.6
       env: RAILS_VERSION=6.0
