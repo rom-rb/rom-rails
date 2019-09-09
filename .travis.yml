@@ -9,6 +9,7 @@ rvm:
   - 2.6.3
   - jruby-9.2.7.0
 env:
+  - RAILS_VERSION=6.0
   - RAILS_VERSION=5.2
   - RAILS_VERSION=5.1
   - RAILS_VERSION=5.0
@@ -20,3 +21,7 @@ notifications:
     on_success: change
     on_failure: always
     on_start: false
+matrix:
+  exclude:
+    - rom: 2.4.6
+      env: RAILS_VERSION=6.0
