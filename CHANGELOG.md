@@ -1,11 +1,10 @@
-## HEAD
+## v2.1.0 2019-09-09
 
 ### Changed
 
 * Allow rails6 (cflipse)
 
-
-[Compare v2.0.0...HEAD](https://github.com/rom-rb/rom-rails/compare/v2.0.0...HEAD)
+[Compare v2.0.0...v2.1.0](https://github.com/rom-rb/rom-rails/compare/v2.0.0...v2.1.0)
 
 ## v2.0.0 2019-04-27
 
