@@ -38,7 +38,12 @@ module ROM
         #
         # @api private
         def call
-          configuration = configurations.fetch(env)
+          configuration = if ::ActiveRecord::VERSION::MAJOR < 6
+                            configurations.fetch(env)
+                          else
+                            configurations.default_hash(env)
+                          end
+
           build(configuration.symbolize_keys.update(root: root))
         end
 
