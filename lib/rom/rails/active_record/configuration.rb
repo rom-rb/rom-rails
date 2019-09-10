@@ -38,13 +38,13 @@ module ROM
         #
         # @api private
         def call
-          configuration = if ::ActiveRecord::VERSION::MAJOR < 6
-                            configurations.fetch(env)
-                          else
+          configuration = if rails6?
                             configurations.default_hash(env)
+                          else
+                            configurations.fetch(env)
                           end
 
-          build(configuration.symbolize_keys.update(root: root))
+          build(configuration.symbolize_keys)
         end
 
         # Builds a configuration hash from a flat database config hash.
@@ -59,13 +59,21 @@ module ROM
         # @api private
         def build(config)
           adapter = config.fetch(:adapter)
-          uri_options = config.except(:adapter).merge(scheme: adapter)
+          uri_options = config.except(:adapter).merge(
+            root: root,
+            scheme: adapter
+          )
           other_options = config.except(*BASE_OPTIONS)
 
           uri = uri_builder.build(adapter, uri_options)
           { uri: uri, options: other_options }
         end
 
+        private
+
+        def rails6?
+          ::ActiveRecord::VERSION::MAJOR >= 6
+        end
       end
     end
   end
