@@ -1,7 +1,10 @@
 require 'rom/rails/active_record/configuration'
+require 'active_record'
 
 RSpec.describe ROM::Rails::ActiveRecord::Configuration do
   let(:root) { Pathname.new('/path/to/app') }
+
+  subject(:configuration) { described_class.new }
 
   def uri_for(config)
     result = read(config)
@@ -9,7 +12,7 @@ RSpec.describe ROM::Rails::ActiveRecord::Configuration do
   end
 
   def read(config)
-    described_class.build(config.merge(root: root))
+    configuration.build(config.merge(root: root))
   end
 
   def parse(uri)

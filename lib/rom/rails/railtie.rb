@@ -86,7 +86,9 @@ module ROM
 
       # @api private
       def gateways
-        config.rom.gateways[:default] ||= infer_default_gateway if active_record?
+        if active_record?
+          config.rom.gateways[:default] ||= infer_default_gateway
+        end
 
         if config.rom.gateways.empty?
           ::Rails.logger.warn "It seems that you have not configured any gateways"
@@ -102,7 +104,8 @@ module ROM
       #
       # @api private
       def infer_default_gateway
-        spec = ROM::Rails::ActiveRecord::Configuration.call
+        ar_config = ROM::Rails::ActiveRecord::Configuration.new
+        spec = ROM::Rails::ActiveRecord::Configuration.new.call
         [:sql, spec[:uri], spec[:options]]
       end
 
