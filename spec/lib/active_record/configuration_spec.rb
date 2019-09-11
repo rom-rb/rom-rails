@@ -1,7 +1,11 @@
 require 'rom/rails/active_record/configuration'
+require 'active_record'
+require 'active_record/database_configurations' if Rails::VERSION::MAJOR >= 6
 
 RSpec.describe ROM::Rails::ActiveRecord::Configuration do
   let(:root) { Pathname.new('/path/to/app') }
+
+  subject(:configuration) { described_class.new(root: root) }
 
   def uri_for(config)
     result = read(config)
@@ -9,7 +13,7 @@ RSpec.describe ROM::Rails::ActiveRecord::Configuration do
   end
 
   def read(config)
-    described_class.build(config.merge(root: root))
+    configuration.build(config)
   end
 
   def parse(uri)
@@ -127,6 +131,30 @@ RSpec.describe ROM::Rails::ActiveRecord::Configuration do
         expected_uri = "jdbc:#{expected_uri}" if RUBY_ENGINE == 'jruby'
 
         expect(read(config)).to eq uri: expected_uri, options: { pool: 5 }
+      end
+    end
+  end
+
+  if Rails::VERSION::MAJOR >= 6
+    context "with an activerecord 6 configuration" do
+      subject(:configuration) { described_class.new(root: root, configurations: railsconfig, env: "test") }
+
+      let(:config_file) { {
+        test: {
+          adapter: 'mysql',
+          host: 'example.com',
+          database: 'test',
+          username: 'user'
+        }
+      }}
+
+      context "with only a single database" do
+        let(:railsconfig) { ActiveRecord::DatabaseConfigurations.new(config_file) }
+
+        it "returns the default hash" do
+          expected_uri = uri_for(config_file[:test])
+          expect(configuration.call).not_to eq expected_uri
+        end
       end
     end
   end

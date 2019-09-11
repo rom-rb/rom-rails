@@ -1,4 +1,4 @@
-require 'addressable/uri'
+require_relative 'uri_builder'
 
 module ROM
   module Rails
@@ -17,15 +17,33 @@ module ROM
           :host
         ].freeze
 
+        attr_reader :configurations
+        attr_reader :env
+        attr_reader :root
+        attr_reader :uri_builder
+
+        def initialize(env: ::Rails.env, root: ::Rails.root, configurations: ::ActiveRecord::Base.configurations)
+          @configurations = configurations
+          @env  = env
+          @root = root
+
+          @uri_builder = ROM::Rails::ActiveRecord::UriBuilder.new
+        end
+
         # Returns gateway configuration for the current environment.
         #
         # @note This relies on ActiveRecord being initialized already.
         # @param [Rails::Application]
         #
         # @api private
-        def self.call
-          configuration = ::ActiveRecord::Base.configurations.fetch(::Rails.env)
-          build(configuration.symbolize_keys.update(root: ::Rails.root))
+        def call
+          configuration = if rails6?
+                            configurations.default_hash(env)
+                          else
+                            configurations.fetch(env)
+                          end
+
+          build(configuration.symbolize_keys)
         end
 
         # Builds a configuration hash from a flat database config hash.
@@ -38,68 +56,22 @@ module ROM
         # @return [Hash]
         #
         # @api private
-        def self.build(config)
+        def build(config)
           adapter = config.fetch(:adapter)
-          uri_options = config.except(:adapter).merge(scheme: adapter)
+          uri_options = config.except(:adapter).merge(
+            root: root,
+            scheme: adapter
+          )
           other_options = config.except(*BASE_OPTIONS)
 
-          builder_method = :"#{adapter}_uri"
-          uri = if respond_to?(builder_method)
-                  send(builder_method, uri_options)
-                else
-                  generic_uri(uri_options)
-                end
-
-          # JRuby connection strings require special care.
-          if RUBY_ENGINE == 'jruby' && adapter != 'postgresql'
-            uri = "jdbc:#{uri}"
-          end
-
+          uri = uri_builder.build(adapter, uri_options)
           { uri: uri, options: other_options }
         end
 
-        def self.sqlite3_uri(config)
-          path = Pathname.new(config.fetch(:root)).join(config.fetch(:database))
+        private
 
-          build_uri(
-            scheme: 'sqlite',
-            host: '',
-            path: path.to_s
-          )
-        end
-
-        def self.postgresql_uri(config)
-          generic_uri(config.merge(
-                        host: config.fetch(:host) { '' },
-                        scheme: 'postgres'
-                      ))
-        end
-
-        def self.mysql_uri(config)
-          if config.key?(:username) && !config.key?(:password)
-            config.update(password: '')
-          end
-
-          generic_uri(config)
-        end
-
-        def self.generic_uri(config)
-          build_uri(
-            scheme: config.fetch(:scheme),
-            user: escape_option(config[:username]),
-            password: escape_option(config[:password]),
-            host: config[:host],
-            port: config[:port],
-            path: config[:database]
-          )
-        end
-
-        def self.build_uri(attrs)
-          Addressable::URI.new(attrs).to_s
-        end
-
-        def self.escape_option(option)
-          option.nil? ? option : CGI.escape(option)
+        def rails6?
+          ::ActiveRecord::VERSION::MAJOR >= 6
         end
       end
     end
