@@ -22,14 +22,13 @@ module ROM
         attr_reader :root
         attr_reader :uri_builder
 
-        def initialize(env: ::Rails.env, root: ::Rails.root, base: ::ActiveRecord::Base)
-          @configurations = base.configurations
+        def initialize(env: ::Rails.env, root: ::Rails.root, configurations: ::ActiveRecord::Base.configurations)
+          @configurations = configurations
           @env  = env
           @root = root
 
           @uri_builder = ROM::Rails::ActiveRecord::UriBuilder.new
         end
-
 
         # Returns gateway configuration for the current environment.
         #
