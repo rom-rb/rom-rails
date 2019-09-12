@@ -196,7 +196,6 @@ RSpec.describe ROM::Rails::ActiveRecord::Configuration do
             writer: { uri: expected_writer_uri, options: options }
           )
         end
-
       end
     end
 

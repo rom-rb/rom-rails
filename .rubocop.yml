@@ -31,9 +31,13 @@ AllCops:
     - tmp/**/*
     - vendor/**/*
 
+Layout/AlignArguments:
+  EnforcedStyle: with_fixed_indentation
+
 # The enforced style doesn’t match Vim’s defaults
 Layout/AlignParameters:
   Enabled: false
+
 
 # UTF-8 is perfectly fine in comments
 Style/AsciiComments:
