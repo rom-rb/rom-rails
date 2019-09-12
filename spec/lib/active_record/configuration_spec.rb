@@ -155,7 +155,7 @@ RSpec.describe ROM::Rails::ActiveRecord::Configuration do
 
         it "returns the default hash" do
           expected_uri = uri_for(config_file[:test])
-          expect(configuration.call).to match(uri: expected_uri, options: { encoding: 'utf8' })
+          expect(configuration.call[:default]).to match(uri: expected_uri, options: { encoding: 'utf8' })
         end
       end
 
@@ -183,7 +183,7 @@ RSpec.describe ROM::Rails::ActiveRecord::Configuration do
 
         it "configures the first database as the default" do
           expected_uri = uri_for(config_file[:test][:reader])
-          expect(configuration.call).to match(uri: expected_uri, options: {encoding: 'utf8'})
+          expect(configuration.call[:default]).to match(uri: expected_uri, options: {encoding: 'utf8'})
         end
       end
     end

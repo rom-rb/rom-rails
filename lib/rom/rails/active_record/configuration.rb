@@ -43,7 +43,7 @@ module ROM
                             configurations.fetch(env)
                           end
 
-          build(configuration.symbolize_keys)
+          { default: build(configuration.symbolize_keys) }
         end
 
         # Builds a configuration hash from a flat database config hash.

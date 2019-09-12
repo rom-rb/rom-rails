@@ -104,8 +104,7 @@ module ROM
       #
       # @api private
       def infer_default_gateway
-        ar_config = ROM::Rails::ActiveRecord::Configuration.new
-        spec = ROM::Rails::ActiveRecord::Configuration.new.call
+        spec = ROM::Rails::ActiveRecord::Configuration.new.call[:default]
         [:sql, spec[:uri], spec[:options]]
       end
 
