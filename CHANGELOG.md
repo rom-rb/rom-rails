@@ -1,3 +1,15 @@
+## v2.2.0 2019-09-12
+
+### Changed
+
+* Read new-style Rails6 configuration, inferring all defined databases (cflipse)
+
+### Fixed
+
+* Updated generator to produce files that are actually compatible with ROM 5.0 (cflipse)
+
+[Compare v2.1.0...v2.2.0](https://github.com/rom-rb/rom-rails/compare/v2.1.0...v2.2.0)
+
 ## v2.1.0 2019-09-09
 
 ### Changed
