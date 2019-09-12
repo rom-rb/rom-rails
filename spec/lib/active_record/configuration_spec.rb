@@ -138,22 +138,21 @@ RSpec.describe ROM::Rails::ActiveRecord::Configuration do
   if Rails::VERSION::MAJOR >= 6
     context "with an activerecord 6 configuration" do
       subject(:configuration) { described_class.new(root: root, configurations: railsconfig, env: "test") }
-
-      let(:config_file) { {
-        test: {
-          adapter: 'mysql',
-          host: 'example.com',
-          database: 'test',
-          username: 'user'
-        }
-      }}
+      let(:railsconfig) { ActiveRecord::DatabaseConfigurations.new(config_file) }
 
       context "with only a single database" do
-        let(:railsconfig) { ActiveRecord::DatabaseConfigurations.new(config_file) }
+        let(:config_file) { {
+          test: {
+            adapter: 'mysql',
+            host: 'example.com',
+            database: 'test',
+            username: 'user'
+          }
+        }}
 
         it "returns the default hash" do
           expected_uri = uri_for(config_file[:test])
-          expect(configuration.call).not_to eq expected_uri
+          expect(configuration.call[:uri]).to eq expected_uri
         end
       end
     end
