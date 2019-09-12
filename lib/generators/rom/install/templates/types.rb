@@ -1,7 +1,7 @@
 require "dry/types"
 
 module Types
-  include Dry::Types.module
+  include Dry.Types
 
   ID = Coercible::Integer.optional.meta(primary_key: true)
 
