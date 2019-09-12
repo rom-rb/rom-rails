@@ -146,13 +146,14 @@ RSpec.describe ROM::Rails::ActiveRecord::Configuration do
             adapter: 'mysql',
             host: 'example.com',
             database: 'test',
-            username: 'user'
+            username: 'user',
+            encoding: 'utf8'
           }
         }}
 
         it "returns the default hash" do
           expected_uri = uri_for(config_file[:test])
-          expect(configuration.call[:uri]).to eq expected_uri
+          expect(configuration.call).to match(uri: expected_uri, options: { encoding: 'utf8' })
         end
       end
     end
