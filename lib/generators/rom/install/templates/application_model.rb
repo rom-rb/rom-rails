@@ -4,7 +4,7 @@ class ApplicationModel < ROM::Struct
   def self.inherited(base)
     super
 
-    base.constructor_type :schema
+    base.transform_types(&:omittable)
 
     base.extend ActiveModel::Naming
     base.include ActiveModel::Conversion

@@ -44,7 +44,7 @@ RSpec.describe ROM::Generators::InstallGenerator, type: :generator do
             module Types
               include Dry::Types.module
 
-              ID = Coercible::Int.optional.meta(primary_key: true)
+              ID = Coercible::Integer.optional.meta(primary_key: true)
 
               # Include your own type definitions and coersions here.
               # See http://dry-rb.org/gems/dry-types
@@ -69,7 +69,7 @@ RSpec.describe ROM::Generators::InstallGenerator, type: :generator do
                 def self.inherited(base)
                   super
 
-                  base.constructor_type :schema
+                  base.transform_types(&:omittable)
 
                   base.extend ActiveModel::Naming
                   base.include ActiveModel::Conversion
