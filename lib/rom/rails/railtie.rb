@@ -87,7 +87,9 @@ module ROM
       # @api private
       def gateways
         if active_record?
-          config.rom.gateways[:default] ||= infer_default_gateway
+          load_active_record_config.each do |name, spec|
+            config.rom.gateways[name] ||= [:sql, spec[:uri], spec[:options]]
+          end
         end
 
         if config.rom.gateways.empty?
@@ -99,14 +101,9 @@ module ROM
         config.rom.gateways
       end
 
-      # If there's no default gateway configured, try to infer it from
-      # other sources, e.g. ActiveRecord.
-      #
-      # @api private
-      def infer_default_gateway
-        ar_config = ROM::Rails::ActiveRecord::Configuration.new
-        spec = ROM::Rails::ActiveRecord::Configuration.new.call
-        [:sql, spec[:uri], spec[:options]]
+      # Attempt to infer all configured gateways from activerecord
+      def load_active_record_config
+        ROM::Rails::ActiveRecord::Configuration.new.call
       end
 
       def load_initializer

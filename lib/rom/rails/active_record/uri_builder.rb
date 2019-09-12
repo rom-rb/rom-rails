@@ -4,7 +4,6 @@ module ROM
   module Rails
     module ActiveRecord
       class UriBuilder
-
         def build(adapter, uri_options)
           builder_method = :"#{adapter}_uri"
 
@@ -21,7 +20,6 @@ module ROM
 
           uri
         end
-
 
         def sqlite3_uri(config)
           path = Pathname.new(config.fetch(:root)).join(config.fetch(:database))
