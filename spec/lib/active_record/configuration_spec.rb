@@ -156,6 +156,36 @@ RSpec.describe ROM::Rails::ActiveRecord::Configuration do
           expect(configuration.call).to match(uri: expected_uri, options: { encoding: 'utf8' })
         end
       end
+
+      context "with multiple configured databases" do
+        let(:config_file) { {
+          test: {
+            reader: {
+              adapter: 'mysql',
+              host: 'example.com',
+              database: 'test_reader',
+              username: 'user',
+              encoding: 'utf8'
+            },
+            writer: {
+              adapter: 'mysql',
+              host: 'write.example.com',
+              database: 'test_writer',
+              username: 'user',
+              encoding: 'utf8'
+            }
+          }
+        }}
+
+        it "configures the first database as the default" do
+          expected_uri = uri_for(config_file[:test][:reader])
+          expect(configuration.call).to match(uri: expected_uri, options: {encoding: 'utf8'})
+        end
+
+      end
     end
+
+
+
   end
 end
