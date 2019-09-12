@@ -185,6 +185,18 @@ RSpec.describe ROM::Rails::ActiveRecord::Configuration do
           expected_uri = uri_for(config_file[:test][:reader])
           expect(configuration.call[:default]).to match(uri: expected_uri, options: {encoding: 'utf8'})
         end
+
+        it "returns each configured database" do
+          options = { encoding: 'utf8' }
+          expected_reader_uri = uri_for(config_file[:test][:reader])
+          expected_writer_uri = uri_for(config_file[:test][:writer])
+
+          expect(configuration.call).to include(
+            reader: { uri: expected_reader_uri, options: options },
+            writer: { uri: expected_writer_uri, options: options }
+          )
+        end
+
       end
     end
 
