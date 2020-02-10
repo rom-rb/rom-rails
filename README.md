@@ -32,7 +32,7 @@ To run tests:
 You can read more about ROM and Rails on the official website:
 
 * [Introduction to ROM](http://rom-rb.org/learn/)
-* [Rails setup](http://rom-rb.org/learn/getting-started/rails-setup/)
+* [Rails setup](http://rom-rb.org/learn/rails/)
 
 
 ## Community
