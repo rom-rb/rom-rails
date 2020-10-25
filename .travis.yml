@@ -4,9 +4,9 @@ cache: bundler
 bundler_args: --without yard guard benchmarks
 script: "RAILS_ENV=test bundle exec rake app:db:reset app:spec"
 rvm:
-  - 2.4.6
-  - 2.5.5
-  - 2.6.3
+  - 2.4
+  - 2.5
+  - 2.6
   - jruby-9.2.7.0
 env:
   - RAILS_VERSION=6.0
@@ -23,5 +23,5 @@ notifications:
     on_start: false
 matrix:
   exclude:
-    - rvm: 2.4.6
+    - rvm: 2.4
       env: RAILS_VERSION=6.0
