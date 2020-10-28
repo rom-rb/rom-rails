@@ -41,7 +41,7 @@ GIT
 PATH
   remote: .
   specs:
-    rom-rails (2.1.0)
+    rom-rails (2.2.0)
       addressable (~> 2.3)
       dry-core (~> 0.3)
       dry-equalizer (~> 0.2)
