@@ -1,3 +1,9 @@
+## v2.3.0 2021-03-20
+
+### Changed
+
+* Updated dependencies to allow Rails 6.1 (alex-lairan)
+
 ## v2.2.0 2019-09-12
 
 ### Changed
