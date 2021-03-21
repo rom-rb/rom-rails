@@ -24,6 +24,8 @@ if ENV["USE_ROM_MASTER"].eql?("true")
 else
   gem "rom"
   gem "rom-sql"
+
+  gem "sequel", "5.31.0"
 end
 
 platforms :jruby do
