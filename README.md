@@ -4,7 +4,7 @@
 [coveralls]: https://coveralls.io/r/rom-rb/rom-rails
 [inchpages]: http://inch-ci.org/github/rom-rb/rom-rails
 
-# rom-rails
+# rom-rails [![Join the chat at https://rom-rb.zulipchat.com](https://img.shields.io/badge/rom--rb-join%20chat-942283.svg)][chat]
 
 [![Gem Version](https://badge.fury.io/rb/rom-rails.svg)][gem]
 [![CI Status](https://github.com/rom-rb/rom-rails/workflows/ci/badge.svg)][actions]
@@ -16,9 +16,9 @@ Rails integration for [Ruby Object Mapper](https://github.com/rom-rb/rom) which
 ships with:
 
 * Relation generators
+* Repository generators
 * Mapper generators
 * Command generators
-* Repository generators
 
 ## Tests
 
@@ -37,8 +37,9 @@ You can read more about ROM and Rails on the official website:
 
 ## Community
 
-* [![Gitter chat](https://badges.gitter.im/rom-rb/chat.png)](https://gitter.im/rom-rb/chat)
+* [Offical ROM blog](https://rom-rg.org/blog)
 * [Discussion Forum](https://discuss.rom-rb.org)
+* [Chat](https://rom-rb.zulipchat.com)
 
 ## License
 
