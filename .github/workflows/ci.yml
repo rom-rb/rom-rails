@@ -1,0 +1,64 @@
+---
+name: ci
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - ".github/workflows/ci.yml"
+      - lib/**
+      - "*.gemspec"
+      - spec/**
+      - db/migrate/**
+      - Rakefile
+      - Gemfile
+      - ".rubocop.yml"
+  pull_request:
+    branches:
+      - master
+  create:
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby:
+          - '2.7'
+          - '2.6'
+          - '2.5'
+          - '2.4'
+          - jruby
+        rails:
+          - "6.0.0"
+          - "5.2.0"
+          - "5.1.0"
+          - "5.0.0"
+          - "4.2.0"
+        exclude:
+          - ruby: "2.4"
+            rails: "6.0.0"
+          - ruby: "2.7"
+            rails: "4.2.0"
+    env:
+      APT_DEPS: libsqlite3-dev
+      RAILS_VERSION: "${{matrix.rails}}"
+      RAILS_ENV: test
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Install package dependencies
+        run: "[ -e $APT_DEPS ] || sudo apt-get install -y --no-install-recommends $APT_DEPS"
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "${{matrix.ruby}}"
+      - name: Install latest bundler
+        run: |
+          gem install bundler --no-document
+          bundle config set without 'tools benchmarks docs'
+      - name: Bundle install
+        run: bundle install --jobs 4 --retry 3
+      - name: Run all tests
+        run: bundle exec rake app:db:reset app:spec
