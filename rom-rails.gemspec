@@ -16,6 +16,12 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
+  spec.metadata = {
+    "bug_tracker_uri" => "https://github.com/rom-rb/rom-rails/issues",
+    "changelog_uri"   => "https://github.com/rom-rb/rom-rails/blob/master/CHANGELOG.md",
+    "source_code_uri" => "https://github.com/rom-rb/rom-rails",
+  }
+
   spec.add_runtime_dependency 'addressable', '~> 2.3'
   spec.add_runtime_dependency 'dry-core', '~> 0.4'
   spec.add_runtime_dependency 'dry-equalizer', '~> 0.2'
