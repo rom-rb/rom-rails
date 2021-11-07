@@ -40,9 +40,18 @@ module ROM
         load "rom/rails/tasks/db.rake" unless active_record?
       end
 
+      # Load ROM-related application code on startup
+      config.after_initialize do
+        if !::Rails.application.config.rom.reload_on_each_request
+          ROM.env = Railtie.create_container
+        end
+      end
+
       # Reload ROM-related application code on each request.
-      config.to_prepare do |_config|
-        ROM.env = Railtie.create_container
+      config.to_prepare do |prepare_conf|
+        if ::Rails.application.config.rom.reload_on_each_request
+          ROM.env = Railtie.create_container
+        end
       end
 
       console do |_app|

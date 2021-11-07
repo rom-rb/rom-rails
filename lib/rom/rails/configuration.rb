@@ -13,6 +13,10 @@ module ROM
       config_accessor :auto_registration_paths do
         ['app']
       end
+
+      config_accessor :reload_on_each_request do
+        true
+      end
     end
   end
 end
