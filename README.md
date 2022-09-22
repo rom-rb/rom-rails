@@ -39,8 +39,8 @@ You can read more about ROM and Rails on the official website:
 
 ## Community
 
-* [Offical ROM blog](https://rom-rg.org/blog)
-* [Discussion Forum](https://discuss.rom-rb.org)
+* [Offical ROM blog](https://rom-rb.org/blog)
+* [Discussion Forum](https://discourse.rom-rb.org)
 * [Chat](https://rom-rb.zulipchat.com)
 
 ## License
