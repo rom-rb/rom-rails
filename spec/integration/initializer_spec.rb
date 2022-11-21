@@ -7,7 +7,12 @@ RSpec.describe 'ROM initializer' do
     expect(rom.relations.dummy).to eql(relation)
   end
 
-  it 'loads commands from additionall auto_registration_paths' do
+  it 'loads commands from additional auto_registration_paths' do
     expect(rom.commands.tasks.create_additional).to be_a(CreateAdditionalTask)
+  end
+
+  it 'allows namespace configuration on autoload paths' do
+    puts rom.commands.tasks.elements
+    expect(rom.commands.tasks.namespaced_additional).to be_a(NamespacedApp::Persistence::Commands::CreateAdditionalTask)
   end
 end

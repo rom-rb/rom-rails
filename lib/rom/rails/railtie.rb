@@ -30,7 +30,7 @@ module ROM
       initializer 'rom.adjust_eager_load_paths' do |app|
         paths =
           auto_registration_paths.inject([]) do |result, root_path|
-            result.concat(COMPONENT_DIRS.map { |dir| ::Rails.root.join(root_path, dir).to_s })
+            result.concat(COMPONENT_DIRS.map { |dir| ::Rails.root.join(root_path.is_a?(Hash) ? root_path[:path] : root_path, dir).to_s })
           end
 
         app.config.eager_load_paths -= paths
@@ -87,7 +87,11 @@ module ROM
         configuration = create_configuration
 
         auto_registration_paths.each do |root_path|
-          configuration.auto_registration(::Rails.root.join(root_path), namespace: false)
+          if root_path.is_a? Hash
+            configuration.auto_registration(::Rails.root.join(root_path[:path]), namespace: root_path[:namespace])
+          else
+            configuration.auto_registration(::Rails.root.join(root_path), namespace: false)
+          end
         end
 
         ROM.container(configuration)
