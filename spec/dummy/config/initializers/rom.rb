@@ -4,4 +4,5 @@ ROM::Rails::Railtie.configure do |config|
   config.gateways[:sql] = [:sql, "#{scheme}://#{Rails.root}/db/#{Rails.env}.sqlite3"]
   config.gateways[:default] = [:test_adapter, foo: :bar]
   config.auto_registration_paths += [Rails.root.join('lib', 'additional_app', 'persistence')]
+  config.auto_registration_paths += [{path: Rails.root.join('lib', 'namespaced_app', 'persistence'), namespace: 'NamespacedApp::Persistence'}]
 end
