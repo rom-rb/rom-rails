@@ -1,3 +1,12 @@
+## v2.3.1 2022-12-07
+
+### Changed
+
+* Add support for namespaced auto loading paths
+* Fix jruby to version 9.3.*
+
+[Compare v2.3.0...v2.3.1](https://github.com/rom-rb/rom-rails/compare/v2.3.0...v2.3.1)
+
 ## v2.3.0 2021-03-20
 
 ### Changed
