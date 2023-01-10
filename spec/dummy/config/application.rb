@@ -7,6 +7,7 @@ Bundler.setup(:default, Rails.env)
 require 'rom-sql'
 require 'rom-rails'
 require 'rspec-rails'
+require 'dry/core/equalizer'
 
 module Dummy
   class Application < Rails::Application

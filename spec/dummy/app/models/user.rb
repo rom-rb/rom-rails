@@ -1,5 +1,5 @@
 class User
-  include Dry::Equalizer(:id, :name, :email)
+  include Dry::Core::Equalizer.new(:id, :name, :email)
 
   attr_reader :id, :name, :email
 

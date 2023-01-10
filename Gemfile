@@ -11,8 +11,6 @@ end
 gem 'byebug', platforms: :mri
 gem 'sqlite3', platforms: [:mri, :rbx]
 
-
-
 if ENV["USE_ROM_MASTER"].eql?("true")
   gem 'rom', git: 'https://github.com/rom-rb/rom', branch: 'master' do
     gem 'rom-core'

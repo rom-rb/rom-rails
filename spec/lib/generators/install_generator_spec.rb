@@ -64,6 +64,7 @@ RSpec.describe ROM::Generators::InstallGenerator, type: :generator do
           file "application_model.rb" do
             contains <<-CONTENT.strip_heredoc
               require "types"
+              require "dry/core/equalizer"
 
               class ApplicationModel < ROM::Struct
                 def self.inherited(base)
@@ -74,7 +75,7 @@ RSpec.describe ROM::Generators::InstallGenerator, type: :generator do
                   base.extend ActiveModel::Naming
                   base.include ActiveModel::Conversion
 
-                  base.include Dry::Equalizer(:id)
+                  base.include Dry::Core::Equalizer.new(:id)
 
                   base.attribute :id, Types::ID
                 end
