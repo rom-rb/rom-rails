@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gemspec
 
-RAILS_VERSION = ENV.fetch("RAILS_VERSION", '6.1.1').freeze
+RAILS_VERSION = ENV.fetch("RAILS_VERSION", '7.0.4').freeze
 
 %w(railties actionview actionpack activerecord).each do |name|
   gem name, "~> #{RAILS_VERSION}"
@@ -33,6 +33,7 @@ platforms :jruby do
 end
 
 group :test do
+  gem 'debug'
   gem 'capybara'
   gem 'codeclimate-test-reporter', require: nil
   gem 'database_cleaner', "~> 1.8.1"
