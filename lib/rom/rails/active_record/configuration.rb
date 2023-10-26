@@ -40,14 +40,17 @@ module ROM
           specs = {}
 
           configurations.configs_for(env_name: env).each do |config|
-            name = config.respond_to?(:spec_name) ? config.spec_name : config.name
-            hash = config.respond_to?(:configuration_hash) ? config.configuration_hash : config.config
+            if config.respond_to?(:configuration_hash)
+              name, hash = [config.name, config.configuration_hash]
+            else  # Rails 6.0
+              name, hash = [config.spec_name, config.config]
+            end
 
-            specs[:default] ||= build(hash.symbolize_keys)
-            specs[name.to_sym] = build(hash.symbolize_keys)
+            specs[:default] ||= hash
+            specs[name.to_sym] = hash
           end
 
-          specs
+          specs.transform_values { |hash| build hash.symbolize_keys }
         end
 
         # Builds a configuration hash from a flat database config hash.
@@ -70,16 +73,6 @@ module ROM
 
           uri = uri_builder.build(adapter, uri_options)
           { uri: uri, options: other_options }
-        end
-
-        private
-
-        def rails7?
-          ::ActiveRecord::VERSION::MAJOR == 7
-        end
-
-        def rails6?
-          ::ActiveRecord::VERSION::MAJOR == 6
         end
       end
     end
