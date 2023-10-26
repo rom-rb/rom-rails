@@ -39,16 +39,11 @@ module ROM
         def call
           specs = {}
 
-          if configurations.respond_to?(:default_hash)
-            specs[:default] = build(configurations.default_hash.symbolize_keys)
-          else
-            specs[:default] = build(configurations.configs_for(env_name: env).first.configuration_hash.symbolize_keys)
-          end
-
           configurations.configs_for(env_name: env).each do |config|
             name = config.respond_to?(:spec_name) ? config.spec_name : config.name
             hash = config.respond_to?(:configuration_hash) ? config.configuration_hash : config.config
 
+            specs[:default] ||= build(hash.symbolize_keys)
             specs[name.to_sym] = build(hash.symbolize_keys)
           end
 
