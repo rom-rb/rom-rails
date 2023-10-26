@@ -31,9 +31,6 @@ jobs:
           - "7.0.0"
           - "6.1.0"
           - "6.0.0"
-          - "5.2.0"
-          - "5.1.0"
-          - "5.0.0"
     env:
       APT_DEPS: libsqlite3-dev
       RAILS_VERSION: "${{matrix.rails}}"
