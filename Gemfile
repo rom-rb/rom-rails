@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gemspec
 
-RAILS_VERSION = ENV.fetch("RAILS_VERSION", '6.1.1').freeze
+RAILS_VERSION = ENV.fetch("RAILS_VERSION", '7.0.4').freeze
 
 %w(railties actionview actionpack activerecord).each do |name|
   gem name, "~> #{RAILS_VERSION}"
@@ -10,8 +10,6 @@ end
 
 gem 'byebug', platforms: :mri
 gem 'sqlite3', platforms: [:mri, :rbx]
-
-
 
 if ENV["USE_ROM_MASTER"].eql?("true")
   gem 'rom', git: 'https://github.com/rom-rb/rom', branch: 'master' do
@@ -33,6 +31,7 @@ platforms :jruby do
 end
 
 group :test do
+  gem 'debug'
   gem 'capybara'
   gem 'codeclimate-test-reporter', require: nil
   gem 'database_cleaner', "~> 1.8.1"

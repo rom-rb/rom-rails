@@ -1,4 +1,5 @@
 require "types"
+require "dry/core/equalizer"
 
 class ApplicationModel < ROM::Struct
   def self.inherited(base)
@@ -9,7 +10,7 @@ class ApplicationModel < ROM::Struct
     base.extend ActiveModel::Naming
     base.include ActiveModel::Conversion
 
-    base.include Dry::Equalizer(:id)
+    base.include Dry::Core::Equalizer.new(:id)
 
     base.attribute :id, Types::ID
   end

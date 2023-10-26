@@ -20,7 +20,9 @@ RSpec.describe ROM::Rails::ActiveRecord::Configuration do
     URI.parse(uri.gsub(/^jdbc:/, ''))
   end
 
-  it 'raises an error without specifying a database'
+  it 'raises an error without specifying a database' do
+    expect { read({}) }.to raise_error KeyError
+  end
 
   context 'with postgresql adapter' do
     it 'rewrites the scheme' do
