@@ -37,23 +37,20 @@ module ROM
         #
         # @api private
         def call
-          specs = { default: build(default_configuration.configuration_hash) }
+          specs = {}
 
-          if rails6?
-            configurations.configs_for(env_name: env).each do |config|
-              specs[config.name.to_sym] = build(config.configuration_hash)
+          configurations.configs_for(env_name: env).each do |config|
+            if config.respond_to?(:configuration_hash)
+              name, hash = [config.name, config.configuration_hash]
+            else  # Rails 6.0
+              name, hash = [config.spec_name, config.config]
             end
+
+            specs[:default] ||= hash
+            specs[name.to_sym] = hash
           end
 
-          specs
-        end
-
-        def default_configuration
-          if rails6?
-            configurations.configs_for(env_name: env).first
-          else
-            configurations.fetch(env)
-          end
+          specs.transform_values { |hash| build hash.symbolize_keys }
         end
 
         # Builds a configuration hash from a flat database config hash.
@@ -76,12 +73,6 @@ module ROM
 
           uri = uri_builder.build(adapter, uri_options)
           { uri: uri, options: other_options }
-        end
-
-        private
-
-        def rails6?
-          ::ActiveRecord::VERSION::MAJOR >= 6
         end
       end
     end
