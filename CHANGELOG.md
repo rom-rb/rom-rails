@@ -1,3 +1,20 @@
+## v2.4.0 2023-10-26c
+
+### Changed
+
+* Add configuration to allow not trigger reload on each request (alex-lairan)
+* Allow namespace configuration from within an auto_registration path (sasa-b)
+
+### Added 
+
+* Compatible with Rails 7.0 (nolantait)
+* Compatible with Rails 7.1 (cflipse)
+
+### Removed
+
+* Dropped support for Rails < 6.0
+* Dropped support for Ruby < 2.7
+
 ## v2.3.0 2021-03-20
 
 ### Changed
