@@ -24,7 +24,7 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'addressable', '~> 2.3'
   spec.add_runtime_dependency 'dry-core', '~> 1.0'
-  spec.add_runtime_dependency 'railties', '>= 3.0', '<= 7.0.4'
+  spec.add_runtime_dependency 'railties', '>= 6.0', '< 8.0.0'
   spec.add_runtime_dependency 'rom', '~> 5.3'
 
   spec.add_development_dependency "bundler"
