@@ -38,6 +38,7 @@ group :test do
   gem 'generator_spec'
   gem 'rack-test'
   gem 'rspec-rails', '~> 3.1'
+  gem 'benchmark'
   gem 'mutex_m'
   gem 'base64'
   gem 'drb'
