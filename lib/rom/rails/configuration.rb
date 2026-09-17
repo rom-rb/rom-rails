@@ -4,18 +4,15 @@ module ROM
   module Rails
     class Configuration
       extend Dry::Core::Deprecations[:configuration]
-      include ActiveSupport::Configurable
 
-      config_accessor :gateways do
-        {}
-      end
+      attr_accessor :gateways
+      attr_accessor :auto_registration_paths
+      attr_accessor :reload_on_each_request
 
-      config_accessor :auto_registration_paths do
-        ['app']
-      end
-
-      config_accessor :reload_on_each_request do
-        true
+      def initialize
+        @gateways = {}
+        @auto_registration_paths = ['app']
+        @reload_on_each_request = true
       end
     end
   end
