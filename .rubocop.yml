@@ -22,7 +22,7 @@ Metrics/PerceivedComplexity:
 
 # Don’t check temp and Rails-generated files
 AllCops:
-  TargetRubyVersion: 2.3.1
+  TargetRubyVersion: 3.3
   Exclude:
     - spec/dummy/Rakefile
     - spec/dummy/config/**/*
